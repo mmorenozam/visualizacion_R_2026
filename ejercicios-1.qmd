@@ -1,0 +1,723 @@
+---
+title: "Ejercicios Módulo 1"
+subtitle: "Generalidades e introducción a R"
+lang: es
+format:
+  live-html:
+    theme:
+      light: [cosmo, theme.scss]
+    toc: true
+    toc-location: right
+    toc-title: En esta página
+    code-copy: true
+    code-overflow: wrap
+webr:
+  packages: []
+  resources:
+    - datos/pinguinos.csv
+# Soluciones de este módulo: cambia a true después de la sesión y vuelve a renderizar.
+live:
+  show-solutions: false
+filters:
+  - soluciones.lua
+engine: knitr
+---
+
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
+
+Estos ejercicios siguen el [Módulo 1](modulo-1.qmd) paso a paso. El código corre **en tu navegador**: no necesitas instalar nada. Escribe tu código en los recuadros y presiona **Run Code**. Donde veas `____`, complétalo. ¿Te atascaste? Abre la pestaña **Pista**. Las soluciones se publican después de la sesión.
+
+::: {.callout-note}
+## Antes de empezar
+- La primera vez, cargar R en el navegador puede tardar hasta un minuto. Espera a que los recuadros estén listos.
+- El archivo `datos/pinguinos.csv` ya está disponible para importarlo: 344 pingüinos del archipiélago Palmer (datos de Gorman y estación Palmer LTER, paquete `{palmerpenguins}`).
+  - `species`: especie (Adelie, Chinstrap, Gentoo); `island`: isla (Biscoe, Dream, Torgersen); `sex`: sexo; `year`: año.
+  - `bill_length_mm` y `bill_depth_mm`: largo y profundidad del pico (mm); `flipper_length_mm`: largo de la aleta (mm); `body_mass_g`: masa corporal (g).
+  - Algunos valores faltan (`NA`).
+:::
+
+::: {.callout-important appearance="simple"}
+## Lo que no terminemos en clase es tarea
+En clase avanzamos por las partes 1 a 3. **Completa todos los ejercicios de esta página antes de la próxima sesión**, incluida la **Parte 4: Más práctica**.
+:::
+
+::: {.callout-tip collapse="true"}
+## Ver el código que prepara los datos
+
+Este código ya se ejecutó por ti en esta página. En RStudio, córrelo al inicio de tu script.
+
+```r
+pinguinos <- read.csv("datos/pinguinos.csv")
+```
+:::
+
+## Parte 1: R como calculadora y objetos {#parte-1}
+
+### Ejercicio 1.1: R como calculadora
+
+**Un pingüino pesaba 3750 g al inicio de la temporada y 4050 g al final. Guarda cada medida en un objeto, calcula cuánto aumentó y qué porcentaje representa ese aumento respecto a la masa inicial.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_1_1
+inicial <- 3750
+final <- ____
+
+aumento <- final - ____
+aumento
+
+porcentaje <- aumento / ____ * 100
+porcentaje
+```
+
+## Pista
+
+::: {.hint exercise="ex_1_1"}
+Asignamos valores con `<-`. El porcentaje es el aumento dividido para la masa **inicial**, multiplicado por 100.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_1_1"}
+```r
+inicial <- 3750
+final <- 4050
+
+aumento <- final - inicial
+aumento
+
+porcentaje <- aumento / inicial * 100
+porcentaje
+```
+
+Aumentó 300 g, un 8% de su masa inicial.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m1 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 1.2: Vectores
+
+**Estas son las masas (g) de cinco pingüinos. Crea el vector `masas`, calcula cuántos valores tiene, su media, y cuántos pingüinos pesan más de 3500 g.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_1_2
+masas <- c(3750, 3800, 3250, 3450, 3650)
+
+length(____)
+mean(____)
+
+masas > 3500
+sum(masas ____ 3500)
+```
+
+## Pista
+
+::: {.hint exercise="ex_1_2"}
+`masas > 3500` devuelve un vector lógico (`TRUE`/`FALSE`). Al sumarlo, R cuenta cada `TRUE` como 1.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_1_2"}
+```r
+masas <- c(3750, 3800, 3250, 3450, 3650)
+
+length(masas)
+mean(masas)
+
+masas > 3500
+sum(masas > 3500)
+```
+
+Son 5 valores con una media de 3580 g, y 3 pingüinos pesan más de 3500 g.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m1 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 1.3: Tipos de datos y factores
+
+**¿Qué clase de objeto obtienes al combinar un número, un texto y un valor lógico? Luego convierte el vector `especie` en un factor y cuenta cuántas veces aparece cada nivel.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_1_3
+mezcla <- c(1, "a", TRUE)
+class(mezcla)
+
+especie <- c("Adelie", "Gentoo", "Chinstrap", "Adelie", "Gentoo")
+especie <- ____(especie)
+
+levels(especie)
+table(____)
+```
+
+## Pista
+
+::: {.hint exercise="ex_1_3"}
+Un vector solo puede contener datos de **una** clase, así que R convierte todo a la clase más general. Para crear un factor usa `factor()`.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_1_3"}
+```r
+mezcla <- c(1, "a", TRUE)
+class(mezcla)
+
+especie <- c("Adelie", "Gentoo", "Chinstrap", "Adelie", "Gentoo")
+especie <- factor(especie)
+
+levels(especie)
+table(especie)
+```
+
+`mezcla` es de clase `"character"`. El factor tiene tres niveles, en orden alfabético: `Adelie`, `Chinstrap` y `Gentoo`, que aparecen 2, 1 y 2 veces.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m1 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 1.4: Tablas de datos
+
+**Construye una tabla de datos con tres pingüinos y extrae: (a) la columna `masa` con `$`, (b) la fila del segundo pingüino, y (c) la masa del tercero usando `[fila, columna]`.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_1_4
+aves <- data.frame(
+  id = c(1, 2, 3),
+  especie = c("Adelie", "Gentoo", "Chinstrap"),
+  masa = c(3750, 5500, 3700)
+)
+
+aves$____
+aves[____, ]
+aves[3, "____"]
+```
+
+## Pista
+
+::: {.hint exercise="ex_1_4"}
+En `tabla[fila, columna]`, dejar un lugar vacío significa "todas". `aves[2, ]` es toda la fila 2.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_1_4"}
+```r
+aves <- data.frame(
+  id = c(1, 2, 3),
+  especie = c("Adelie", "Gentoo", "Chinstrap"),
+  masa = c(3750, 5500, 3700)
+)
+
+aves$masa
+aves[2, ]
+aves[3, "masa"]
+```
+
+La masa del tercer pingüino es 3700 g. `aves[2, ]` devuelve una tabla de una fila; `aves$masa`, un vector.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m1 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+```{webr}
+#| setup: true
+#| exercise:
+#|   - ex_2_2
+#|   - ex_3_1
+#|   - ex_3_2
+#|   - ex_3_3
+#|   - ex_3_4
+#|   - ex_4_2
+#|   - ex_4_3
+#|   - ex_4_4
+#|   - ex_4_5
+pinguinos <- read.csv("datos/pinguinos.csv")
+```
+
+## Parte 2: Importar datos {#parte-2}
+
+### Ejercicio 2.1: Importar un archivo csv
+
+**Importa el archivo `datos/pinguinos.csv` en un objeto llamado `pinguinos`. ¿Cuántas filas y columnas tiene? Revisa su estructura con `str()`.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_2_1
+pinguinos <- read.csv("____")
+
+nrow(pinguinos)
+ncol(____)
+str(____)
+```
+
+## Pista
+
+::: {.hint exercise="ex_2_1"}
+La ruta va entre comillas, incluida la carpeta: `"datos/pinguinos.csv"`. En tu computador, la ruta es relativa a la carpeta de tu **proyecto de R**.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_2_1"}
+```r
+pinguinos <- read.csv("datos/pinguinos.csv")
+
+nrow(pinguinos)
+ncol(pinguinos)
+str(pinguinos)
+```
+
+La tabla tiene 344 filas (una por pingüino) y 8 columnas. `species`, `island` y `sex` se importaron como texto (`chr`); las medidas del pico como números (`num`); la aleta, la masa y el año como enteros (`int`).
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m1 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 2.2: Explorar una tabla
+
+**La tabla `pinguinos` ya está cargada. Muestra sus primeras seis filas, las tres primeras filas de las columnas `species` y `body_mass_g`, y un resumen de todas las columnas. ¿Cuántos valores faltan en `body_mass_g`?**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_2_2
+head(____)
+pinguinos[1:3, c("____", "____")]
+summary(pinguinos)
+```
+
+## Pista
+
+::: {.hint exercise="ex_2_2"}
+Para elegir varias columnas por su nombre, ponlas en un vector con `c()`. `summary()` cuenta los valores faltantes en la línea `NA's`.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_2_2"}
+```r
+head(pinguinos)
+pinguinos[1:3, c("species", "body_mass_g")]
+summary(pinguinos)
+```
+
+Los tres primeros son Adelie, de 3750, 3800 y 3250 g. Según `summary()`, faltan 2 valores de `body_mass_g`.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m1 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+## Parte 3: Operaciones estadísticas básicas {#parte-3}
+
+### Ejercicio 3.1: Valores faltantes, media y dispersión
+
+**Calcula la media de `body_mass_g`. ¿Qué devuelve? Repite con `na.rm = TRUE`, y calcula también la mediana y la desviación estándar.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_3_1
+mean(pinguinos$body_mass_g)
+mean(pinguinos$body_mass_g, na.rm = ____)
+median(pinguinos$body_mass_g, ____)
+sd(____, na.rm = TRUE)
+```
+
+## Pista
+
+::: {.hint exercise="ex_3_1"}
+Si falta un valor, R no puede saber la media y devuelve `NA`. `na.rm = TRUE` le pide ignorar los faltantes; lo aceptan `mean()`, `median()`, `sd()`, `sum()` y muchas otras.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_3_1"}
+```r
+mean(pinguinos$body_mass_g)
+mean(pinguinos$body_mass_g, na.rm = TRUE)
+median(pinguinos$body_mass_g, na.rm = TRUE)
+sd(pinguinos$body_mass_g, na.rm = TRUE)
+```
+
+Sin `na.rm`, la media es `NA`. Con `na.rm = TRUE`: media 4201.75 g, mediana 4050 g y desviación estándar 801.95 g.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m1 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 3.2: Cuartiles
+
+**Calcula los cuartiles de `body_mass_g`. ¿Entre qué valores está el 50% central de los pingüinos?**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_3_2
+quantile(pinguinos$body_mass_g, na.rm = ____)
+quantile(pinguinos$body_mass_g, probs = c(0.25, ____), na.rm = TRUE)
+```
+
+## Pista
+
+::: {.hint exercise="ex_3_2"}
+El 50% central de los datos está entre el primer cuartil (0.25) y el tercero (0.75).
+:::
+
+## Solución
+
+::: {.solution exercise="ex_3_2"}
+```r
+quantile(pinguinos$body_mass_g, na.rm = TRUE)
+quantile(pinguinos$body_mass_g, probs = c(0.25, 0.75), na.rm = TRUE)
+```
+
+El 50% central de los pingüinos pesa entre 3550 y 4750 g. El más liviano pesa 2700 g y el más pesado, 6300 g.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m1 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 3.3: Variables categóricas
+
+**¿Cuántos pingüinos hay de cada especie? Calcula también la proporción, y una tabla cruzada de especie por isla. ¿Qué especie vive en las tres islas?**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_3_3
+table(pinguinos$species)
+prop.table(table(pinguinos$____))
+table(pinguinos$species, pinguinos$____)
+```
+
+## Pista
+
+::: {.hint exercise="ex_3_3"}
+`table()` cuenta las veces que aparece cada valor; `prop.table()` convierte los conteos en proporciones. Con dos variables, `table()` hace una tabla cruzada.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_3_3"}
+```r
+table(pinguinos$species)
+prop.table(table(pinguinos$species))
+table(pinguinos$species, pinguinos$island)
+```
+
+Hay 152 Adelie (44%), 68 Chinstrap (20%) y 124 Gentoo (36%). Solo los **Adelie** viven en las tres islas; los Chinstrap están solo en Dream y los Gentoo solo en Biscoe.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m1 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 3.4: Resumir por grupos
+
+**Calcula la masa media de cada especie, primero con `tapply()` y luego con `aggregate()`. ¿Qué especie es la más pesada?**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_3_4
+tapply(pinguinos$body_mass_g, pinguinos$____, mean, na.rm = TRUE)
+
+aggregate(body_mass_g ~ ____, data = pinguinos, FUN = ____)
+```
+
+## Pista
+
+::: {.hint exercise="ex_3_4"}
+`tapply(variable, grupo, función)` aplica la función dentro de cada grupo; los argumentos extra, como `na.rm = TRUE`, pasan a la función. `aggregate()` con fórmula descarta los `NA` por su cuenta.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_3_4"}
+```r
+tapply(pinguinos$body_mass_g, pinguinos$species, mean, na.rm = TRUE)
+
+aggregate(body_mass_g ~ species, data = pinguinos, FUN = mean)
+```
+
+Las medias son 3700.66 g (Adelie), 3733.09 g (Chinstrap) y 5076.02 g (Gentoo). Los **Gentoo** pesan unos 1300 g más que las otras dos especies.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m1 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+## Parte 4: Más práctica {#parte-4}
+
+### Ejercicio 4.1: Operaciones con vectores
+
+**Convierte las masas de los cinco pingüinos de gramos a kilogramos, ordénalas de menor a mayor y redondea su media en kilogramos a dos decimales.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_4_1
+masas <- c(3750, 3800, 3250, 3450, 3650)
+
+masas_kg <- masas / ____
+sort(____)
+round(mean(masas_kg), digits = ____)
+```
+
+## Pista
+
+::: {.hint exercise="ex_4_1"}
+Un kilogramo tiene 1000 gramos. `sort()` ordena de menor a mayor; `round(x, digits = 2)` redondea a dos decimales.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_4_1"}
+```r
+masas <- c(3750, 3800, 3250, 3450, 3650)
+
+masas_kg <- masas / 1000
+sort(masas_kg)
+round(mean(masas_kg), digits = 2)
+```
+
+Ordenadas: 3.25, 3.45, 3.65, 3.75 y 3.80 kg. La media redondeada es 3.58 kg.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m1 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 4.2: Filtrar filas
+
+**Quédate solo con los Gentoo. ¿Cuántos son y cuál es su masa media? Luego filtra los Gentoo machos (`sex == "male"`).**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_4_2
+gentoo <- pinguinos[pinguinos$species == "____", ]
+nrow(gentoo)
+mean(gentoo$body_mass_g, na.rm = TRUE)
+
+gentoo_machos <- pinguinos[pinguinos$species == "Gentoo" ____ pinguinos$sex == "male", ]
+gentoo_machos <- gentoo_machos[!is.na(gentoo_machos$species), ]
+nrow(gentoo_machos)
+mean(gentoo_machos$body_mass_g)
+```
+
+## Pista
+
+::: {.hint exercise="ex_4_2"}
+Una condición antes de la coma en `[ , ]` elige las **filas** donde es `TRUE`. Para dos condiciones a la vez, únelas con `&`. Las filas con `sex` faltante dan `NA` en la condición; la segunda línea las quita.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_4_2"}
+```r
+gentoo <- pinguinos[pinguinos$species == "Gentoo", ]
+nrow(gentoo)
+mean(gentoo$body_mass_g, na.rm = TRUE)
+
+gentoo_machos <- pinguinos[pinguinos$species == "Gentoo" & pinguinos$sex == "male", ]
+gentoo_machos <- gentoo_machos[!is.na(gentoo_machos$species), ]
+nrow(gentoo_machos)
+mean(gentoo_machos$body_mass_g)
+```
+
+Hay 124 Gentoo, con una masa media de 5076.02 g. De ellos, 61 son machos, con 5484.84 g en promedio. En el [Módulo 2](ejercicios-2.qmd) haremos esto mucho más fácil con `filter()`.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m1 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 4.3: Crear una columna nueva
+
+**Crea la columna `pico_relativo` (largo del pico dividido para su profundidad) y calcula su media. ¿Qué fila tiene el pingüino más pesado, y de qué especie, isla y sexo es?**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_4_3
+pinguinos$pico_relativo <- pinguinos$bill_length_mm / pinguinos$____
+mean(pinguinos$pico_relativo, na.rm = ____)
+
+fila <- which.max(pinguinos$____)
+fila
+pinguinos[fila, c("species", "island", "sex", "body_mass_g")]
+```
+
+## Pista
+
+::: {.hint exercise="ex_4_3"}
+Asignar a `tabla$nombre_nuevo` crea una columna. `which.max()` devuelve la **posición** del valor más alto e ignora los `NA`.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_4_3"}
+```r
+pinguinos$pico_relativo <- pinguinos$bill_length_mm / pinguinos$bill_depth_mm
+mean(pinguinos$pico_relativo, na.rm = TRUE)
+
+fila <- which.max(pinguinos$body_mass_g)
+fila
+pinguinos[fila, c("species", "island", "sex", "body_mass_g")]
+```
+
+El pico mide en promedio 2.61 veces más de largo que de profundidad. El más pesado está en la fila 170: un Gentoo macho de Biscoe, de 6300 g.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m1 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 4.4: ¿Cuántos datos faltan?
+
+**Cuenta los valores faltantes de cada columna con `colSums(is.na(...))`, y cuántas filas están completas.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_4_4
+colSums(is.na(____))
+sum(complete.cases(____))
+```
+
+## Pista
+
+::: {.hint exercise="ex_4_4"}
+`is.na()` devuelve `TRUE` donde falta un valor; `colSums()` suma por columna. `complete.cases()` es `TRUE` en las filas sin ningún faltante.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_4_4"}
+```r
+colSums(is.na(pinguinos))
+sum(complete.cases(pinguinos))
+```
+
+Faltan 2 valores en cada medida del cuerpo y 11 en `sex`. Hay 333 filas completas de 344.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m1 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 4.5: Resumir por dos grupos
+
+**Calcula la masa media para cada combinación de especie y sexo. ¿Cuánto más pesan los machos que las hembras en cada especie?**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_4_5
+aggregate(body_mass_g ~ species + ____, data = pinguinos, FUN = mean)
+```
+
+## Pista
+
+::: {.hint exercise="ex_4_5"}
+En la fórmula de `aggregate()`, varios grupos se unen con `+`.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_4_5"}
+```r
+aggregate(body_mass_g ~ species + sex, data = pinguinos, FUN = mean)
+```
+
+Hembras y machos: Adelie 3368.84 y 4043.49 g; Chinstrap 3527.21 y 3938.97 g; Gentoo 4679.74 y 5484.84 g. Los machos pesan unos 675 g más en Adelie, 412 g en Chinstrap y 805 g en Gentoo.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m1 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+## Con tus propios datos
+
+Importa en tu proyecto de R una tabla de tus propios datos (o `pinguinos.csv`, que puedes [descargar aquí](datos/pinguinos.csv)) y repite la Parte 3: valores faltantes, medidas de tendencia central y dispersión, conteos y un resumen por grupos.

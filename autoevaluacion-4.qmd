@@ -1,0 +1,129 @@
+---
+title: "Autoevaluación Módulo 4"
+subtitle: "Introducción a Quarto"
+filters:
+  - selfcheck.lua
+include-after-body: selfcheck.html
+toc: false
+---
+
+Ocho preguntas cortas sobre el [Módulo 4](modulo-4.qmd), dos por cada objetivo de la sesión. Tienes dos intentos por pregunta; después verás la respuesta y una explicación. **Es anónima: no se guarda ni se envía nada.**
+
+::: {.callout-note appearance="simple"}
+<span id="sc-score"></span>
+:::
+
+
+## Objetivo 1: Crear y renderizar
+
+::: {.selfcheck}
+**1. ¿Qué hace el botón **Render** de RStudio en un documento `.qmd`?**
+
+- [ ] Guarda el archivo
+- [x] Ejecuta el código del documento y genera el reporte (html, Word, PDF...) con el texto y los resultados
+- [ ] Instala Quarto
+- [ ] Corre solo la línea actual
+
+::: {.explanation}
+Al renderizar, Quarto ejecuta todos los fragmentos en una sesión **nueva** de R y reúne texto, código y resultados en el formato de salida.
+:::
+:::
+
+::: {.selfcheck}
+**2. Tu documento se renderiza bien en tu computador, pero un colega recibe el error `object 'pinguinos' not found`. ¿Causa más probable?**
+
+- [ ] Su versión de R es distinta
+- [x] Creaste `pinguinos` en la consola, no en un fragmento del documento: al renderizar, el documento empieza en una sesión vacía
+- [ ] Quarto no funciona en su sistema operativo
+- [ ] El archivo es demasiado grande
+
+::: {.explanation}
+Un documento de Quarto debe ser **autosuficiente**: todo lo que usa, incluido importar los datos y cargar paquetes, tiene que estar en sus fragmentos.
+:::
+:::
+
+## Objetivo 2: Encabezado, Markdown y fragmentos
+
+::: {.selfcheck}
+**3. ¿Qué opción de fragmento muestra el resultado pero **no** el código?**
+
+- [ ] `eval: false`
+- [x] `echo: false`
+- [ ] `include: false`
+- [ ] `message: false`
+
+::: {.explanation}
+`echo: false` oculta el código y deja el resultado. `eval: false` muestra el código sin ejecutarlo; `include: false` lo ejecuta sin mostrar nada; `message: false` oculta solo los mensajes.
+:::
+:::
+
+::: {.selfcheck}
+**4. ¿Dónde se ponen las opciones que valen para **todos** los fragmentos?**
+
+- [ ] En el primer fragmento
+- [x] En el encabezado YAML, bajo `execute:`
+- [ ] Al final del documento
+- [ ] En cada línea de código
+
+::: {.explanation}
+`execute:` en el encabezado define opciones globales, como `echo: false`. Cada fragmento puede cambiarlas para sí mismo con `#|`.
+:::
+:::
+
+## Objetivo 3: Figuras y tablas
+
+::: {.selfcheck}
+**5. Quieres citar una figura en el texto como "Figura 1". ¿Qué etiqueta le das al fragmento?**
+
+- [ ] `#| label: figura1`
+- [x] `#| label: fig-masa`, y en el texto `@fig-masa`
+- [ ] `#| fig-cap: 1`
+- [ ] No se puede en Quarto
+
+::: {.explanation}
+Las etiquetas que empiezan con `fig-` (figuras) o `tbl-` (tablas) se numeran solas, y `@etiqueta` las cita con un enlace.
+:::
+:::
+
+::: {.selfcheck}
+**6. ¿Qué hace `knitr::kable()` al final de una cadena de `{dplyr}`?**
+
+- [ ] Exporta la tabla a Excel
+- [x] Convierte la tabla de datos en una tabla con formato dentro del documento
+- [ ] Hace un gráfico
+- [ ] Ordena la tabla
+
+::: {.explanation}
+`kable()` da formato a la tabla para el documento (html, Word o PDF). `digits` controla los decimales.
+:::
+:::
+
+## Objetivo 4: Formatos de salida
+
+::: {.selfcheck}
+**7. Un mismo `.qmd`, ¿puede producir html, Word y PDF?**
+
+- [ ] No, hace falta un archivo por formato
+- [x] Sí: se listan los formatos bajo `format:` en el encabezado
+- [ ] Solo html y PDF
+- [ ] Solo si no tiene código
+
+::: {.explanation}
+El mismo contenido se renderiza en varios formatos. Algunas opciones son propias de cada uno (por ejemplo, `code-fold` solo existe en html).
+:::
+:::
+
+::: {.selfcheck}
+**8. Al renderizar a PDF aparece un error sobre LaTeX. ¿Qué haces?**
+
+- [ ] Cambiar a otro programa
+- [x] Instalar TinyTeX con `tinytex::install_tinytex()` y volver a renderizar
+- [ ] Borrar las figuras
+- [ ] Usar solo html para siempre
+
+::: {.explanation}
+Quarto usa LaTeX para crear PDF. TinyTeX es una instalación pequeña de LaTeX pensada para esto.
+:::
+:::
+
+¿Fallaste alguna? Vuelve a la parte correspondiente de las [diapositivas](diapositivas/modulo-4.html){target="_blank"} o de los [ejercicios](ejercicios-4.qmd). Cuando estés listo, haz el **examen**, disponible a partir del {{< var fecha-examen >}}.

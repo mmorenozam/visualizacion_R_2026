@@ -1,0 +1,47 @@
+---
+title: "Módulo 1: Generalidades e introducción a R"
+subtitle: "{{< var fecha-m1 >}} · {{< var horario >}}"
+---
+
+[Ver las diapositivas](diapositivas/modulo-1.html){.btn .btn-primary target="_blank"} [Hacer los ejercicios](ejercicios-1.qmd){.btn .btn-outline-primary} [Hacer la autoevaluación](autoevaluacion-1.qmd){.btn .btn-outline-primary}
+
+## Contexto
+
+- **Para quién:** personas que nunca han programado, o que necesitan un repaso de R antes de empezar con `{tidyverse}`.
+- **Lugar en el curso:** primera sesión. Si tomaste *Introducción a R*, es un repaso; si no, te pone al día para el resto del curso.
+- **Duración:** 3 horas de clase virtual y unas 6 horas de trabajo autónomo.
+
+## Objetivos de la sesión
+
+Al terminar, podrás:
+
+1. **Instalar** R y RStudio, y **organizar** tu trabajo en un proyecto de R.
+2. **Usar** los tipos de datos, operadores y objetos básicos de R (vectores, factores, tablas de datos y listas).
+3. **Instalar y cargar** paquetes, e **importar** una tabla de datos desde un archivo csv.
+4. **Calcular** operaciones estadísticas básicas, también cuando hay valores faltantes.
+
+## Estructura
+
+| Parte | Qué hacemos | Objetivo |
+|:--|:--|:--:|
+| Bienvenida | Presentación, cómo funciona el curso y la evaluación |  |
+| R y RStudio | Instalación guiada; los cuatro paneles de RStudio | 1 |
+| Proyectos de R | Crear un proyecto y ordenar carpetas (`datos/`, `scripts/`, `resultados/`) | 1 |
+| Sintaxis, tipos de datos y operadores | Asignación con `<-`, nombres, comentarios; `numeric`, `character`, `logical`, `factor` | 2 |
+| Objetos | Vectores, factores, tablas de datos y listas; indexación con `[ ]` y `$` | 2 |
+| Paquetes e importación | `install.packages()`, `library()`, `read.csv()`; revisar la tabla con `str()` y `summary()` | 3 |
+| Operaciones estadísticas básicas | `mean()`, `median()`, `sd()`, `quantile()`, `table()`, `tapply()`; valores faltantes y `na.rm = TRUE` | 4 |
+
+## Trabajo autónomo
+
+Después de la clase:
+
+1. **Crea tu proyecto de R** para el curso, con la estructura de carpetas vista en clase.
+2. **Completa todos los [ejercicios](ejercicios-1.qmd)**: lo que no alcancemos en clase, incluida la Parte 4 (Más práctica), es tarea. Si te atascas, usa la pestaña **Pista**.
+3. **Importa tus propios datos** (o `pinguinos.csv`) en tu proyecto y calcula sus estadísticos básicos.
+4. Haz la **[autoevaluación](autoevaluacion-1.qmd)**.
+
+## Datos y materiales
+
+- **`pinguinos.csv`** ([descargar](datos/pinguinos.csv)): 344 pingüinos de tres especies del archipiélago Palmer (Antártida), con medidas del pico, de la aleta y de la masa corporal. Datos de Kristen Gorman y la estación Palmer (LTER), publicados en el paquete [`{palmerpenguins}`](https://allisonhorst.github.io/palmerpenguins/){target="_blank"} de Allison Horst, Alison Hill y Kristen Gorman (licencia CC0). La usamos en todo el curso.
+- [Diapositivas del Módulo 1](diapositivas/modulo-1.html){target="_blank"}.

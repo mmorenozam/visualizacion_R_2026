@@ -1,0 +1,67 @@
+---
+title: "____"
+author: "____"
+date: today
+format:
+  html:
+    toc: true
+execute:
+  echo: ____
+  warning: false
+---
+
+<!--
+EXAMEN FINAL, PARTE B (3 puntos)
+
+Completa este reporte y renderízalo a html. Debe:
+  1. Tener un título, tu nombre como autor, y ocultar el código (echo).
+  2. Importar los datos en el fragmento "importar", sin mostrar mensajes.
+  3. Decir en el texto, con código en línea, cuántas muestras hay.
+  4. Incluir una figura numerada, con título, citada en el texto con @fig-...
+  5. Incluir una tabla numerada, con título, hecha con knitr::kable() y citada
+     en el texto con @tbl-...
+  6. Terminar con tus conclusiones (de tres a cinco frases).
+
+No cambies los nombres de las secciones (##).
+Entrega este archivo como reporte_apellido_nombre.qmd
+-->
+
+## Introducción
+
+Este reporte analiza la calidad en taza de muestras de café de tres provincias del Ecuador.
+
+```{r}
+#| label: importar
+#| message: ____
+library(tidyverse)
+cafe <- read_csv("datos/datos_examen.csv")
+```
+
+Analizamos `r ____(cafe)` muestras de café.
+
+## Resultados
+
+```{r}
+#| label: fig-____
+#| fig-cap: "____"
+ggplot(cafe, aes(x = altitud_m, y = puntaje_taza)) +
+  geom_point() +
+  labs(x = "Altitud (m s. n. m.)", y = "Puntaje en taza")
+```
+
+Como muestra la @fig-____, ____.
+
+```{r}
+#| label: tbl-____
+#| tbl-cap: "____"
+cafe |>
+  group_by(provincia) |>
+  summarise(n = n(), puntaje_medio = mean(puntaje_taza)) |>
+  knitr::____(digits = 1)
+```
+
+La @tbl-____ resume ____.
+
+## Conclusiones
+
+____

@@ -1,0 +1,129 @@
+---
+title: "Autoevaluación Módulo 1"
+subtitle: "Generalidades e introducción a R"
+filters:
+  - selfcheck.lua
+include-after-body: selfcheck.html
+toc: false
+---
+
+Ocho preguntas cortas sobre el [Módulo 1](modulo-1.qmd), dos por cada objetivo de la sesión. Tienes dos intentos por pregunta; después verás la respuesta y una explicación. **Es anónima: no se guarda ni se envía nada.**
+
+::: {.callout-note appearance="simple"}
+<span id="sc-score"></span>
+:::
+
+
+## Objetivo 1: R, RStudio y proyectos
+
+::: {.selfcheck}
+**1. ¿Cuál es la principal ventaja de trabajar dentro de un proyecto de R?**
+
+- [ ] Hace que el código corra más rápido
+- [x] Fija la carpeta de trabajo, así las rutas como `"datos/pinguinos.csv"` funcionan en cualquier computador
+- [ ] Instala automáticamente todos los paquetes
+- [ ] Guarda una copia de seguridad en la nube
+
+::: {.explanation}
+Al abrir un proyecto, RStudio fija la carpeta de trabajo en la carpeta del proyecto. Las rutas relativas funcionan igual en tu computador y en el de un colega.
+:::
+:::
+
+::: {.selfcheck}
+**2. R y RStudio, ¿son lo mismo?**
+
+- [ ] Sí, son dos nombres del mismo programa
+- [x] No: R es el lenguaje que hace los cálculos y RStudio es un entorno para escribir y ejecutar código de R
+- [ ] No: RStudio es el lenguaje y R la interfaz
+- [ ] Sí, pero RStudio es la versión de pago
+
+::: {.explanation}
+R es el lenguaje y el motor de cálculo; RStudio es el entorno de trabajo. Por eso se instala **primero R** y luego RStudio.
+:::
+:::
+
+## Objetivo 2: Tipos de datos, operadores y objetos
+
+::: {.selfcheck}
+**3. Queremos comprobar si `x` es igual a 5. ¿Qué expresión usamos?**
+
+- [ ] `x = 5`
+- [ ] `x <- 5`
+- [x] `x == 5`
+- [ ] `x != 5`
+
+::: {.explanation}
+`==` compara y devuelve `TRUE` o `FALSE`. `=` y `<-` **asignan** el valor 5 a `x`; `!=` pregunta si es distinto.
+:::
+:::
+
+::: {.selfcheck}
+**4. ¿Qué devuelve `levels(factor(c("Gentoo", "Adelie", "Gentoo")))`?**
+
+- [ ] `"Gentoo" "Adelie"`
+- [x] `"Adelie" "Gentoo"`
+- [ ] `"Gentoo" "Adelie" "Gentoo"`
+- [ ] `2`
+
+::: {.explanation}
+Los niveles de un factor son los valores **únicos**, por defecto en orden alfabético. Ese orden es el que usarán después las tablas y los gráficos.
+:::
+:::
+
+## Objetivo 3: Paquetes e importación de datos
+
+::: {.selfcheck}
+**5. ¿Cuál es la diferencia entre `install.packages("tidyverse")` y `library(tidyverse)`?**
+
+- [ ] Ninguna
+- [x] `install.packages()` descarga el paquete una vez; `library()` lo carga en cada sesión en que lo uses
+- [ ] `library()` descarga y `install.packages()` actualiza
+- [ ] `install.packages()` solo funciona en Windows
+
+::: {.explanation}
+Un paquete se **instala** una sola vez, pero hay que **cargarlo** con `library()` cada vez que abres R.
+:::
+:::
+
+::: {.selfcheck}
+**6. Después de importar `pinguinos`, ¿qué función muestra de un vistazo el tipo de cada columna?**
+
+- [x] `str(pinguinos)`
+- [ ] `mean(pinguinos)`
+- [ ] `table(pinguinos)`
+- [ ] `length(pinguinos)`
+
+::: {.explanation}
+`str()` muestra la estructura: filas, columnas, y la clase y primeros valores de cada columna. Es lo primero que conviene revisar después de importar.
+:::
+:::
+
+## Objetivo 4: Operaciones estadísticas básicas
+
+::: {.selfcheck}
+**7. `mean(pinguinos$body_mass_g)` devuelve `NA`. ¿Por qué?**
+
+- [ ] Porque la columna es de texto
+- [x] Porque hay valores faltantes y no se usó `na.rm = TRUE`
+- [ ] Porque la tabla no se importó
+- [ ] Porque `mean()` no funciona con enteros
+
+::: {.explanation}
+Si falta un valor, R no puede saber la media y lo indica con `NA`. `mean(x, na.rm = TRUE)` calcula la media de los valores disponibles. Antes de hacerlo, conviene saber **cuántos** faltan: `sum(is.na(x))`.
+:::
+:::
+
+::: {.selfcheck}
+**8. ¿Qué devuelve `table(pinguinos$species, pinguinos$island)`?**
+
+- [ ] La masa media por especie e isla
+- [x] Una tabla cruzada con el número de pingüinos de cada especie en cada isla
+- [ ] La lista de especies
+- [ ] Un error, porque son dos variables
+
+::: {.explanation}
+Con dos variables categóricas, `table()` cuenta cada combinación. En los pingüinos revela que solo los Adelie viven en las tres islas.
+:::
+:::
+
+¿Fallaste alguna? Vuelve a la parte correspondiente de las [diapositivas](diapositivas/modulo-1.html){target="_blank"} o de los [ejercicios](ejercicios-1.qmd).

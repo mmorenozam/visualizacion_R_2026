@@ -1,0 +1,1311 @@
+[
+  {
+    "objectID": "diapositivas/modulo-4.html#section",
+    "href": "diapositivas/modulo-4.html#section",
+    "title": "Visualización de datos en R",
+    "section": "",
+    "text": "Módulo 4: Introducción a Quarto\n\nMauricio Moreno, PhD\nsábado 5 de diciembre de 2026"
+  },
+  {
+    "objectID": "diapositivas/modulo-4.html#hoy",
+    "href": "diapositivas/modulo-4.html#hoy",
+    "title": "Visualización de datos en R",
+    "section": "Hoy",
+    "text": "Hoy\n\n¿Qué es Quarto?\nPreparar el ambiente de trabajo\nEstructura básica de un documento\nFiguras y tablas\nGenerar reportes en html, Word y PDF\nCierre del curso, examen y certificado"
+  },
+  {
+    "objectID": "diapositivas/modulo-4.html#del-script-al-reporte",
+    "href": "diapositivas/modulo-4.html#del-script-al-reporte",
+    "title": "Visualización de datos en R",
+    "section": "Del script al reporte",
+    "text": "Del script al reporte\n\nHasta ahora: un script con el código, y luego copiar y pegar números y gráficos en Word.\nSi cambian los datos, hay que repetir todo a mano, y es fácil equivocarse.\nQuarto junta en un solo archivo (.qmd) el texto, el código y sus resultados.\nAl presionar Render, Quarto ejecuta el código y genera el documento: html, Word, PDF, presentaciones o sitios web.\nEstas diapositivas y la página del curso están hechas con Quarto."
+  },
+  {
+    "objectID": "diapositivas/modulo-4.html#instalación",
+    "href": "diapositivas/modulo-4.html#instalación",
+    "title": "Visualización de datos en R",
+    "section": "Instalación",
+    "text": "Instalación\n\nQuarto viene incluido en las versiones recientes de RStudio. Comprueba con File → New File → Quarto Document…\nPara documentos en PDF hace falta LaTeX. La forma más sencilla es TinyTeX:\n\n\n\ninstall.packages(\"tinytex\")\ntinytex::install_tinytex()"
+  },
+  {
+    "objectID": "diapositivas/modulo-4.html#un-proyecto-de-quarto",
+    "href": "diapositivas/modulo-4.html#un-proyecto-de-quarto",
+    "title": "Visualización de datos en R",
+    "section": "Un proyecto de Quarto",
+    "text": "Un proyecto de Quarto\n\n\n\n\n\n\n\n\n\nFile → New Project…\nNew Directory → Quarto Project\nElegimos el nombre y la ubicación de la carpeta → Create Project."
+  },
+  {
+    "objectID": "diapositivas/modulo-4.html#un-proyecto-de-quarto-1",
+    "href": "diapositivas/modulo-4.html#un-proyecto-de-quarto-1",
+    "title": "Visualización de datos en R",
+    "section": "Un proyecto de Quarto",
+    "text": "Un proyecto de Quarto\nRStudio crea un documento de ejemplo. Presiona Render:"
+  },
+  {
+    "objectID": "diapositivas/modulo-4.html#las-tres-partes-de-un-documento",
+    "href": "diapositivas/modulo-4.html#las-tres-partes-de-un-documento",
+    "title": "Visualización de datos en R",
+    "section": "Las tres partes de un documento",
+    "text": "Las tres partes de un documento\n---\ntitle: \"Pingüinos del archipiélago Palmer\"\nauthor: \"Tu nombre\"\nformat: html\n---\n\n## Introducción\n\nAnalizamos la **masa corporal** de tres especies de pingüinos.\n\n```{r}\nlibrary(tidyverse)\npinguinos &lt;- read_csv(\"datos/pinguinos.csv\")\n```\n\nEncabezado YAML, entre ---: título, autor, formato.\nTexto en Markdown.\nFragmentos de código (chunks), entre ```."
+  },
+  {
+    "objectID": "diapositivas/modulo-4.html#markdown-en-un-minuto",
+    "href": "diapositivas/modulo-4.html#markdown-en-un-minuto",
+    "title": "Visualización de datos en R",
+    "section": "Markdown en un minuto",
+    "text": "Markdown en un minuto\n\n\n\nEscribes\nObtienes\n\n\n\n\n## Título de sección\nun título de segundo nivel\n\n\n**negrita**, *cursiva*\nnegrita, cursiva\n\n\n- elemento\nuna lista\n\n\n[texto](https://quarto.org)\nun enlace\n\n\n`código`\ncódigo en línea\n\n\n$\\bar{x}$\n\\(\\bar{x}\\)\n\n\n\n\nY código en línea: `r nrow(pinguinos)` escribe el número de filas dentro del texto, y se actualiza solo."
+  },
+  {
+    "objectID": "diapositivas/modulo-4.html#opciones-de-los-fragmentos",
+    "href": "diapositivas/modulo-4.html#opciones-de-los-fragmentos",
+    "title": "Visualización de datos en R",
+    "section": "Opciones de los fragmentos",
+    "text": "Opciones de los fragmentos\n```{r}\n#| label: importar\n#| echo: false\n#| message: false\nlibrary(tidyverse)\n```\n\n\n\nOpción\nQué hace\n\n\n\n\necho: false\nmuestra el resultado pero no el código\n\n\neval: false\nmuestra el código pero no lo ejecuta\n\n\ninclude: false\nejecuta, pero no muestra nada\n\n\nwarning: false, message: false\noculta advertencias y mensajes"
+  },
+  {
+    "objectID": "diapositivas/modulo-4.html#opciones-globales",
+    "href": "diapositivas/modulo-4.html#opciones-globales",
+    "title": "Visualización de datos en R",
+    "section": "Opciones globales",
+    "text": "Opciones globales\nPara todo el documento, en el encabezado:\n---\ntitle: \"Pingüinos del archipiélago Palmer\"\nformat: html\nexecute:\n  echo: false\n  warning: false\n---\n\n\n\n\n\n\n\nEn un reporte para otras personas, lo habitual es echo: false: se ven los resultados, no el código."
+  },
+  {
+    "objectID": "diapositivas/modulo-4.html#figuras",
+    "href": "diapositivas/modulo-4.html#figuras",
+    "title": "Visualización de datos en R",
+    "section": "Figuras",
+    "text": "Figuras\n```{r}\n#| label: fig-masa\n#| fig-cap: \"Masa corporal por especie.\"\n#| fig-width: 6\n#| fig-height: 4\nggplot(pinguinos, aes(x = species, y = body_mass_g)) +\n  geom_boxplot()\n```\n\nComo se ve en la @fig-masa, los Gentoo son los más pesados.\n\nUna etiqueta que empieza con fig- numera la figura y permite citarla con @fig-masa.\nfig-width y fig-height, en pulgadas.\nPara una imagen guardada: ![Título](images/foto.png){width=50%}."
+  },
+  {
+    "objectID": "diapositivas/modulo-4.html#tablas",
+    "href": "diapositivas/modulo-4.html#tablas",
+    "title": "Visualización de datos en R",
+    "section": "Tablas",
+    "text": "Tablas\n```{r}\n#| label: tbl-masa\n#| tbl-cap: \"Masa corporal media por especie (g).\"\npinguinos |&gt;\n  group_by(species) |&gt;\n  summarise(n = n(), masa_media = mean(body_mass_g, na.rm = TRUE)) |&gt;\n  knitr::kable(digits = 0)\n```\n\n\n\n\n\n\nspecies\nn\nmasa_media\n\n\n\n\nAdelie\n152\n3701\n\n\nChinstrap\n68\n3733\n\n\nGentoo\n124\n5076"
+  },
+  {
+    "objectID": "diapositivas/modulo-4.html#html-word-y-pdf",
+    "href": "diapositivas/modulo-4.html#html-word-y-pdf",
+    "title": "Visualización de datos en R",
+    "section": "html, Word y PDF",
+    "text": "html, Word y PDF\n---\ntitle: \"Pingüinos del archipiélago Palmer\"\nformat:\n  html: default\n  docx: default\n  pdf: default\n---\n\nEl mismo .qmd produce los tres formatos. En RStudio, la flecha junto a Render elige cuál.\nhtml: el más rico (interactivo, sin instalar nada más).\ndocx: para quien necesita editar en Word.\npdf: necesita TinyTeX."
+  },
+  {
+    "objectID": "diapositivas/modulo-4.html#section-1",
+    "href": "diapositivas/modulo-4.html#section-1",
+    "title": "Visualización de datos en R",
+    "section": "",
+    "text": "Ejercicios"
+  },
+  {
+    "objectID": "diapositivas/modulo-4.html#lo-que-vimos-en-cuatro-sesiones",
+    "href": "diapositivas/modulo-4.html#lo-que-vimos-en-cuatro-sesiones",
+    "title": "Visualización de datos en R",
+    "section": "Lo que vimos en cuatro sesiones",
+    "text": "Lo que vimos en cuatro sesiones\n\n\n\n\n\n\n\nMódulo\nLo que ya puedes hacer con R\n\n\n\n\n1\nTrabajar en un proyecto, importar datos y calcular estadísticos básicos.\n\n\n2\nTransformar y resumir tablas con {dplyr}, y hacer los primeros gráficos.\n\n\n3\nElegir, mejorar y exportar gráficos con {ggplot2}.\n\n\n4\nReunir análisis, figuras y texto en un reporte reproducible."
+  },
+  {
+    "objectID": "diapositivas/modulo-4.html#examen-y-certificado",
+    "href": "diapositivas/modulo-4.html#examen-y-certificado",
+    "title": "Visualización de datos en R",
+    "section": "Examen y certificado",
+    "text": "Examen y certificado\n\nEl examen estará disponible a partir del 6 de diciembre de 2026. Vale el 60% de la nota; los ejercicios en clase, el 40%.\nTiene dos partes: un script de R para completar (datos y gráficos) y un reporte de Quarto corto. Entregas los dos archivos.\nCon 7/10 obtienes el certificado de aprobación; si no, el de asistencia.\nAntes del examen, completa todos los ejercicios del Módulo 4 y repasa las autoevaluaciones."
+  },
+  {
+    "objectID": "diapositivas/modulo-4.html#section-2",
+    "href": "diapositivas/modulo-4.html#section-2",
+    "title": "Visualización de datos en R",
+    "section": "",
+    "text": "¡Gracias!\n\n\n\n\n\n\n\nCréditos de fotos\n\n\nPortada por Florian Klauer en Unsplash\nFoto final por Julian Rösner en Unsplash\nResto de fotos: varias fuentes"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#section",
+    "href": "diapositivas/modulo-2.html#section",
+    "title": "Visualización de datos en R",
+    "section": "",
+    "text": "Módulo 2: Introducción al {tidyverse} y a {ggplot2}\n\nMauricio Moreno, PhD\nsábado 21 de noviembre de 2026"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#hoy",
+    "href": "diapositivas/modulo-2.html#hoy",
+    "title": "Visualización de datos en R",
+    "section": "Hoy",
+    "text": "Hoy\n\nEl {tidyverse} y el operador de cascada\nTipos de tablas: tibble y datos ordenados\nOperaciones con tablas en {dplyr}\nIntroducción a {ggplot2}: función de inicio, geometrías, estéticas y capas"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#qué-es-el-tidyverse",
+    "href": "diapositivas/modulo-2.html#qué-es-el-tidyverse",
+    "title": "Visualización de datos en R",
+    "section": "¿Qué es el {tidyverse}?",
+    "text": "¿Qué es el {tidyverse}?\n\n\n\n\n\n\n\n\n\nUna colección de paquetes que comparten una misma forma de trabajar con datos.\n{readr} importa, {tidyr} ordena, {dplyr} transforma, {ggplot2} grafica.\nLas funciones tienen nombres de verbos: filter(), select(), mutate(), summarise().\nTodas reciben una tabla como primer argumento y devuelven una tabla.\n\n\n\n\nlibrary(tidyverse)"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#los-datos-de-hoy",
+    "href": "diapositivas/modulo-2.html#los-datos-de-hoy",
+    "title": "Visualización de datos en R",
+    "section": "Los datos de hoy",
+    "text": "Los datos de hoy\n\n\nMostrar el código\npinguinos &lt;- read_csv(\"datos/pinguinos.csv\")\npinguinos\n\n\n# A tibble: 344 × 8\n   species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g\n   &lt;chr&gt;   &lt;chr&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;\n 1 Adelie  Torgersen           39.1          18.7               181        3750\n 2 Adelie  Torgersen           39.5          17.4               186        3800\n 3 Adelie  Torgersen           40.3          18                 195        3250\n 4 Adelie  Torgersen           NA            NA                  NA          NA\n 5 Adelie  Torgersen           36.7          19.3               193        3450\n 6 Adelie  Torgersen           39.3          20.6               190        3650\n 7 Adelie  Torgersen           38.9          17.8               181        3625\n 8 Adelie  Torgersen           39.2          19.6               195        4675\n 9 Adelie  Torgersen           34.1          18.1               193        3475\n10 Adelie  Torgersen           42            20.2               190        4250\n# ℹ 334 more rows\n# ℹ 2 more variables: sex &lt;chr&gt;, year &lt;dbl&gt;\n\n\nread_csv() (con guion bajo, de {readr}) devuelve un tibble."
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#tibbles",
+    "href": "diapositivas/modulo-2.html#tibbles",
+    "title": "Visualización de datos en R",
+    "section": "Tibbles",
+    "text": "Tibbles\n\nUn tibble es un data.frame moderno: se imprime mejor (solo las primeras filas y el tipo de cada columna) y nunca cambia los nombres de las columnas.\nTodo lo que funciona con un data.frame funciona con un tibble.\nPara convertir: as_tibble(tabla) y as.data.frame(tabla)."
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#el-operador-de-cascada",
+    "href": "diapositivas/modulo-2.html#el-operador-de-cascada",
+    "title": "Visualización de datos en R",
+    "section": "El operador de cascada",
+    "text": "El operador de cascada\nSin el operador, leemos de adentro hacia afuera:\n\nround(mean(pinguinos$body_mass_g, na.rm = TRUE), 1)\n\n[1] 4201.8\n\n\n\nCon |&gt;, leemos de izquierda a derecha, como una receta: “toma esto, y luego haz aquello”.\n\npinguinos$body_mass_g |&gt;\n  mean(na.rm = TRUE) |&gt;\n  round(1)\n\n[1] 4201.8\n\n\n\n\n\n\n\n\n\n\nx |&gt; f(y) es lo mismo que f(x, y). En RStudio: Ctrl + Shift + M. También verás %&gt;%, la versión de {magrittr}; para este curso funcionan igual."
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#datos-ordenados-tidy-data",
+    "href": "diapositivas/modulo-2.html#datos-ordenados-tidy-data",
+    "title": "Visualización de datos en R",
+    "section": "Datos ordenados (tidy data)",
+    "text": "Datos ordenados (tidy data)\n\n\n\n\n\n\n\n\n\nCada variable es una columna.\nCada observación es una fila.\nCada valor está en su propia celda.\n\n. . .\n{ggplot2} y {dplyr} esperan datos ordenados."
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#formato-ancho-y-formato-largo",
+    "href": "diapositivas/modulo-2.html#formato-ancho-y-formato-largo",
+    "title": "Visualización de datos en R",
+    "section": "Formato ancho y formato largo",
+    "text": "Formato ancho y formato largo\n\nancho &lt;- tibble(especie = c(\"Adelie\", \"Gentoo\"),\n                `2007` = c(3700, 5070), `2008` = c(3740, 5020), `2009` = c(3670, 5140))\nancho\n\n# A tibble: 2 × 4\n  especie `2007` `2008` `2009`\n  &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;\n1 Adelie    3700   3740   3670\n2 Gentoo    5070   5020   5140\n\n\n\n\nlargo &lt;- ancho |&gt;\n  pivot_longer(cols = c(`2007`, `2008`, `2009`), names_to = \"año\", values_to = \"masa_g\")\nlargo\n\n# A tibble: 6 × 3\n  especie año   masa_g\n  &lt;chr&gt;   &lt;chr&gt;  &lt;dbl&gt;\n1 Adelie  2007    3700\n2 Adelie  2008    3740\n3 Adelie  2009    3670\n4 Gentoo  2007    5070\n5 Gentoo  2008    5020\n6 Gentoo  2009    5140\n\n\npivot_wider() hace el camino inverso."
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#filtrar-filas-filter",
+    "href": "diapositivas/modulo-2.html#filtrar-filas-filter",
+    "title": "Visualización de datos en R",
+    "section": "Filtrar filas: filter()",
+    "text": "Filtrar filas: filter()\n\npinguinos |&gt;\n  filter(species == \"Gentoo\", body_mass_g &gt; 5500)\n\n# A tibble: 28 × 8\n   species island bill_length_mm bill_depth_mm flipper_length_mm body_mass_g\n   &lt;chr&gt;   &lt;chr&gt;           &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;\n 1 Gentoo  Biscoe           50            16.3               230        5700\n 2 Gentoo  Biscoe           50            15.2               218        5700\n 3 Gentoo  Biscoe           49            16.1               216        5550\n 4 Gentoo  Biscoe           48.4          14.6               213        5850\n 5 Gentoo  Biscoe           49.3          15.7               217        5850\n 6 Gentoo  Biscoe           49.2          15.2               221        6300\n 7 Gentoo  Biscoe           50.2          14.3               218        5700\n 8 Gentoo  Biscoe           47.8          15                 215        5650\n 9 Gentoo  Biscoe           50            15.3               220        5550\n10 Gentoo  Biscoe           59.6          17                 230        6050\n# ℹ 18 more rows\n# ℹ 2 more variables: sex &lt;chr&gt;, year &lt;dbl&gt;\n\n\n\nCondiciones: ==, !=, &gt;, &lt;, %in%, y !is.na(x) para descartar faltantes. Varias condiciones separadas por coma se cumplen a la vez."
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#seleccionar-y-ordenar-select-y-arrange",
+    "href": "diapositivas/modulo-2.html#seleccionar-y-ordenar-select-y-arrange",
+    "title": "Visualización de datos en R",
+    "section": "Seleccionar y ordenar: select() y arrange()",
+    "text": "Seleccionar y ordenar: select() y arrange()\n\npinguinos |&gt;\n  select(species, island, body_mass_g) |&gt;\n  arrange(desc(body_mass_g))\n\n# A tibble: 344 × 3\n   species island body_mass_g\n   &lt;chr&gt;   &lt;chr&gt;        &lt;dbl&gt;\n 1 Gentoo  Biscoe        6300\n 2 Gentoo  Biscoe        6050\n 3 Gentoo  Biscoe        6000\n 4 Gentoo  Biscoe        6000\n 5 Gentoo  Biscoe        5950\n 6 Gentoo  Biscoe        5950\n 7 Gentoo  Biscoe        5850\n 8 Gentoo  Biscoe        5850\n 9 Gentoo  Biscoe        5850\n10 Gentoo  Biscoe        5800\n# ℹ 334 more rows"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#crear-columnas-mutate",
+    "href": "diapositivas/modulo-2.html#crear-columnas-mutate",
+    "title": "Visualización de datos en R",
+    "section": "Crear columnas: mutate()",
+    "text": "Crear columnas: mutate()\n\npinguinos |&gt;\n  mutate(masa_kg = body_mass_g / 1000,\n         pico_relativo = bill_length_mm / bill_depth_mm) |&gt;\n  select(species, masa_kg, pico_relativo)\n\n# A tibble: 344 × 3\n   species masa_kg pico_relativo\n   &lt;chr&gt;     &lt;dbl&gt;         &lt;dbl&gt;\n 1 Adelie     3.75          2.09\n 2 Adelie     3.8           2.27\n 3 Adelie     3.25          2.24\n 4 Adelie    NA            NA   \n 5 Adelie     3.45          1.90\n 6 Adelie     3.65          1.91\n 7 Adelie     3.62          2.19\n 8 Adelie     4.68          2   \n 9 Adelie     3.48          1.88\n10 Adelie     4.25          2.08\n# ℹ 334 more rows"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#resumir-por-grupos-group_by-y-summarise",
+    "href": "diapositivas/modulo-2.html#resumir-por-grupos-group_by-y-summarise",
+    "title": "Visualización de datos en R",
+    "section": "Resumir por grupos: group_by() y summarise()",
+    "text": "Resumir por grupos: group_by() y summarise()\n\npinguinos |&gt;\n  filter(!is.na(body_mass_g)) |&gt;\n  group_by(species) |&gt;\n  summarise(n = n(),\n            masa_media = mean(body_mass_g),\n            masa_de = sd(body_mass_g))\n\n# A tibble: 3 × 4\n  species       n masa_media masa_de\n  &lt;chr&gt;     &lt;int&gt;      &lt;dbl&gt;   &lt;dbl&gt;\n1 Adelie      151      3701.    459.\n2 Chinstrap    68      3733.    384.\n3 Gentoo      123      5076.    504.\n\n\n\ncount(species, island) es un atajo para contar combinaciones."
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#section-1",
+    "href": "diapositivas/modulo-2.html#section-1",
+    "title": "Visualización de datos en R",
+    "section": "",
+    "text": "Ejercicios, Partes 1 y 2"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#qué-observas",
+    "href": "diapositivas/modulo-2.html#qué-observas",
+    "title": "Visualización de datos en R",
+    "section": "¿Qué observas?",
+    "text": "¿Qué observas?\n\n¿Qué relación ves? ¿Qué información falta en este gráfico?"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#la-gramática-de-los-gráficos",
+    "href": "diapositivas/modulo-2.html#la-gramática-de-los-gráficos",
+    "title": "Visualización de datos en R",
+    "section": "La gramática de los gráficos",
+    "text": "La gramática de los gráficos\n\n\n\n\n\n\n\n\n\nDatos: la tabla.\nEstéticas (aes()): qué variable va en el eje x, en el eje y, en el color…\nGeometrías (geom_*()): cómo se dibujan los datos (puntos, barras, cajas…).\nCapas: se suman con +."
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#función-de-inicio",
+    "href": "diapositivas/modulo-2.html#función-de-inicio",
+    "title": "Visualización de datos en R",
+    "section": "Función de inicio",
+    "text": "Función de inicio\n\nggplot(data = pinguinos, mapping = aes(x = flipper_length_mm, y = body_mass_g))\n\n\nggplot() prepara el lienzo y los ejes, pero todavía no dibuja nada."
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#geometrías",
+    "href": "diapositivas/modulo-2.html#geometrías",
+    "title": "Visualización de datos en R",
+    "section": "Geometrías",
+    "text": "Geometrías\n\nggplot(pinguinos, aes(x = flipper_length_mm, y = body_mass_g)) +\n  geom_point()\n\n\n\nOtras: geom_histogram(), geom_boxplot(), geom_bar(), geom_line(), geom_smooth()…"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#mapeo-estético",
+    "href": "diapositivas/modulo-2.html#mapeo-estético",
+    "title": "Visualización de datos en R",
+    "section": "Mapeo estético",
+    "text": "Mapeo estético\n\nggplot(pinguinos, aes(x = flipper_length_mm, y = body_mass_g, color = species)) +\n  geom_point()\n\n\nDentro de aes(), color = species mapea una variable a un color, y {ggplot2} agrega la leyenda."
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#dentro-o-fuera-de-aes",
+    "href": "diapositivas/modulo-2.html#dentro-o-fuera-de-aes",
+    "title": "Visualización de datos en R",
+    "section": "Dentro o fuera de aes()",
+    "text": "Dentro o fuera de aes()\n\n\n\nggplot(pinguinos, aes(x = flipper_length_mm,\n                      y = body_mass_g)) +\n  geom_point(color = \"steelblue\", size = 2)\n\n\n\n\n\n\n\n\n\n\nDentro de aes(): el color depende de una variable.\nFuera de aes(), en la geometría: un valor fijo para todos los puntos.\nEstéticas comunes: color, fill, size, shape, alpha."
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#capas",
+    "href": "diapositivas/modulo-2.html#capas",
+    "title": "Visualización de datos en R",
+    "section": "Capas",
+    "text": "Capas\n\nggplot(pinguinos, aes(x = flipper_length_mm, y = body_mass_g, color = species)) +\n  geom_point(alpha = 0.6) +\n  geom_smooth(method = \"lm\", se = FALSE)\n\n\nCada + agrega una capa. Las estéticas de ggplot() las heredan todas las capas."
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#otras-geometrías",
+    "href": "diapositivas/modulo-2.html#otras-geometrías",
+    "title": "Visualización de datos en R",
+    "section": "Otras geometrías",
+    "text": "Otras geometrías\n\n\n\nggplot(pinguinos, aes(x = body_mass_g)) +\n  geom_histogram(binwidth = 250)\n\n\n\n\n\n\n\n\n\n\nggplot(pinguinos, aes(x = species, y = body_mass_g)) +\n  geom_boxplot()\n\n\n\n\n\n\n\n\n\n{ggplot2} avisa cuando descarta filas con NA; aquí, las dos sin masa."
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#section-2",
+    "href": "diapositivas/modulo-2.html#section-2",
+    "title": "Visualización de datos en R",
+    "section": "",
+    "text": "Ejercicios, Parte 3"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#antes-de-la-próxima-sesión",
+    "href": "diapositivas/modulo-2.html#antes-de-la-próxima-sesión",
+    "title": "Visualización de datos en R",
+    "section": "Antes de la próxima sesión",
+    "text": "Antes de la próxima sesión\n\nCompleta todos los ejercicios del Módulo 2: lo que no alcanzamos en clase, incluida la Parte 4, es tarea.\nCon tus propios datos, escribe una cadena de {dplyr} que resuma una variable por grupo, y haz un gráfico de dispersión.\nHaz la autoevaluación del Módulo 2."
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#section-3",
+    "href": "diapositivas/modulo-2.html#section-3",
+    "title": "Visualización de datos en R",
+    "section": "",
+    "text": "Fin del módulo 2\n\n\n\n\n\n\n\nCréditos\n\n\nDatos: Gorman KB, Williams TD, Fraser WR (2014), PLoS ONE 9(3): e90081, distribuidos en el paquete {palmerpenguins} (CC0).\nFoto final por Alison Pang en Unsplash\nResto de fotos: varias fuentes"
+  },
+  {
+    "objectID": "acerca.html",
+    "href": "acerca.html",
+    "title": "Acerca de",
+    "section": "",
+    "text": "Mauricio Moreno, PhD\nIngeniero en Biotecnología (Universidad de las Fuerzas Armadas ESPE), con un máster en Estadística con mención en Biometría (KU Leuven, Bélgica) y un doctorado en Bioinformática (Jacobs University Bremen, Alemania). Tiene más de quince años de experiencia en programación estadística en R.\nHa trabajado como consultor independiente, profesor, analista de estadísticas ambientales e investigador postdoctoral. Actualmente es Científico Bioestadístico en la función de Soluciones de Campo en Bayer Crop Science, Alemania, donde lidera proyectos de investigación y desarrollo, incluida la migración de procesos estadísticos a la nube y la determinación de tamaños de muestra mediante simulaciones Montecarlo basadas en cadenas de Markov.\nEn su tiempo libre imparte cursos gratuitos de estadística en línea. El más reciente, Bioestadística en R (2025), fue un taller de 40 horas para estudiantes e investigadores de biología y agricultura."
+  },
+  {
+    "objectID": "acerca.html#sobre-el-instructor",
+    "href": "acerca.html#sobre-el-instructor",
+    "title": "Acerca de",
+    "section": "",
+    "text": "Mauricio Moreno, PhD\nIngeniero en Biotecnología (Universidad de las Fuerzas Armadas ESPE), con un máster en Estadística con mención en Biometría (KU Leuven, Bélgica) y un doctorado en Bioinformática (Jacobs University Bremen, Alemania). Tiene más de quince años de experiencia en programación estadística en R.\nHa trabajado como consultor independiente, profesor, analista de estadísticas ambientales e investigador postdoctoral. Actualmente es Científico Bioestadístico en la función de Soluciones de Campo en Bayer Crop Science, Alemania, donde lidera proyectos de investigación y desarrollo, incluida la migración de procesos estadísticos a la nube y la determinación de tamaños de muestra mediante simulaciones Montecarlo basadas en cadenas de Markov.\nEn su tiempo libre imparte cursos gratuitos de estadística en línea. El más reciente, Bioestadística en R (2025), fue un taller de 40 horas para estudiantes e investigadores de biología y agricultura."
+  },
+  {
+    "objectID": "acerca.html#contacto",
+    "href": "acerca.html#contacto",
+    "title": "Acerca de",
+    "section": "Contacto",
+    "text": "Contacto\nPreguntas fuera de la hora de clase: mmorenozambrano@gmail.com"
+  },
+  {
+    "objectID": "acerca.html#sobre-este-sitio",
+    "href": "acerca.html#sobre-este-sitio",
+    "title": "Acerca de",
+    "section": "Sobre este sitio",
+    "text": "Sobre este sitio\nSitio construido con Quarto. Los ejercicios interactivos usan webR mediante la extensión quarto-live, que corre R directamente en el navegador."
+  },
+  {
+    "objectID": "autoevaluacion-4.html",
+    "href": "autoevaluacion-4.html",
+    "title": "Autoevaluación Módulo 4",
+    "section": "",
+    "text": "Ocho preguntas cortas sobre el Módulo 4, dos por cada objetivo de la sesión. Tienes dos intentos por pregunta; después verás la respuesta y una explicación. Es anónima: no se guarda ni se envía nada."
+  },
+  {
+    "objectID": "autoevaluacion-4.html#objetivo-1-crear-y-renderizar",
+    "href": "autoevaluacion-4.html#objetivo-1-crear-y-renderizar",
+    "title": "Autoevaluación Módulo 4",
+    "section": "Objetivo 1: Crear y renderizar",
+    "text": "Objetivo 1: Crear y renderizar\n\n1. ¿Qué hace el botón Render** de RStudio en un documento .qmd?**\nGuarda el archivo\nEjecuta el código del documento y genera el reporte (html, Word, PDF…)\ncon el texto y los resultados\nInstala Quarto\nCorre solo la línea actualComprobar respuesta\n\n\nAl renderizar, Quarto ejecuta todos los fragmentos en una sesión nueva de R y reúne texto, código y resultados en el formato de salida.\n\n\n\n\n2. Tu documento se renderiza bien en tu computador, pero un colega recibe el error object 'pinguinos' not found. ¿Causa más probable?\nSu versión de R es distinta\nCreaste pinguinos en la consola, no en un fragmento del\ndocumento: al renderizar, el documento empieza en una sesión vacía\nQuarto no funciona en su sistema operativo\nEl archivo es demasiado grandeComprobar respuesta\n\n\nUn documento de Quarto debe ser autosuficiente: todo lo que usa, incluido importar los datos y cargar paquetes, tiene que estar en sus fragmentos."
+  },
+  {
+    "objectID": "autoevaluacion-4.html#objetivo-2-encabezado-markdown-y-fragmentos",
+    "href": "autoevaluacion-4.html#objetivo-2-encabezado-markdown-y-fragmentos",
+    "title": "Autoevaluación Módulo 4",
+    "section": "Objetivo 2: Encabezado, Markdown y fragmentos",
+    "text": "Objetivo 2: Encabezado, Markdown y fragmentos\n\n3. ¿Qué opción de fragmento muestra el resultado pero no** el código?**\neval: false\necho: false\ninclude: false\nmessage: falseComprobar respuesta\n\n\necho: false oculta el código y deja el resultado. eval: false muestra el código sin ejecutarlo; include: false lo ejecuta sin mostrar nada; message: false oculta solo los mensajes.\n\n\n\n\n4. ¿Dónde se ponen las opciones que valen para todos** los fragmentos?**\nEn el primer fragmento\nEn el encabezado YAML, bajo execute:\nAl final del documento\nEn cada línea de códigoComprobar respuesta\n\n\nexecute: en el encabezado define opciones globales, como echo: false. Cada fragmento puede cambiarlas para sí mismo con #|."
+  },
+  {
+    "objectID": "autoevaluacion-4.html#objetivo-3-figuras-y-tablas",
+    "href": "autoevaluacion-4.html#objetivo-3-figuras-y-tablas",
+    "title": "Autoevaluación Módulo 4",
+    "section": "Objetivo 3: Figuras y tablas",
+    "text": "Objetivo 3: Figuras y tablas\n\n5. Quieres citar una figura en el texto como “Figura 1”. ¿Qué etiqueta le das al fragmento?\n#| label: figura1\n#| label: fig-masa, y en el texto @fig-masa\n#| fig-cap: 1\nNo se puede en QuartoComprobar respuesta\n\n\nLas etiquetas que empiezan con fig- (figuras) o tbl- (tablas) se numeran solas, y @etiqueta las cita con un enlace.\n\n\n\n\n6. ¿Qué hace knitr::kable() al final de una cadena de {dplyr}?\nExporta la tabla a Excel\nConvierte la tabla de datos en una tabla con formato dentro del\ndocumento\nHace un gráfico\nOrdena la tablaComprobar respuesta\n\n\nkable() da formato a la tabla para el documento (html, Word o PDF). digits controla los decimales."
+  },
+  {
+    "objectID": "autoevaluacion-4.html#objetivo-4-formatos-de-salida",
+    "href": "autoevaluacion-4.html#objetivo-4-formatos-de-salida",
+    "title": "Autoevaluación Módulo 4",
+    "section": "Objetivo 4: Formatos de salida",
+    "text": "Objetivo 4: Formatos de salida\n\n7. Un mismo .qmd, ¿puede producir html, Word y PDF?\nNo, hace falta un archivo por formato\nSí: se listan los formatos bajo format: en el encabezado\nSolo html y PDF\nSolo si no tiene códigoComprobar respuesta\n\n\nEl mismo contenido se renderiza en varios formatos. Algunas opciones son propias de cada uno (por ejemplo, code-fold solo existe en html).\n\n\n\n\n8. Al renderizar a PDF aparece un error sobre LaTeX. ¿Qué haces?\nCambiar a otro programa\nInstalar TinyTeX con tinytex::install_tinytex() y volver a\nrenderizar\nBorrar las figuras\nUsar solo html para siempreComprobar respuesta\n\n\nQuarto usa LaTeX para crear PDF. TinyTeX es una instalación pequeña de LaTeX pensada para esto.\n\n\n\n¿Fallaste alguna? Vuelve a la parte correspondiente de las diapositivas o de los ejercicios. Cuando estés listo, haz el examen, disponible a partir del 6 de diciembre de 2026."
+  },
+  {
+    "objectID": "autoevaluacion-2.html",
+    "href": "autoevaluacion-2.html",
+    "title": "Autoevaluación Módulo 2",
+    "section": "",
+    "text": "Ocho preguntas cortas sobre el Módulo 2, dos por cada objetivo de la sesión. Tienes dos intentos por pregunta; después verás la respuesta y una explicación. Es anónima: no se guarda ni se envía nada."
+  },
+  {
+    "objectID": "autoevaluacion-2.html#objetivo-1-el-operador-de-cascada",
+    "href": "autoevaluacion-2.html#objetivo-1-el-operador-de-cascada",
+    "title": "Autoevaluación Módulo 2",
+    "section": "Objetivo 1: El operador de cascada",
+    "text": "Objetivo 1: El operador de cascada\n\n1. ¿Qué es equivalente a pinguinos |&gt; filter(species == \"Gentoo\")?\nfilter(species == \"Gentoo\", pinguinos)\nfilter(pinguinos, species == \"Gentoo\")\npinguinos(filter(species == \"Gentoo\"))\nspecies == \"Gentoo\" |&gt; filter(pinguinos)Comprobar respuesta\n\n\nx |&gt; f(y) es f(x, y): lo de la izquierda entra como primer argumento. Por eso las funciones del {tidyverse} reciben la tabla primero.\n\n\n\n\n2. ¿Cómo se lee pinguinos |&gt; group_by(species) |&gt; summarise(n = n())?\nResume y luego agrupa\nToma los pingüinos, y luego agrúpalos por especie, y luego cuenta\ncuántos hay en cada grupo\nCuenta las especies y luego toma los pingüinos\nEs un error: no se pueden encadenar tres funcionesComprobar respuesta\n\n\nCada |&gt; se lee como “y luego”. Se pueden encadenar tantos pasos como haga falta; conviene poner uno por línea."
+  },
+  {
+    "objectID": "autoevaluacion-2.html#objetivo-2-tibbles-y-datos-ordenados",
+    "href": "autoevaluacion-2.html#objetivo-2-tibbles-y-datos-ordenados",
+    "title": "Autoevaluación Módulo 2",
+    "section": "Objetivo 2: Tibbles y datos ordenados",
+    "text": "Objetivo 2: Tibbles y datos ordenados\n\n3. Una tabla tiene las columnas especie, 2007, 2008, 2009, con la masa media de cada año. ¿Está ordenada (tidy)?\nSí, porque cada fila es una especie\nNo: el año es una variable repartida en tres columnas; en formato largo\nserían especie, año y masa\nSí, porque no hay valores faltantes\nNo, porque tiene númerosComprobar respuesta\n\n\nEn datos ordenados, cada variable es una columna. Aquí el año está en los nombres de las columnas. pivot_longer() la ordena.\n\n\n\n\n4. ¿Qué diferencia hay entre un tibble y un data.frame?\nSon incompatibles: hay que convertirlos para usar {dplyr}\nUn tibble es un data.frame moderno: se imprime mejor y no\ncambia los nombres de las columnas\nUn tibble no admite columnas de texto\nUn tibble solo funciona con {ggplot2}Comprobar respuesta\n\n\nUn tibble es un data.frame (tiene esa clase), con mejoras para trabajar cómodamente. Todo lo que funciona con uno funciona con el otro."
+  },
+  {
+    "objectID": "autoevaluacion-2.html#objetivo-3-operaciones-con-dplyr",
+    "href": "autoevaluacion-2.html#objetivo-3-operaciones-con-dplyr",
+    "title": "Autoevaluación Módulo 2",
+    "section": "Objetivo 3: Operaciones con {dplyr}",
+    "text": "Objetivo 3: Operaciones con {dplyr}\n\n5. Quieres quedarte con las columnas species y body_mass_g. ¿Qué función usas?\nfilter()\nselect()\nmutate()\narrange()Comprobar respuesta\n\n\nselect() elige columnas; filter() elige filas; mutate() crea columnas; arrange() ordena filas.\n\n\n\n\n6. ¿Qué devuelve pinguinos |&gt; group_by(species) |&gt; summarise(media = mean(body_mass_g))?\nLa masa media de cada especie, sin problemas\nUna tabla con una fila por especie, donde las medias de Adelie y Gentoo\nson NA\nUn error\nUna sola media para todosComprobar respuesta\n\n\nAdelie y Gentoo tienen un valor faltante cada uno, así que su media es NA. Falta na.rm = TRUE dentro de mean(), o filtrar antes con filter(!is.na(body_mass_g))."
+  },
+  {
+    "objectID": "autoevaluacion-2.html#objetivo-4-la-gramática-de-ggplot2",
+    "href": "autoevaluacion-2.html#objetivo-4-la-gramática-de-ggplot2",
+    "title": "Autoevaluación Módulo 2",
+    "section": "Objetivo 4: La gramática de {ggplot2}",
+    "text": "Objetivo 4: La gramática de {ggplot2}\n\n7. ¿Qué hace ggplot(pinguinos, aes(x = flipper_length_mm, y = body_mass_g)) sin nada más?\nUn gráfico de dispersión\nPrepara el lienzo y los ejes, pero no dibuja datos: falta una geometría\nUn error\nUn histogramaComprobar respuesta\n\n\nggplot() define los datos y el mapeo. Los datos se dibujan al sumar una geometría con +, por ejemplo + geom_point().\n\n\n\n\n8. Quieres que el color de los puntos dependa de la especie. ¿Dónde va color = species?\nFuera de aes(), en geom_point(color = species)\nDentro de aes()\nEn labs()\nEn theme()Comprobar respuesta\n\n\nLo que depende de una variable va dentro de aes(). Un valor fijo, como color = \"blue\", va fuera de aes(), en la geometría.\n\n\n\n¿Fallaste alguna? Vuelve a la parte correspondiente de las diapositivas o de los ejercicios."
+  },
+  {
+    "objectID": "ejercicios-4.html",
+    "href": "ejercicios-4.html",
+    "title": "Ejercicios Módulo 4",
+    "section": "",
+    "text": "Estos ejercicios siguen el Módulo 4. Todos se hacen en RStudio: vas a construir, paso a paso, un reporte de Quarto sobre los pingüinos. Copia cada fragmento en tu documento, completa los ____ y presiona Render. ¿Te atascaste? Abre la pestaña Pista. Las soluciones se publican después de la sesión."
+  },
+  {
+    "objectID": "ejercicios-4.html#parte-1",
+    "href": "ejercicios-4.html#parte-1",
+    "title": "Ejercicios Módulo 4",
+    "section": "Parte 1: Un documento de Quarto",
+    "text": "Parte 1: Un documento de Quarto\n\nEjercicio 1.1: Crear y renderizar\nCrea un proyecto de Quarto (File → New Project… → New Directory → Quarto Project), abre el documento de ejemplo y presiona Render. Luego crea un documento nuevo llamado reporte.qmd y deja solo el encabezado.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\nEste ejercicio se hace en RStudio, en tu proyecto del curso: copia el código, complétalo y córrelo (o renderiza el documento).\n\n\n\n---\ntitle: \"____\"\nformat: html\n---\n\n\nSi Render no funciona, revisa que RStudio esté actualizado (Help → Check for Updates). El documento debe guardarse antes de renderizar.\n\n\n\nLa solución se publicará después de la sesión (sábado 5 de diciembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 1.2: El encabezado YAML\nCompleta el encabezado con título, autor, fecha de hoy y formato html con tabla de contenidos.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\nEste ejercicio se hace en RStudio, en tu proyecto del curso: copia el código, complétalo y córrelo (o renderiza el documento).\n\n\n\n---\ntitle: \"Pingüinos del archipiélago Palmer\"\nauthor: \"____\"\ndate: today\nformat:\n  html:\n    toc: ____\n---\n\n\ndate: today pone la fecha del día en que renderizas. Las opciones de un formato van con sangría, debajo de su nombre. En YAML, la sangría importa: usa espacios, no tabulaciones.\n\n\n\nLa solución se publicará después de la sesión (sábado 5 de diciembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 1.3: Texto en Markdown\nDebajo del encabezado, escribe una sección Introducción con un párrafo que tenga una palabra en negrita, una en cursiva, una lista de las tres especies y un enlace a la página del paquete {palmerpenguins}.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\nEste ejercicio se hace en RStudio, en tu proyecto del curso: copia el código, complétalo y córrelo (o renderiza el documento).\n\n\n\n## ____\n\nAnalizamos la **masa corporal** de tres especies de *pingüinos* del archipiélago Palmer:\n\n- Adelie\n- ____\n- Gentoo\n\nLos datos vienen del paquete [palmerpenguins](____).\n\n\n## es un título de segundo nivel; **texto**, negrita; *texto*, cursiva; -, una lista; [texto](url), un enlace. La URL es https://allisonhorst.github.io/palmerpenguins/.\n\n\n\nLa solución se publicará después de la sesión (sábado 5 de diciembre de 2026). Mientras tanto, usa la pestaña Pista."
+  },
+  {
+    "objectID": "ejercicios-4.html#parte-2",
+    "href": "ejercicios-4.html#parte-2",
+    "title": "Ejercicios Módulo 4",
+    "section": "Parte 2: Fragmentos de código",
+    "text": "Parte 2: Fragmentos de código\n\nEjercicio 2.1: Importar los datos\nAgrega un fragmento de código con la etiqueta importar que cargue el {tidyverse} e importe los datos, sin mostrar los mensajes de carga.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\nEste ejercicio se hace en RStudio, en tu proyecto del curso: copia el código, complétalo y córrelo (o renderiza el documento).\n\n\n\n```{r}\n#| label: ____\n#| message: ____\nlibrary(tidyverse)\npinguinos &lt;- read_csv(\"datos/pinguinos.csv\")\n```\n\n\nLas opciones de un fragmento van al inicio, en líneas que empiezan con #|. message: false oculta los mensajes de library() y read_csv(). En RStudio, Ctrl + Alt + I inserta un fragmento nuevo.\n\n\n\nLa solución se publicará después de la sesión (sábado 5 de diciembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 2.2: Mostrar resultados sin el código\nPara un reporte dirigido a otras personas, oculta el código de todo el documento con una opción global, y las advertencias también.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\nEste ejercicio se hace en RStudio, en tu proyecto del curso: copia el código, complétalo y córrelo (o renderiza el documento).\n\n\n\n---\ntitle: \"Pingüinos del archipiélago Palmer\"\nauthor: \"Tu nombre\"\ndate: today\nformat:\n  html:\n    toc: true\nexecute:\n  echo: ____\n  warning: ____\n---\n\n\nexecute: en el encabezado aplica las opciones a todos los fragmentos. Un fragmento puede cambiarlas para sí mismo con su propio #| echo: true.\n\n\n\nLa solución se publicará después de la sesión (sábado 5 de diciembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 2.3: Código en línea\nEscribe una frase que diga cuántos pingüinos hay y cuál es su masa media, con los números calculados por R dentro del texto.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\nEste ejercicio se hace en RStudio, en tu proyecto del curso: copia el código, complétalo y córrelo (o renderiza el documento).\n\n\n\nAnalizamos `r nrow(____)` pingüinos, con una masa media de\n`r round(mean(pinguinos$body_mass_g, na.rm = ____))` g.\n\n\n`r expresión` dentro del texto ejecuta la expresión y escribe el resultado. Si cambian los datos, la frase se actualiza sola al renderizar.\n\n\n\nLa solución se publicará después de la sesión (sábado 5 de diciembre de 2026). Mientras tanto, usa la pestaña Pista."
+  },
+  {
+    "objectID": "ejercicios-4.html#parte-3",
+    "href": "ejercicios-4.html#parte-3",
+    "title": "Ejercicios Módulo 4",
+    "section": "Parte 3: Figuras, tablas y formatos",
+    "text": "Parte 3: Figuras, tablas y formatos\n\nEjercicio 3.1: Una figura numerada\nAgrega una sección Resultados con un diagrama de caja de la masa por especie. Dale una etiqueta que empiece con fig-, un título y un tamaño, y cítala en el texto.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\nEste ejercicio se hace en RStudio, en tu proyecto del curso: copia el código, complétalo y córrelo (o renderiza el documento).\n\n\n\n## Resultados\n\n```{r}\n#| label: fig-____\n#| fig-cap: \"____\"\n#| fig-width: 6\n#| fig-height: 4\nggplot(pinguinos, aes(x = species, y = body_mass_g)) +\n  geom_boxplot() +\n  labs(x = \"Especie\", y = \"Masa corporal (g)\")\n```\n\nComo muestra la @fig-____, los Gentoo son los más pesados.\n\n\nUna etiqueta que empieza con fig- numera la figura (“Figura 1”) y permite citarla con @ y la etiqueta.\n\n\n\nLa solución se publicará después de la sesión (sábado 5 de diciembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 3.2: Una tabla numerada\nAgrega una tabla con el número de pingüinos y la masa media por especie, con título, y cítala en el texto.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\nEste ejercicio se hace en RStudio, en tu proyecto del curso: copia el código, complétalo y córrelo (o renderiza el documento).\n\n\n\n```{r}\n#| label: tbl-____\n#| tbl-cap: \"Número de pingüinos y masa media por especie.\"\npinguinos |&gt;\n  group_by(species) |&gt;\n  summarise(n = n(), masa_media_g = mean(body_mass_g, na.rm = TRUE)) |&gt;\n  knitr::____(digits = 0)\n```\n\nLa @tbl-____ resume los datos de cada especie.\n\n\nknitr::kable() convierte una tabla de datos en una tabla con formato. Las etiquetas de tablas empiezan con tbl-.\n\n\n\nLa solución se publicará después de la sesión (sábado 5 de diciembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 3.3: Word y PDF\nCambia el encabezado para que el mismo documento se renderice también en Word y en PDF. Renderiza los tres formatos.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\nEste ejercicio se hace en RStudio, en tu proyecto del curso: copia el código, complétalo y córrelo (o renderiza el documento).\n\n\n\nformat:\n  html:\n    toc: true\n  ____: default\n  pdf: ____\n\n\nCada formato es una entrada bajo format:; default usa las opciones por defecto. En RStudio, la flecha junto a Render elige el formato; quarto render reporte.qmd en la Terminal los genera todos. PDF necesita TinyTeX.\n\n\n\nLa solución se publicará después de la sesión (sábado 5 de diciembre de 2026). Mientras tanto, usa la pestaña Pista."
+  },
+  {
+    "objectID": "ejercicios-4.html#parte-4",
+    "href": "ejercicios-4.html#parte-4",
+    "title": "Ejercicios Módulo 4",
+    "section": "Parte 4: Más práctica",
+    "text": "Parte 4: Más práctica\n\nEjercicio 4.1: Secciones numeradas\nNumera las secciones del reporte y agrega una sección Conclusiones con dos frases.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\nEste ejercicio se hace en RStudio, en tu proyecto del curso: copia el código, complétalo y córrelo (o renderiza el documento).\n\n\n\nformat:\n  html:\n    toc: true\n    number-sections: ____\n\n...\n\n## ____\n\nLos Gentoo pesan unos 1300 g más que Adelie y Chinstrap. En las tres especies, los machos son más pesados que las hembras.\n\n\nnumber-sections: true numera los títulos (1, 1.1, …). Funciona en html, Word y PDF.\n\n\n\nLa solución se publicará después de la sesión (sábado 5 de diciembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 4.2: Una imagen guardada\nInserta en la introducción una imagen que tengas en la carpeta images/ de tu proyecto, al 40% del ancho, con un título.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\nEste ejercicio se hace en RStudio, en tu proyecto del curso: copia el código, complétalo y córrelo (o renderiza el documento).\n\n\n\n![Pingüinos Gentoo en la Antártida.](images/____.jpg){width=____}\n\n\nLa sintaxis es ![título](ruta){opciones}. La ruta es relativa al documento. width=40% controla el ancho.\n\n\n\nLa solución se publicará después de la sesión (sábado 5 de diciembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 4.3: Un recuadro destacado\nAgrega un recuadro de nota (callout) que explique de dónde vienen los datos.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\nEste ejercicio se hace en RStudio, en tu proyecto del curso: copia el código, complétalo y córrelo (o renderiza el documento).\n\n\n\n::: {.callout-____}\n## Sobre los datos\nDatos de Gorman, Williams y Fraser (2014), publicados en el paquete `{palmerpenguins}`.\n:::\n\n\nQuarto tiene cinco tipos de recuadros: note, tip, warning, important y caution.\n\n\n\nLa solución se publicará después de la sesión (sábado 5 de diciembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 4.4: Código plegable en html\nEn el formato html, muestra el código pero plegado, con un botón para desplegarlo.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\nEste ejercicio se hace en RStudio, en tu proyecto del curso: copia el código, complétalo y córrelo (o renderiza el documento).\n\n\n\nformat:\n  html:\n    toc: true\n    code-fold: ____\n    code-summary: \"____\"\nexecute:\n  echo: true\n\n\ncode-fold: true muestra el código plegado bajo un botón; code-summary cambia el texto del botón. Necesita echo: true: si el código no se muestra, no hay nada que plegar.\n\n\n\nLa solución se publicará después de la sesión (sábado 5 de diciembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 4.5: Un reporte con tus datos\nUsa tu reporte de los pingüinos como plantilla para un reporte con tus propios datos: introducción, una tabla, dos figuras numeradas y citadas, y conclusiones. Renderízalo en html y en Word.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\nEste ejercicio se hace en RStudio, en tu proyecto del curso: copia el código, complétalo y córrelo (o renderiza el documento).\n\n\n\n---\ntitle: \"____\"\nauthor: \"____\"\ndate: today\nformat:\n  html:\n    toc: true\n    number-sections: true\n  docx: default\nexecute:\n  echo: false\n  warning: false\n---\n\n## Introducción\n\n## Métodos\n\n## Resultados\n\n## Conclusiones\n\n\nEmpieza por copiar tu reporte de los pingüinos y cambiar los datos y las preguntas. Renderiza a menudo: es más fácil encontrar un error si cambiaste poco desde la última vez.\n\n\n\nLa solución se publicará después de la sesión (sábado 5 de diciembre de 2026). Mientras tanto, usa la pestaña Pista."
+  },
+  {
+    "objectID": "ejercicios-4.html#antes-del-examen",
+    "href": "ejercicios-4.html#antes-del-examen",
+    "title": "Ejercicios Módulo 4",
+    "section": "Antes del examen",
+    "text": "Antes del examen\nEl examen incluye un reporte corto de Quarto. Si completaste las partes 1 a 3, ya tienes todo lo necesario: encabezado, texto, fragmentos con opciones, una figura y una tabla numeradas, y el render a html."
+  },
+  {
+    "objectID": "ejercicios-2.html",
+    "href": "ejercicios-2.html",
+    "title": "Ejercicios Módulo 2",
+    "section": "",
+    "text": "Estos ejercicios siguen el Módulo 2. El código corre en tu navegador. Donde veas ____, complétalo y presiona Run Code. ¿Te atascaste? Abre la pestaña Pista. Las soluciones se publican después de la sesión."
+  },
+  {
+    "objectID": "ejercicios-2.html#parte-1",
+    "href": "ejercicios-2.html#parte-1",
+    "title": "Ejercicios Módulo 2",
+    "section": "Parte 1: El operador de cascada y los tipos de tablas",
+    "text": "Parte 1: El operador de cascada y los tipos de tablas\n\nEjercicio 1.1: Del anidado a la cascada\nReescribe round(sd(pinguinos$body_mass_g, na.rm = TRUE), 1) con el operador |&gt;, de modo que se lea de izquierda a derecha.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nx |&gt; f(y) es lo mismo que f(x, y): el resultado de la izquierda entra como primer argumento de la función de la derecha.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 21 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 1.2: Tibbles\nCompara cómo se imprime pinguinos (un tibble) con as.data.frame(pinguinos). ¿Qué clase tiene cada uno?\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nUn tibble se imprime con sus dimensiones, solo las primeras filas y el tipo de cada columna (&lt;chr&gt;, &lt;dbl&gt;, &lt;int&gt;).\n\n\n\n\nLa solución se publicará después de la sesión (sábado 21 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 1.3: De ancho a largo\nLa tabla picos tiene una columna por medida. Pásala a formato largo, con una columna medida y otra mm. ¿Cuántas filas tiene ahora?\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\ncols son las columnas que se van a apilar; names_to es el nombre de la nueva columna con sus nombres; values_to, el de la columna con sus valores.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 21 de noviembre de 2026). Mientras tanto, usa la pestaña Pista."
+  },
+  {
+    "objectID": "ejercicios-2.html#parte-2",
+    "href": "ejercicios-2.html#parte-2",
+    "title": "Ejercicios Módulo 2",
+    "section": "Parte 2: Operaciones con tablas en {dplyr}",
+    "text": "Parte 2: Operaciones con tablas en {dplyr}\n\nEjercicio 2.1: Filtrar filas\n¿Cuántos Chinstrap pesan más de 4000 g?\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nDentro de filter(), las condiciones separadas por coma deben cumplirse a la vez. filter() descarta solo las filas donde la condición es NA.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 21 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 2.2: Seleccionar y ordenar\nMuestra la especie, la isla, el sexo y la masa de los pingüinos, del más pesado al más liviano. ¿Cómo son los cuatro más pesados?\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\narrange() ordena de menor a mayor; para el orden inverso, envuelve la columna en desc().\n\n\n\n\nLa solución se publicará después de la sesión (sábado 21 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 2.3: Crear columnas\nCrea la columna masa_kg y calcula la masa media en kilogramos de los Gentoo.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nmutate() crea (o modifica) columnas usando las que ya existen. summarise() reduce la tabla a una fila de resumen.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 21 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 2.4: Resumir por grupos\nPara cada especie, calcula el número de pingüinos y el largo medio de la aleta. ¿Qué especie tiene las aletas más largas?\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\ngroup_by() no cambia la tabla: le dice a summarise() que calcule por separado en cada grupo. n() cuenta las filas del grupo.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 21 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 2.5: Contar combinaciones\nCuenta cuántos pingüinos hay de cada especie en cada isla con count(). Compara con la tabla cruzada del Módulo 1.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\ncount(a, b) es un atajo de group_by(a, b) |&gt; summarise(n = n()). Devuelve una tabla en formato largo.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 21 de noviembre de 2026). Mientras tanto, usa la pestaña Pista."
+  },
+  {
+    "objectID": "ejercicios-2.html#parte-3",
+    "href": "ejercicios-2.html#parte-3",
+    "title": "Ejercicios Módulo 2",
+    "section": "Parte 3: Primeros gráficos con {ggplot2}",
+    "text": "Parte 3: Primeros gráficos con {ggplot2}\n\nEjercicio 3.1: Un gráfico de dispersión\nHaz un gráfico de dispersión del largo de la aleta (eje x) frente a la masa corporal (eje y). ¿Qué relación observas?\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nggplot() recibe los datos y el mapeo con aes(); la geometría de los puntos es geom_point(). {ggplot2} avisa que quitó 2 filas con NA.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 21 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 3.2: Color por especie\nRepite el gráfico, coloreando los puntos según la especie. ¿Qué especie ocupa la esquina superior derecha?\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nPara que el color dependa de una variable, va dentro de aes(). {ggplot2} elige los colores y agrega la leyenda.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 21 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 3.3: Un histograma\nHaz un histograma de la masa corporal con barras de 250 g. ¿Dónde se concentran los valores? ¿Es simétrico?\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nbinwidth es el ancho de cada barra, en las unidades de la variable.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 21 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 3.4: Diagramas de caja\nCompara el largo del pico (bill_length_mm) entre especies con diagramas de caja.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nCon una variable categórica en el eje x y una numérica en el eje y, geom_boxplot() dibuja una caja por grupo.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 21 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 3.5: Dentro o fuera de aes()\nEste código pretende pintar todos los puntos de azul, pero no funciona como esperamos. Ejecútalo, mira qué pasa y corrígelo.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nDentro de aes(), \"blue\" se trata como un dato (una columna con el texto “blue”), no como un color. Un valor fijo va fuera de aes(), en la geometría.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 21 de noviembre de 2026). Mientras tanto, usa la pestaña Pista."
+  },
+  {
+    "objectID": "ejercicios-2.html#parte-4",
+    "href": "ejercicios-2.html#parte-4",
+    "title": "Ejercicios Módulo 2",
+    "section": "Parte 4: Más práctica",
+    "text": "Parte 4: Más práctica\n\nEjercicio 4.1: Varias condiciones\n¿Cuántos pingüinos de Biscoe o Dream tienen el sexo registrado?\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\n%in% pregunta si el valor está en un conjunto. !is.na(x) se queda con las filas donde x no falta.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 21 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 4.2: Resumir por dos grupos\nSin los pingüinos de sexo desconocido, calcula el largo medio del pico por especie y sexo. ¿En qué especie es mayor la diferencia entre machos y hembras?\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\ngroup_by() acepta varias columnas. .groups = \"drop\" quita la agrupación al terminar (y evita un mensaje).\n\n\n\n\nLa solución se publicará después de la sesión (sábado 21 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 4.3: De largo a ancho\nConvierte el conteo de especies por isla en una tabla ancha, con una columna por isla y ceros donde no hay pingüinos.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\npivot_wider() es el inverso de pivot_longer(): names_from da los nombres de las nuevas columnas y values_from, sus valores. values_fill rellena las combinaciones que faltan.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 21 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 4.4: La paradoja de los picos\nGrafica el largo del pico (x) frente a su profundidad (y) con una recta de tendencia para todos los pingüinos. Luego repite coloreando por especie. ¿Qué cambia?\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nCuando el color está en ggplot(aes(...)), todas las capas lo heredan: geom_smooth() ajusta una recta por especie.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 21 de noviembre de 2026). Mientras tanto, usa la pestaña Pista."
+  },
+  {
+    "objectID": "ejercicios-2.html#con-tus-propios-datos",
+    "href": "ejercicios-2.html#con-tus-propios-datos",
+    "title": "Ejercicios Módulo 2",
+    "section": "Con tus propios datos",
+    "text": "Con tus propios datos\nEscribe una cadena de {dplyr} que filtre, cree una columna y resuma una variable por grupo. Luego haz un gráfico de dispersión de dos variables numéricas, coloreado por un grupo."
+  },
+  {
+    "objectID": "modulo-4.html",
+    "href": "modulo-4.html",
+    "title": "Módulo 4: Introducción a Quarto",
+    "section": "",
+    "text": "Ver las diapositivas Hacer los ejercicios Hacer la autoevaluación"
+  },
+  {
+    "objectID": "modulo-4.html#contexto",
+    "href": "modulo-4.html#contexto",
+    "title": "Módulo 4: Introducción a Quarto",
+    "section": "Contexto",
+    "text": "Contexto\n\nPara quién: participantes que ya saben preparar datos y gráficos en R (Módulo 3).\nLugar en el curso: última sesión. Reunimos el código, los gráficos y el texto en un solo documento que se vuelve a generar con un clic.\nDuración: 3 horas de clase virtual y unas 6 horas de trabajo autónomo, incluido el examen."
+  },
+  {
+    "objectID": "modulo-4.html#objetivos-de-la-sesión",
+    "href": "modulo-4.html#objetivos-de-la-sesión",
+    "title": "Módulo 4: Introducción a Quarto",
+    "section": "Objetivos de la sesión",
+    "text": "Objetivos de la sesión\nAl terminar, podrás:\n\nCrear un documento de Quarto en un proyecto de RStudio y renderizarlo.\nUsar el encabezado YAML, el formato Markdown y los fragmentos de código con sus opciones.\nIncluir figuras y tablas con títulos, tamaños y referencias.\nGenerar un reporte en html, Word o PDF a partir del mismo archivo."
+  },
+  {
+    "objectID": "modulo-4.html#estructura",
+    "href": "modulo-4.html#estructura",
+    "title": "Módulo 4: Introducción a Quarto",
+    "section": "Estructura",
+    "text": "Estructura\n\n\n\n\n\n\n\n\nParte\nQué hacemos\nObjetivo\n\n\n\n\n¿Qué es Quarto?\nDocumentos que mezclan texto, código y resultados; del script al reporte\n1\n\n\nPreparar el ambiente\nInstalar Quarto y TinyTeX; crear un proyecto de Quarto en RStudio\n1\n\n\nEstructura básica\nEncabezado YAML, texto en Markdown y fragmentos de código\n2\n\n\nOpciones de los fragmentos\necho, eval, include, warning, message; opciones globales\n2\n\n\nFiguras\nfig-cap, fig-width, fig-height, etiquetas fig- y referencias cruzadas\n3\n\n\nTablas\nknitr::kable(), títulos y referencias\n3\n\n\nConstruir un reporte\nDel análisis de los pingüinos a un reporte completo\n3, 4\n\n\nFormatos de salida\nhtml, Word (docx) y PDF desde el mismo archivo\n4\n\n\nAntes de terminar\nRepaso del curso, examen y certificado"
+  },
+  {
+    "objectID": "modulo-4.html#trabajo-autónomo",
+    "href": "modulo-4.html#trabajo-autónomo",
+    "title": "Módulo 4: Introducción a Quarto",
+    "section": "Trabajo autónomo",
+    "text": "Trabajo autónomo\nDespués de la clase:\n\nCompleta todos los ejercicios: lo que no alcancemos en clase, incluida la Parte 4 (Más práctica), es tarea.\nHaz un reporte de Quarto con tus propios datos: una tabla, dos gráficos y tus conclusiones.\nHaz la autoevaluación y luego el examen, disponible a partir del 6 de diciembre de 2026 (ver Evaluación)."
+  },
+  {
+    "objectID": "modulo-4.html#datos-y-materiales",
+    "href": "modulo-4.html#datos-y-materiales",
+    "title": "Módulo 4: Introducción a Quarto",
+    "section": "Datos y materiales",
+    "text": "Datos y materiales\n\npinguinos.csv (descargar): 344 pingüinos de tres especies del archipiélago Palmer (Antártida), con medidas del pico, de la aleta y de la masa corporal. Datos de Kristen Gorman y la estación Palmer (LTER), publicados en el paquete {palmerpenguins} de Allison Horst, Alison Hill y Kristen Gorman (licencia CC0). La usamos en todo el curso.\nDiapositivas del Módulo 4."
+  },
+  {
+    "objectID": "modulo-2.html",
+    "href": "modulo-2.html",
+    "title": "Módulo 2: Introducción al {tidyverse} y a {ggplot2}",
+    "section": "",
+    "text": "Ver las diapositivas Hacer los ejercicios Hacer la autoevaluación"
+  },
+  {
+    "objectID": "modulo-2.html#contexto",
+    "href": "modulo-2.html#contexto",
+    "title": "Módulo 2: Introducción al {tidyverse} y a {ggplot2}",
+    "section": "Contexto",
+    "text": "Contexto\n\nPara quién: participantes que ya saben importar una tabla y calcular estadísticos en R (Módulo 1).\nLugar en el curso: segunda sesión. Pasamos de las funciones de R base a la forma de trabajar del {tidyverse}, y hacemos los primeros gráficos.\nDuración: 3 horas de clase virtual y unas 6 horas de trabajo autónomo."
+  },
+  {
+    "objectID": "modulo-2.html#objetivos-de-la-sesión",
+    "href": "modulo-2.html#objetivos-de-la-sesión",
+    "title": "Módulo 2: Introducción al {tidyverse} y a {ggplot2}",
+    "section": "Objetivos de la sesión",
+    "text": "Objetivos de la sesión\nAl terminar, podrás:\n\nEncadenar operaciones con el operador de cascada |&gt;.\nReconocer una tabla ordenada (tidy) y pasar entre los formatos ancho y largo.\nFiltrar, seleccionar, ordenar, crear columnas y resumir tablas con {dplyr}.\nConstruir un gráfico con ggplot(): datos, estéticas, geometrías y capas."
+  },
+  {
+    "objectID": "modulo-2.html#estructura",
+    "href": "modulo-2.html#estructura",
+    "title": "Módulo 2: Introducción al {tidyverse} y a {ggplot2}",
+    "section": "Estructura",
+    "text": "Estructura\n\n\n\n\n\n\n\n\nParte\nQué hacemos\nObjetivo\n\n\n\n\nEl {tidyverse}\nQué es, qué paquetes trae y por qué se usa tanto\n1\n\n\nOperador de cascada\nLeer el código como una receta, paso a paso\n1\n\n\nTipos de tablas\ntibble frente a data.frame; datos ordenados; pivot_longer() y pivot_wider()\n2\n\n\nOperaciones con tablas\nfilter(), select(), arrange(), mutate(), group_by() y summarise()\n3\n\n\n¿Qué observas?\nUn gráfico de dispersión de los pingüinos: qué nos dice y qué nos falta\n4\n\n\nFunción de inicio\nggplot(datos, aes(...)): el lienzo y el mapeo\n4\n\n\nGeometrías\ngeom_point(), geom_histogram(), geom_boxplot(), geom_bar()\n4\n\n\nMapeo estético y capas\ncolor, fill, size, shape; dentro y fuera de aes(); sumar capas con +\n4"
+  },
+  {
+    "objectID": "modulo-2.html#trabajo-autónomo",
+    "href": "modulo-2.html#trabajo-autónomo",
+    "title": "Módulo 2: Introducción al {tidyverse} y a {ggplot2}",
+    "section": "Trabajo autónomo",
+    "text": "Trabajo autónomo\nDespués de la clase:\n\nCompleta todos los ejercicios: lo que no alcancemos en clase, incluida la Parte 4 (Más práctica), es tarea.\nCon tus propios datos, escribe una cadena de {dplyr} que resuma una variable por grupo, y haz un gráfico de dispersión de dos variables numéricas.\nHaz la autoevaluación."
+  },
+  {
+    "objectID": "modulo-2.html#datos-y-materiales",
+    "href": "modulo-2.html#datos-y-materiales",
+    "title": "Módulo 2: Introducción al {tidyverse} y a {ggplot2}",
+    "section": "Datos y materiales",
+    "text": "Datos y materiales\n\npinguinos.csv (descargar): 344 pingüinos de tres especies del archipiélago Palmer (Antártida), con medidas del pico, de la aleta y de la masa corporal. Datos de Kristen Gorman y la estación Palmer (LTER), publicados en el paquete {palmerpenguins} de Allison Horst, Alison Hill y Kristen Gorman (licencia CC0). La usamos en todo el curso.\nDiapositivas del Módulo 2."
+  },
+  {
+    "objectID": "programa.html",
+    "href": "programa.html",
+    "title": "Programa",
+    "section": "",
+    "text": "El curso tiene cuatro módulos de tres horas. Cada módulo se apoya en el anterior: primero ponemos a punto R y los datos, luego aprendemos a ordenarlos y a hacer los primeros gráficos, después construimos figuras completas con {ggplot2} y, al final, reunimos análisis, figuras y texto en un reporte con Quarto.\nflowchart LR\n  M1[\"&lt;b&gt;Módulo 1&lt;/b&gt;&lt;br/&gt;Generalidades e&lt;br/&gt;introducción a R\"] --&gt; M2[\"&lt;b&gt;Módulo 2&lt;/b&gt;&lt;br/&gt;tidyverse y&lt;br/&gt;primeros gráficos\"]\n  M2 --&gt; M3[\"&lt;b&gt;Módulo 3&lt;/b&gt;&lt;br/&gt;Visualización&lt;br/&gt;con ggplot2\"]\n  M3 --&gt; M4[\"&lt;b&gt;Módulo 4&lt;/b&gt;&lt;br/&gt;Introducción&lt;br/&gt;a Quarto\"]\n  classDef default fill:#ffffff,stroke:#333333,color:#000000;\n  style M1 fill:#ffffff,stroke:#0072B2,stroke-width:3px,color:#000000\n  style M2 fill:#ffffff,stroke:#D55E00,stroke-width:3px,color:#000000\n  style M3 fill:#ffffff,stroke:#009E73,stroke-width:3px,color:#000000\n  style M4 fill:#ffffff,stroke:#CC79A7,stroke-width:3px,color:#000000"
+  },
+  {
+    "objectID": "programa.html#objetivos-de-aprendizaje",
+    "href": "programa.html#objetivos-de-aprendizaje",
+    "title": "Programa",
+    "section": "Objetivos de aprendizaje",
+    "text": "Objetivos de aprendizaje\nAl finalizar el curso podrás:\n\nUtilizar el entorno de R y RStudio para la gestión de proyectos y el análisis de datos.\nManipular y transformar datos con herramientas del ecosistema {tidyverse}.\nConstruir visualizaciones claras y efectivas con {ggplot2}, usando distintos tipos de gráficos y capas.\nIntegrar el análisis estadístico y la visualización para comunicar resultados de forma clara y profesional.\nExportar gráficos y resultados para informes y presentaciones.\nGenerar reportes reproducibles con Quarto."
+  },
+  {
+    "objectID": "programa.html#formato-y-horario",
+    "href": "programa.html#formato-y-horario",
+    "title": "Programa",
+    "section": "Formato y horario",
+    "text": "Formato y horario\n\nModalidad: 100% en línea, clases virtuales en tiempo real.\nHorario: cuatro sesiones, de 9H00 a 12H00.\nDuración: 12 horas de clases virtuales y 24 horas de aprendizaje autónomo individual, 36 horas en total.\nCada sesión combina exposiciones cortas con trabajo práctico en R. Lo que no se alcance en clase queda como tarea: se espera que completes todos los ejercicios de cada módulo.\n\n\nCalendario del curso.\n\n\n\n\n\n\n\nSesión\nFecha\nMódulo\n\n\n\n\n1\nsábado 14 de noviembre de 2026\nGeneralidades e introducción a R\n\n\n2\nsábado 21 de noviembre de 2026\nIntroducción al {tidyverse} y a {ggplot2}\n\n\n3\nsábado 28 de noviembre de 2026\nVisualización de datos con {ggplot2}\n\n\n4\nsábado 5 de diciembre de 2026\nIntroducción a Quarto"
+  },
+  {
+    "objectID": "programa.html#requisitos",
+    "href": "programa.html#requisitos",
+    "title": "Programa",
+    "section": "Requisitos",
+    "text": "Requisitos\nIndispensables:\n\nComputador con al menos 2 GB de RAM y procesador de 64 bits, para los talleres y las tareas.\nConexión estable a internet.\n\nIdeales, pero no indispensables:\n\nHaber tomado el curso Introducción a R, o conocimientos básicos de R.\nConocimientos básicos de estadística.\nSistema operativo Windows 10/11.\nMicrosoft Office (o LibreOffice)."
+  },
+  {
+    "objectID": "programa.html#contenidos-y-alineación",
+    "href": "programa.html#contenidos-y-alineación",
+    "title": "Programa",
+    "section": "Contenidos y alineación",
+    "text": "Contenidos y alineación\nCada módulo indica qué podrás hacer al terminarlo, cómo lo practicamos y cómo se comprueba. Los números entre paréntesis remiten a los objetivos de aprendizaje.\n\n\n\n\nMódulo\nAl terminar podrás…\nActividades\nEvaluación\n\n\n\n\n1. Generalidades e introducción a R\ninstalar R y RStudio y trabajar en un proyecto; usar tipos de datos, objetos y paquetes; importar una tabla; calcular operaciones estadísticas básicas (1)\ninstalación guiada, programación en vivo, ejercicios cortos\nejercicios, autoevaluación\n\n\n2. {tidyverse} y primeros gráficos\nencadenar operaciones con el operador de cascada; reconocer datos ordenados; filtrar, seleccionar, transformar y resumir tablas con {dplyr}; construir un gráfico con ggplot(), una geometría y estéticas (2, 3)\n“¿qué observas?” con un gráfico, programación en vivo\nejercicios, autoevaluación\n\n\n3. Visualización con {ggplot2}\nelegir el gráfico según el tipo de variables; añadir estadísticos; usar facetas, escalas, etiquetas y temas; exportar con ggsave() (3, 4, 5)\nmejorar un gráfico paso a paso, elegir el gráfico para cinco preguntas\nejercicios, autoevaluación\n\n\n4. Introducción a Quarto\ncrear un documento de Quarto; usar el encabezado YAML, Markdown y fragmentos de código con opciones; incluir figuras y tablas; generar un reporte en html, Word o PDF (4, 5, 6)\nconstruir un reporte del curso de principio a fin\nejercicios, autoevaluación, examen"
+  },
+  {
+    "objectID": "programa.html#evaluacion",
+    "href": "programa.html#evaluacion",
+    "title": "Programa",
+    "section": "Evaluación",
+    "text": "Evaluación\nLa nota final se pondera sobre un máximo de 10 puntos:\n\n\n\n\n\n\n\nComponente\nPeso\n\n\n\n\nResolución de ejercicios durante cada sesión\n40%\n\n\nExamen (disponible a partir del 6 de diciembre de 2026)\n60%\n\n\n\n\nEl examen tiene dos partes: un script de R para completar (manejo de datos y gráficos) y un pequeño reporte de Quarto. Lo completas en tu proyecto con los datos del examen y entregas los dos archivos.\nCon una nota de 7 puntos o más obtienes el certificado de aprobación.\nSi no alcanzas la nota mínima, tienes derecho a un certificado de asistencia.\nLas autoevaluaciones de este sitio no cuentan para la nota: son para que compruebes por tu cuenta qué ideas necesitan un repaso."
+  },
+  {
+    "objectID": "programa.html#comunicación",
+    "href": "programa.html#comunicación",
+    "title": "Programa",
+    "section": "Comunicación",
+    "text": "Comunicación\nLas preguntas fuera de la hora de clase se dirigen al correo electrónico mmorenozambrano@gmail.com."
+  },
+  {
+    "objectID": "programa.html#secuencialidad",
+    "href": "programa.html#secuencialidad",
+    "title": "Programa",
+    "section": "Secuencialidad",
+    "text": "Secuencialidad\nLo ideal es haber tomado antes el curso Introducción a R. Para quienes no lo tomaron, el Módulo 1 pone a todos a la par."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Visualización de datos en R",
+    "section": "",
+    "text": "Anuncios\n\n\n\n\nBienvenidos. La primera clase es el sábado 14 de noviembre de 2026, de 9H00 a 12H00. Antes, revisa los requisitos e instala R, RStudio y los paquetes del curso siguiendo la guía de Recursos.\nEste curso te introduce en el análisis y la visualización de datos con R. Vas a manipular y transformar tablas con el ecosistema {tidyverse}, a construir gráficos claros y profesionales con {ggplot2} y a comunicar tus resultados en reportes reproducibles con Quarto.\nEstá dirigido a una audiencia diversa: no hace falta experiencia previa en programación ni conocimientos avanzados de estadística. Si ya tomaste Introducción a R, el primer módulo te sirve de repaso; si no, te pone al día. Al terminar, podrás obtener un certificado."
+  },
+  {
+    "objectID": "index.html#cuatro-módulos-un-mismo-camino",
+    "href": "index.html#cuatro-módulos-un-mismo-camino",
+    "title": "Visualización de datos en R",
+    "section": "Cuatro módulos, un mismo camino",
+    "text": "Cuatro módulos, un mismo camino\n\n\n\nsábado 14 de noviembre de 2026\n\n1. Generalidades e introducción a R\nR y RStudio, proyectos, objetos, paquetes, importación de datos y operaciones estadísticas básicas.\nIr al módulo\n\n\n\n\n\nsábado 21 de noviembre de 2026\n\n2. {tidyverse} y primeros gráficos\nEl operador |&gt;, tablas ordenadas, {dplyr}, y la gramática de {ggplot2}: datos, estéticas, geometrías y capas.\nIr al módulo\n\n\n\n\n\nsábado 28 de noviembre de 2026\n\n3. Visualización con {ggplot2}\nGráficos comunes, figuras con estadísticos, facetas, escalas y temas, y exportar gráficos.\nIr al módulo\n\n\n\n\n\nsábado 5 de diciembre de 2026\n\n4. Introducción a Quarto\nEstructura de un documento, fragmentos de código, figuras y tablas, y reportes en html, Word y PDF.\nIr al módulo\n\n\n\n\nVer el programa completo →"
+  },
+  {
+    "objectID": "index.html#cómo-aprendemos",
+    "href": "index.html#cómo-aprendemos",
+    "title": "Visualización de datos en R",
+    "section": "Cómo aprendemos",
+    "text": "Cómo aprendemos\n\nPrimero la pregunta, luego el gráfico. Cada figura empieza con la pregunta que debe responder.\nPracticar desde el primer día. Exposiciones cortas seguidas de trabajo práctico en R, en clase y en casa.\nTus propios datos. Te animamos a aplicar cada técnica a tus datos, a la par de los ejemplos del curso.\nReproducible desde el inicio. Proyectos de R, scripts ordenados y reportes que se vuelven a generar con un clic.\nMateriales abiertos. Diapositivas, ejercicios y datos están disponibles en este sitio."
+  },
+  {
+    "objectID": "index.html#explora",
+    "href": "index.html#explora",
+    "title": "Visualización de datos en R",
+    "section": "Explora",
+    "text": "Explora\n\n\n\nEjercicios\nEjercicios interactivos de R que corren en tu navegador, sin instalar nada. Lo que no terminemos en clase es tarea: completa todos los ejercicios de cada módulo.\nEmpezar con el Módulo 1\n\n\n\n\nAutoevaluación\nPreguntas cortas de opción múltiple, anónimas, con explicaciones. Te muestran qué ideas necesitan un repaso.\nAutoevaluación del Módulo 1\n\n\n\n\nEvaluación y certificado\n40% ejercicios en clase, 60% examen. Con 7 de 10 puntos obtienes el certificado de aprobación.\nCómo se evalúa"
+  },
+  {
+    "objectID": "modulo-1.html",
+    "href": "modulo-1.html",
+    "title": "Módulo 1: Generalidades e introducción a R",
+    "section": "",
+    "text": "Ver las diapositivas Hacer los ejercicios Hacer la autoevaluación"
+  },
+  {
+    "objectID": "modulo-1.html#contexto",
+    "href": "modulo-1.html#contexto",
+    "title": "Módulo 1: Generalidades e introducción a R",
+    "section": "Contexto",
+    "text": "Contexto\n\nPara quién: personas que nunca han programado, o que necesitan un repaso de R antes de empezar con {tidyverse}.\nLugar en el curso: primera sesión. Si tomaste Introducción a R, es un repaso; si no, te pone al día para el resto del curso.\nDuración: 3 horas de clase virtual y unas 6 horas de trabajo autónomo."
+  },
+  {
+    "objectID": "modulo-1.html#objetivos-de-la-sesión",
+    "href": "modulo-1.html#objetivos-de-la-sesión",
+    "title": "Módulo 1: Generalidades e introducción a R",
+    "section": "Objetivos de la sesión",
+    "text": "Objetivos de la sesión\nAl terminar, podrás:\n\nInstalar R y RStudio, y organizar tu trabajo en un proyecto de R.\nUsar los tipos de datos, operadores y objetos básicos de R (vectores, factores, tablas de datos y listas).\nInstalar y cargar paquetes, e importar una tabla de datos desde un archivo csv.\nCalcular operaciones estadísticas básicas, también cuando hay valores faltantes."
+  },
+  {
+    "objectID": "modulo-1.html#estructura",
+    "href": "modulo-1.html#estructura",
+    "title": "Módulo 1: Generalidades e introducción a R",
+    "section": "Estructura",
+    "text": "Estructura\n\n\n\n\n\n\n\n\nParte\nQué hacemos\nObjetivo\n\n\n\n\nBienvenida\nPresentación, cómo funciona el curso y la evaluación\n\n\n\nR y RStudio\nInstalación guiada; los cuatro paneles de RStudio\n1\n\n\nProyectos de R\nCrear un proyecto y ordenar carpetas (datos/, scripts/, resultados/)\n1\n\n\nSintaxis, tipos de datos y operadores\nAsignación con &lt;-, nombres, comentarios; numeric, character, logical, factor\n2\n\n\nObjetos\nVectores, factores, tablas de datos y listas; indexación con [ ] y $\n2\n\n\nPaquetes e importación\ninstall.packages(), library(), read.csv(); revisar la tabla con str() y summary()\n3\n\n\nOperaciones estadísticas básicas\nmean(), median(), sd(), quantile(), table(), tapply(); valores faltantes y na.rm = TRUE\n4"
+  },
+  {
+    "objectID": "modulo-1.html#trabajo-autónomo",
+    "href": "modulo-1.html#trabajo-autónomo",
+    "title": "Módulo 1: Generalidades e introducción a R",
+    "section": "Trabajo autónomo",
+    "text": "Trabajo autónomo\nDespués de la clase:\n\nCrea tu proyecto de R para el curso, con la estructura de carpetas vista en clase.\nCompleta todos los ejercicios: lo que no alcancemos en clase, incluida la Parte 4 (Más práctica), es tarea. Si te atascas, usa la pestaña Pista.\nImporta tus propios datos (o pinguinos.csv) en tu proyecto y calcula sus estadísticos básicos.\nHaz la autoevaluación."
+  },
+  {
+    "objectID": "modulo-1.html#datos-y-materiales",
+    "href": "modulo-1.html#datos-y-materiales",
+    "title": "Módulo 1: Generalidades e introducción a R",
+    "section": "Datos y materiales",
+    "text": "Datos y materiales\n\npinguinos.csv (descargar): 344 pingüinos de tres especies del archipiélago Palmer (Antártida), con medidas del pico, de la aleta y de la masa corporal. Datos de Kristen Gorman y la estación Palmer (LTER), publicados en el paquete {palmerpenguins} de Allison Horst, Alison Hill y Kristen Gorman (licencia CC0). La usamos en todo el curso.\nDiapositivas del Módulo 1."
+  },
+  {
+    "objectID": "modulo-3.html",
+    "href": "modulo-3.html",
+    "title": "Módulo 3: Visualización de datos con {ggplot2}",
+    "section": "",
+    "text": "Ver las diapositivas Hacer los ejercicios Hacer la autoevaluación"
+  },
+  {
+    "objectID": "modulo-3.html#contexto",
+    "href": "modulo-3.html#contexto",
+    "title": "Módulo 3: Visualización de datos con {ggplot2}",
+    "section": "Contexto",
+    "text": "Contexto\n\nPara quién: participantes que ya saben hacer un gráfico sencillo con ggplot() y preparar los datos con {dplyr} (Módulo 2).\nLugar en el curso: tercera sesión. Pasamos de un gráfico que funciona a un gráfico que comunica, listo para un informe.\nDuración: 3 horas de clase virtual y unas 6 horas de trabajo autónomo."
+  },
+  {
+    "objectID": "modulo-3.html#objetivos-de-la-sesión",
+    "href": "modulo-3.html#objetivos-de-la-sesión",
+    "title": "Módulo 3: Visualización de datos con {ggplot2}",
+    "section": "Objetivos de la sesión",
+    "text": "Objetivos de la sesión\nAl terminar, podrás:\n\nElegir el gráfico adecuado según el tipo de variables y la pregunta.\nAñadir estadísticos a una figura: medias, barras de error y líneas de tendencia.\nMejorar un gráfico con facetas, escalas de color, etiquetas y temas.\nExportar un gráfico con el tamaño y la resolución adecuados con ggsave()."
+  },
+  {
+    "objectID": "modulo-3.html#estructura",
+    "href": "modulo-3.html#estructura",
+    "title": "Módulo 3: Visualización de datos con {ggplot2}",
+    "section": "Estructura",
+    "text": "Estructura\n\n\n\n\n\n\n\n\nParte\nQué hacemos\nObjetivo\n\n\n\n\nElegir el gráfico\nUna variable o dos; categóricas o numéricas: qué gráfico usar en cada caso\n1\n\n\nGráficos comunes\nBarras, histogramas, densidades, dispersión, líneas, cajas y violines\n1\n\n\nFiguras con estadísticos\nstat_summary() para medias y barras de error; geom_smooth()\n2\n\n\nGráficos especiales\nFacetas con facet_wrap() y facet_grid(); mapas de calor con geom_tile()\n3\n\n\nFormato\nEscalas y paletas accesibles, labs(), temas y theme()\n3\n\n\nMejorar un gráfico paso a paso\nDe un gráfico por defecto a uno listo para publicar\n3\n\n\nExportar gráficos\nggsave(): formato, tamaño y resolución; combinar figuras con {patchwork}\n4"
+  },
+  {
+    "objectID": "modulo-3.html#trabajo-autónomo",
+    "href": "modulo-3.html#trabajo-autónomo",
+    "title": "Módulo 3: Visualización de datos con {ggplot2}",
+    "section": "Trabajo autónomo",
+    "text": "Trabajo autónomo\nDespués de la clase:\n\nCompleta todos los ejercicios: lo que no alcancemos en clase, incluida la Parte 4 (Más práctica), es tarea.\nCon tus propios datos, haz un gráfico listo para un informe: etiquetas, colores accesibles y tema limpio, exportado con ggsave().\nHaz la autoevaluación."
+  },
+  {
+    "objectID": "modulo-3.html#datos-y-materiales",
+    "href": "modulo-3.html#datos-y-materiales",
+    "title": "Módulo 3: Visualización de datos con {ggplot2}",
+    "section": "Datos y materiales",
+    "text": "Datos y materiales\n\npinguinos.csv (descargar): 344 pingüinos de tres especies del archipiélago Palmer (Antártida), con medidas del pico, de la aleta y de la masa corporal. Datos de Kristen Gorman y la estación Palmer (LTER), publicados en el paquete {palmerpenguins} de Allison Horst, Alison Hill y Kristen Gorman (licencia CC0). La usamos en todo el curso.\nDiapositivas del Módulo 3."
+  },
+  {
+    "objectID": "ejercicios-1.html",
+    "href": "ejercicios-1.html",
+    "title": "Ejercicios Módulo 1",
+    "section": "",
+    "text": "Estos ejercicios siguen el Módulo 1 paso a paso. El código corre en tu navegador: no necesitas instalar nada. Escribe tu código en los recuadros y presiona Run Code. Donde veas ____, complétalo. ¿Te atascaste? Abre la pestaña Pista. Las soluciones se publican después de la sesión."
+  },
+  {
+    "objectID": "ejercicios-1.html#parte-1",
+    "href": "ejercicios-1.html#parte-1",
+    "title": "Ejercicios Módulo 1",
+    "section": "Parte 1: R como calculadora y objetos",
+    "text": "Parte 1: R como calculadora y objetos\n\nEjercicio 1.1: R como calculadora\nUn pingüino pesaba 3750 g al inicio de la temporada y 4050 g al final. Guarda cada medida en un objeto, calcula cuánto aumentó y qué porcentaje representa ese aumento respecto a la masa inicial.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nAsignamos valores con &lt;-. El porcentaje es el aumento dividido para la masa inicial, multiplicado por 100.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 14 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 1.2: Vectores\nEstas son las masas (g) de cinco pingüinos. Crea el vector masas, calcula cuántos valores tiene, su media, y cuántos pingüinos pesan más de 3500 g.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nmasas &gt; 3500 devuelve un vector lógico (TRUE/FALSE). Al sumarlo, R cuenta cada TRUE como 1.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 14 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 1.3: Tipos de datos y factores\n¿Qué clase de objeto obtienes al combinar un número, un texto y un valor lógico? Luego convierte el vector especie en un factor y cuenta cuántas veces aparece cada nivel.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nUn vector solo puede contener datos de una clase, así que R convierte todo a la clase más general. Para crear un factor usa factor().\n\n\n\n\nLa solución se publicará después de la sesión (sábado 14 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 1.4: Tablas de datos\nConstruye una tabla de datos con tres pingüinos y extrae: (a) la columna masa con $, (b) la fila del segundo pingüino, y (c) la masa del tercero usando [fila, columna].\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nEn tabla[fila, columna], dejar un lugar vacío significa “todas”. aves[2, ] es toda la fila 2.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 14 de noviembre de 2026). Mientras tanto, usa la pestaña Pista."
+  },
+  {
+    "objectID": "ejercicios-1.html#parte-2",
+    "href": "ejercicios-1.html#parte-2",
+    "title": "Ejercicios Módulo 1",
+    "section": "Parte 2: Importar datos",
+    "text": "Parte 2: Importar datos\n\nEjercicio 2.1: Importar un archivo csv\nImporta el archivo datos/pinguinos.csv en un objeto llamado pinguinos. ¿Cuántas filas y columnas tiene? Revisa su estructura con str().\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nLa ruta va entre comillas, incluida la carpeta: \"datos/pinguinos.csv\". En tu computador, la ruta es relativa a la carpeta de tu proyecto de R.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 14 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 2.2: Explorar una tabla\nLa tabla pinguinos ya está cargada. Muestra sus primeras seis filas, las tres primeras filas de las columnas species y body_mass_g, y un resumen de todas las columnas. ¿Cuántos valores faltan en body_mass_g?\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nPara elegir varias columnas por su nombre, ponlas en un vector con c(). summary() cuenta los valores faltantes en la línea NA's.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 14 de noviembre de 2026). Mientras tanto, usa la pestaña Pista."
+  },
+  {
+    "objectID": "ejercicios-1.html#parte-3",
+    "href": "ejercicios-1.html#parte-3",
+    "title": "Ejercicios Módulo 1",
+    "section": "Parte 3: Operaciones estadísticas básicas",
+    "text": "Parte 3: Operaciones estadísticas básicas\n\nEjercicio 3.1: Valores faltantes, media y dispersión\nCalcula la media de body_mass_g. ¿Qué devuelve? Repite con na.rm = TRUE, y calcula también la mediana y la desviación estándar.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nSi falta un valor, R no puede saber la media y devuelve NA. na.rm = TRUE le pide ignorar los faltantes; lo aceptan mean(), median(), sd(), sum() y muchas otras.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 14 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 3.2: Cuartiles\nCalcula los cuartiles de body_mass_g. ¿Entre qué valores está el 50% central de los pingüinos?\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nEl 50% central de los datos está entre el primer cuartil (0.25) y el tercero (0.75).\n\n\n\n\nLa solución se publicará después de la sesión (sábado 14 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 3.3: Variables categóricas\n¿Cuántos pingüinos hay de cada especie? Calcula también la proporción, y una tabla cruzada de especie por isla. ¿Qué especie vive en las tres islas?\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\ntable() cuenta las veces que aparece cada valor; prop.table() convierte los conteos en proporciones. Con dos variables, table() hace una tabla cruzada.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 14 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 3.4: Resumir por grupos\nCalcula la masa media de cada especie, primero con tapply() y luego con aggregate(). ¿Qué especie es la más pesada?\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\ntapply(variable, grupo, función) aplica la función dentro de cada grupo; los argumentos extra, como na.rm = TRUE, pasan a la función. aggregate() con fórmula descarta los NA por su cuenta.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 14 de noviembre de 2026). Mientras tanto, usa la pestaña Pista."
+  },
+  {
+    "objectID": "ejercicios-1.html#parte-4",
+    "href": "ejercicios-1.html#parte-4",
+    "title": "Ejercicios Módulo 1",
+    "section": "Parte 4: Más práctica",
+    "text": "Parte 4: Más práctica\n\nEjercicio 4.1: Operaciones con vectores\nConvierte las masas de los cinco pingüinos de gramos a kilogramos, ordénalas de menor a mayor y redondea su media en kilogramos a dos decimales.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nUn kilogramo tiene 1000 gramos. sort() ordena de menor a mayor; round(x, digits = 2) redondea a dos decimales.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 14 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 4.2: Filtrar filas\nQuédate solo con los Gentoo. ¿Cuántos son y cuál es su masa media? Luego filtra los Gentoo machos (sex == \"male\").\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nUna condición antes de la coma en [ , ] elige las filas donde es TRUE. Para dos condiciones a la vez, únelas con &. Las filas con sex faltante dan NA en la condición; la segunda línea las quita.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 14 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 4.3: Crear una columna nueva\nCrea la columna pico_relativo (largo del pico dividido para su profundidad) y calcula su media. ¿Qué fila tiene el pingüino más pesado, y de qué especie, isla y sexo es?\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nAsignar a tabla$nombre_nuevo crea una columna. which.max() devuelve la posición del valor más alto e ignora los NA.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 14 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 4.4: ¿Cuántos datos faltan?\nCuenta los valores faltantes de cada columna con colSums(is.na(...)), y cuántas filas están completas.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nis.na() devuelve TRUE donde falta un valor; colSums() suma por columna. complete.cases() es TRUE en las filas sin ningún faltante.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 14 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 4.5: Resumir por dos grupos\nCalcula la masa media para cada combinación de especie y sexo. ¿Cuánto más pesan los machos que las hembras en cada especie?\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nEn la fórmula de aggregate(), varios grupos se unen con +.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 14 de noviembre de 2026). Mientras tanto, usa la pestaña Pista."
+  },
+  {
+    "objectID": "ejercicios-1.html#con-tus-propios-datos",
+    "href": "ejercicios-1.html#con-tus-propios-datos",
+    "title": "Ejercicios Módulo 1",
+    "section": "Con tus propios datos",
+    "text": "Con tus propios datos\nImporta en tu proyecto de R una tabla de tus propios datos (o pinguinos.csv, que puedes descargar aquí) y repite la Parte 3: valores faltantes, medidas de tendencia central y dispersión, conteos y un resumen por grupos."
+  },
+  {
+    "objectID": "ejercicios-3.html",
+    "href": "ejercicios-3.html",
+    "title": "Ejercicios Módulo 3",
+    "section": "",
+    "text": "Estos ejercicios siguen el Módulo 3. Los de gráficos corren en tu navegador; los de exportar se hacen en RStudio, porque crean archivos en tu computador. Donde veas ____, complétalo. ¿Te atascaste? Abre la pestaña Pista. Las soluciones se publican después de la sesión."
+  },
+  {
+    "objectID": "ejercicios-3.html#parte-1",
+    "href": "ejercicios-3.html#parte-1",
+    "title": "Ejercicios Módulo 3",
+    "section": "Parte 1: Gráficos comunes",
+    "text": "Parte 1: Gráficos comunes\n\nEjercicio 1.1: Barras agrupadas y apiladas\nHaz un gráfico de barras del número de pingüinos por isla, con las barras divididas por especie: primero una al lado de la otra (\"dodge\") y luego en proporciones (\"fill\").\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nposition = \"dodge\" pone las barras lado a lado; \"stack\" (por defecto) las apila; \"fill\" las apila y las lleva a la misma altura, de 0 a 1.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 28 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 1.2: Densidades por grupo\nCompara la distribución de la masa corporal entre especies con curvas de densidad semitransparentes.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nalpha va de 0 (transparente) a 1 (opaco). Con 0.4 o 0.5 se ven las curvas que se superponen.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 28 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 1.3: Violines con puntos\nCompara el largo de la aleta entre especies con un gráfico de violín y los puntos encima, un poco dispersos para que no se tapen.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\ngeom_jitter() dibuja puntos con un pequeño desplazamiento aleatorio; width controla cuánto se mueven a los lados.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 28 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 1.4: Una serie de tiempo\nCon la tabla economics, grafica la tasa de ahorro personal (psavert, en %) a lo largo del tiempo (date). ¿Qué tendencia ves?\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nPara una variable en el tiempo, geom_line() une los puntos en orden. labs(x = NULL) quita el título del eje x.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 28 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 1.5: Elegir el gráfico\nPregunta: ¿difiere la masa corporal entre machos y hembras dentro de cada especie? Elige un gráfico que lo responda de un vistazo.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nUna variable numérica frente a dos categóricas: diagramas de caja por especie, con el relleno según el sexo.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 28 de noviembre de 2026). Mientras tanto, usa la pestaña Pista."
+  },
+  {
+    "objectID": "ejercicios-3.html#parte-2",
+    "href": "ejercicios-3.html#parte-2",
+    "title": "Ejercicios Módulo 3",
+    "section": "Parte 2: Figuras con estadísticos",
+    "text": "Parte 2: Figuras con estadísticos\n\nEjercicio 2.1: La media y su error estándar\nSobre los puntos del largo de la aleta por especie, agrega la media ± un error estándar con stat_summary().\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nmean_se es una función de {ggplot2} que devuelve la media y la media ± un error estándar. stat_summary() la calcula en cada grupo.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 28 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 2.2: Barras de error calculadas antes\nCalcula la masa media y la desviación estándar por especie y sexo, y grafícalas con puntos y barras de error de ± una desviación estándar.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\ngeom_errorbar() necesita ymin y ymax dentro de aes(). position_dodge() separa los dos sexos; usa el mismo ancho en las dos capas para que coincidan.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 28 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 2.3: Una recta de tendencia\nGrafica el largo de la aleta frente a la masa, coloreado por especie, con una recta de regresión por especie y su intervalo de confianza.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\ngeom_smooth(method = \"lm\") ajusta una recta; la banda gris es su intervalo de confianza del 95% (quítala con se = FALSE).\n\n\n\n\nLa solución se publicará después de la sesión (sábado 28 de noviembre de 2026). Mientras tanto, usa la pestaña Pista."
+  },
+  {
+    "objectID": "ejercicios-3.html#parte-3",
+    "href": "ejercicios-3.html#parte-3",
+    "title": "Ejercicios Módulo 3",
+    "section": "Parte 3: Gráficos especiales y formato",
+    "text": "Parte 3: Gráficos especiales y formato\n\nEjercicio 3.1: Facetas\nHaz un histograma de la masa con un panel por isla y el relleno por especie.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nfacet_wrap(~ variable) dibuja un panel por cada nivel de la variable, con los mismos ejes.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 28 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 3.2: Un mapa de calor\nCuenta los pingüinos por especie e isla y dibuja un mapa de calor con el número en cada celda.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\ngeom_tile() dibuja un rectángulo por fila de la tabla; el color de relleno muestra el valor. geom_text() escribe la etiqueta encima.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 28 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 3.3: De un gráfico por defecto a uno para un informe\nMejora este gráfico: títulos de los ejes en español con unidades, título de la leyenda, una paleta apta para daltonismo y un tema limpio con la leyenda abajo.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nlabs() cambia los títulos, incluido el de cada estética (color = ...). scale_color_viridis_d() usa la paleta viridis para variables discretas. theme(legend.position = \"bottom\") mueve la leyenda.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 28 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 3.4: Exportar con ggsave()\nEn tu proyecto, guarda el gráfico del ejercicio 3.3 como png (16 × 10 cm, 300 dpi) y como pdf en la carpeta resultados/.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\nEste ejercicio se hace en RStudio, en tu proyecto del curso: copia el código, complétalo y córrelo (o renderiza el documento).\n\n\n\nlibrary(tidyverse)\npinguinos &lt;- read_csv(\"datos/pinguinos.csv\") |&gt; filter(!is.na(sex))\n\ngrafico &lt;- ggplot(pinguinos, aes(x = bill_length_mm, y = bill_depth_mm, color = species)) +\n  geom_point() +\n  scale_color_viridis_d() +\n  labs(x = \"Largo del pico (mm)\", y = \"Profundidad del pico (mm)\", color = \"Especie\") +\n  theme_minimal()\n\nggsave(\"resultados/picos.png\", plot = ____, width = 16, height = 10, units = \"____\", dpi = ____)\nggsave(\"resultados/picos.____\", plot = grafico, width = 16, height = 10, units = \"cm\")\n\n\nCrea antes la carpeta resultados/. Fija siempre width, height y units; si no, el tamaño depende de la ventana de RStudio. El formato sale de la extensión del archivo.\n\n\n\nLa solución se publicará después de la sesión (sábado 28 de noviembre de 2026). Mientras tanto, usa la pestaña Pista."
+  },
+  {
+    "objectID": "ejercicios-3.html#parte-4",
+    "href": "ejercicios-3.html#parte-4",
+    "title": "Ejercicios Módulo 3",
+    "section": "Parte 4: Más práctica",
+    "text": "Parte 4: Más práctica\n\nEjercicio 4.1: Proporciones de sexo\n¿Están equilibrados los sexos en cada especie? Responde con un gráfico de barras en proporciones.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nCon position = \"fill\", cada barra mide 1 y se ve qué fracción corresponde a cada sexo.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 28 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 4.2: Ordenar las categorías\nDibuja diagramas de caja de la masa por especie, ordenando las especies según su mediana con reorder().\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nreorder(factor, variable, FUN = median) ordena los niveles del factor según la mediana de la variable. Ordenar las categorías por su valor facilita la lectura.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 28 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 4.3: Una cuadrícula de paneles\nGrafica el largo de la aleta frente a la masa, con una cuadrícula de paneles: sexo en las filas y especie en las columnas.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nEn facet_grid(filas ~ columnas), la variable de la izquierda define las filas de paneles y la de la derecha, las columnas.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 28 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 4.4: Una paleta propia\nColorea el gráfico de dispersión de los picos con colores elegidos por ti para cada especie, y aumenta el tamaño del texto del tema.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nscale_color_manual(values = ...) recibe un vector de colores con nombre, uno por nivel. Los temas aceptan base_size para el tamaño del texto. La paleta Okabe-Ito (#E69F00, #56B4E9, #009E73, …) es apta para daltonismo.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 28 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 4.5: Combinar gráficos con {patchwork}\nEn RStudio, combina en una sola figura un diagrama de caja de la masa por especie y el gráfico de dispersión aleta y masa, con las letras A y B, y guárdala.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\nEste ejercicio se hace en RStudio, en tu proyecto del curso: copia el código, complétalo y córrelo (o renderiza el documento).\n\n\n\n# install.packages(\"patchwork\")   # solo la primera vez\nlibrary(tidyverse)\nlibrary(patchwork)\npinguinos &lt;- read_csv(\"datos/pinguinos.csv\") |&gt; filter(!is.na(sex))\n\ng1 &lt;- ggplot(pinguinos, aes(x = species, y = body_mass_g)) + geom_boxplot()\ng2 &lt;- ggplot(pinguinos, aes(x = flipper_length_mm, y = body_mass_g, color = species)) + geom_point()\n\nfigura &lt;- g1 ____ g2 + plot_annotation(tag_levels = \"____\")\nfigura\nggsave(\"resultados/figura_combinada.png\", figura, width = 24, height = 10, units = \"cm\", dpi = 300)\n\n\nCon {patchwork}, g1 + g2 pone los gráficos lado a lado y g1 / g2, uno sobre otro. plot_annotation(tag_levels = \"A\") agrega las letras.\n\n\n\nLa solución se publicará después de la sesión (sábado 28 de noviembre de 2026). Mientras tanto, usa la pestaña Pista."
+  },
+  {
+    "objectID": "ejercicios-3.html#con-tus-propios-datos",
+    "href": "ejercicios-3.html#con-tus-propios-datos",
+    "title": "Ejercicios Módulo 3",
+    "section": "Con tus propios datos",
+    "text": "Con tus propios datos\nElige una pregunta sobre tus datos, el gráfico que la responde, y llévalo hasta una versión lista para un informe: etiquetas con unidades, colores accesibles, un tema limpio y exportado con ggsave()."
+  },
+  {
+    "objectID": "autoevaluacion-1.html",
+    "href": "autoevaluacion-1.html",
+    "title": "Autoevaluación Módulo 1",
+    "section": "",
+    "text": "Ocho preguntas cortas sobre el Módulo 1, dos por cada objetivo de la sesión. Tienes dos intentos por pregunta; después verás la respuesta y una explicación. Es anónima: no se guarda ni se envía nada."
+  },
+  {
+    "objectID": "autoevaluacion-1.html#objetivo-1-r-rstudio-y-proyectos",
+    "href": "autoevaluacion-1.html#objetivo-1-r-rstudio-y-proyectos",
+    "title": "Autoevaluación Módulo 1",
+    "section": "Objetivo 1: R, RStudio y proyectos",
+    "text": "Objetivo 1: R, RStudio y proyectos\n\n1. ¿Cuál es la principal ventaja de trabajar dentro de un proyecto de R?\nHace que el código corra más rápido\nFija la carpeta de trabajo, así las rutas como\n\"datos/pinguinos.csv\" funcionan en cualquier computador\nInstala automáticamente todos los paquetes\nGuarda una copia de seguridad en la nubeComprobar respuesta\n\n\nAl abrir un proyecto, RStudio fija la carpeta de trabajo en la carpeta del proyecto. Las rutas relativas funcionan igual en tu computador y en el de un colega.\n\n\n\n\n2. R y RStudio, ¿son lo mismo?\nSí, son dos nombres del mismo programa\nNo: R es el lenguaje que hace los cálculos y RStudio es un entorno para\nescribir y ejecutar código de R\nNo: RStudio es el lenguaje y R la interfaz\nSí, pero RStudio es la versión de pagoComprobar respuesta\n\n\nR es el lenguaje y el motor de cálculo; RStudio es el entorno de trabajo. Por eso se instala primero R y luego RStudio."
+  },
+  {
+    "objectID": "autoevaluacion-1.html#objetivo-2-tipos-de-datos-operadores-y-objetos",
+    "href": "autoevaluacion-1.html#objetivo-2-tipos-de-datos-operadores-y-objetos",
+    "title": "Autoevaluación Módulo 1",
+    "section": "Objetivo 2: Tipos de datos, operadores y objetos",
+    "text": "Objetivo 2: Tipos de datos, operadores y objetos\n\n3. Queremos comprobar si x es igual a 5. ¿Qué expresión usamos?\nx = 5\nx &lt;- 5\nx == 5\nx != 5Comprobar respuesta\n\n\n== compara y devuelve TRUE o FALSE. = y &lt;- asignan el valor 5 a x; != pregunta si es distinto.\n\n\n\n\n4. ¿Qué devuelve levels(factor(c(\"Gentoo\", \"Adelie\", \"Gentoo\")))?\n\"Gentoo\" \"Adelie\"\n\"Adelie\" \"Gentoo\"\n\"Gentoo\" \"Adelie\" \"Gentoo\"\n2Comprobar respuesta\n\n\nLos niveles de un factor son los valores únicos, por defecto en orden alfabético. Ese orden es el que usarán después las tablas y los gráficos."
+  },
+  {
+    "objectID": "autoevaluacion-1.html#objetivo-3-paquetes-e-importación-de-datos",
+    "href": "autoevaluacion-1.html#objetivo-3-paquetes-e-importación-de-datos",
+    "title": "Autoevaluación Módulo 1",
+    "section": "Objetivo 3: Paquetes e importación de datos",
+    "text": "Objetivo 3: Paquetes e importación de datos\n\n5. ¿Cuál es la diferencia entre install.packages(\"tidyverse\") y library(tidyverse)?\nNinguna\ninstall.packages() descarga el paquete una vez;\nlibrary() lo carga en cada sesión en que lo uses\nlibrary() descarga y install.packages()\nactualiza\ninstall.packages() solo funciona en WindowsComprobar respuesta\n\n\nUn paquete se instala una sola vez, pero hay que cargarlo con library() cada vez que abres R.\n\n\n\n\n6. Después de importar pinguinos, ¿qué función muestra de un vistazo el tipo de cada columna?\nstr(pinguinos)\nmean(pinguinos)\ntable(pinguinos)\nlength(pinguinos)Comprobar respuesta\n\n\nstr() muestra la estructura: filas, columnas, y la clase y primeros valores de cada columna. Es lo primero que conviene revisar después de importar."
+  },
+  {
+    "objectID": "autoevaluacion-1.html#objetivo-4-operaciones-estadísticas-básicas",
+    "href": "autoevaluacion-1.html#objetivo-4-operaciones-estadísticas-básicas",
+    "title": "Autoevaluación Módulo 1",
+    "section": "Objetivo 4: Operaciones estadísticas básicas",
+    "text": "Objetivo 4: Operaciones estadísticas básicas\n\n7. mean(pinguinos$body_mass_g) devuelve NA. ¿Por qué?\nPorque la columna es de texto\nPorque hay valores faltantes y no se usó na.rm = TRUE\nPorque la tabla no se importó\nPorque mean() no funciona con enterosComprobar respuesta\n\n\nSi falta un valor, R no puede saber la media y lo indica con NA. mean(x, na.rm = TRUE) calcula la media de los valores disponibles. Antes de hacerlo, conviene saber cuántos faltan: sum(is.na(x)).\n\n\n\n\n8. ¿Qué devuelve table(pinguinos$species, pinguinos$island)?\nLa masa media por especie e isla\nUna tabla cruzada con el número de pingüinos de cada especie en cada\nisla\nLa lista de especies\nUn error, porque son dos variablesComprobar respuesta\n\n\nCon dos variables categóricas, table() cuenta cada combinación. En los pingüinos revela que solo los Adelie viven en las tres islas.\n\n\n\n¿Fallaste alguna? Vuelve a la parte correspondiente de las diapositivas o de los ejercicios."
+  },
+  {
+    "objectID": "autoevaluacion-3.html",
+    "href": "autoevaluacion-3.html",
+    "title": "Autoevaluación Módulo 3",
+    "section": "",
+    "text": "Ocho preguntas cortas sobre el Módulo 3, dos por cada objetivo de la sesión. Tienes dos intentos por pregunta; después verás la respuesta y una explicación. Es anónima: no se guarda ni se envía nada."
+  },
+  {
+    "objectID": "autoevaluacion-3.html#objetivo-1-elegir-el-gráfico",
+    "href": "autoevaluacion-3.html#objetivo-1-elegir-el-gráfico",
+    "title": "Autoevaluación Módulo 3",
+    "section": "Objetivo 1: Elegir el gráfico",
+    "text": "Objetivo 1: Elegir el gráfico\n\n1. Quieres ver si la masa corporal está relacionada con el largo de la aleta. ¿Qué gráfico usas?\nBarras\nDispersión (geom_point())\nHistograma\nMapa de calorComprobar respuesta\n\n\nDos variables numéricas: gráfico de dispersión. Si además quieres la tendencia, agrega geom_smooth().\n\n\n\n\n2. Quieres comparar la distribución de la masa entre las tres especies. ¿Qué opción es la menos** adecuada?**\nDiagramas de caja por especie\nViolines con los puntos\nDensidades superpuestas por especie\nUn gráfico de líneas de la masa en el orden de las filasComprobar respuesta\n\n\nUna numérica frente a una categórica: cajas, violines, densidades o puntos. Una línea une valores en orden, y aquí el orden de las filas no significa nada."
+  },
+  {
+    "objectID": "autoevaluacion-3.html#objetivo-2-figuras-con-estadísticos",
+    "href": "autoevaluacion-3.html#objetivo-2-figuras-con-estadísticos",
+    "title": "Autoevaluación Módulo 3",
+    "section": "Objetivo 2: Figuras con estadísticos",
+    "text": "Objetivo 2: Figuras con estadísticos\n\n3. ¿Qué dibuja stat_summary(fun.data = mean_se)?\nLa mediana y los cuartiles\nLa media y la media ± un error estándar, en cada grupo\nLa media ± dos desviaciones estándar\nUna recta de regresiónComprobar respuesta\n\n\nstat_summary() calcula un resumen por grupo; mean_se devuelve la media y ± un error estándar. Para la desviación estándar, mean_sdl (con fun.args = list(mult = 1)).\n\n\n\n\n4. En una figura, ¿por qué hay que decir si las barras de error son la desviación estándar o el error estándar?\nNo importa, son lo mismo\nPorque la desviación estándar describe cuánto varían los datos, y el\nerror estándar cuánta incertidumbre tiene la media; el error estándar es\nmucho menor\nPorque {ggplot2} solo dibuja una de las dos\nPor estéticaComprobar respuesta\n\n\nEl error estándar es \\(s/\\sqrt{n}\\): con 70 pingüinos, unas 8 veces más pequeño que la desviación estándar. Sin aclararlo, el lector no puede interpretar las barras."
+  },
+  {
+    "objectID": "autoevaluacion-3.html#objetivo-3-facetas-escalas-etiquetas-y-temas",
+    "href": "autoevaluacion-3.html#objetivo-3-facetas-escalas-etiquetas-y-temas",
+    "title": "Autoevaluación Módulo 3",
+    "section": "Objetivo 3: Facetas, escalas, etiquetas y temas",
+    "text": "Objetivo 3: Facetas, escalas, etiquetas y temas\n\n5. ¿Qué hace facet_wrap(~ island)?\nColorea por isla\nDibuja un panel por isla, con los mismos ejes\nOrdena las islas\nQuita las islas con pocos datosComprobar respuesta\n\n\nLas facetas dividen el gráfico en paneles, uno por nivel. facet_grid(filas ~ columnas) hace una cuadrícula con dos variables.\n\n\n\n\n6. ¿Por qué conviene usar paletas como viridis u Okabe-Ito?\nPorque son las únicas que acepta {ggplot2}\nPorque se distinguen también con daltonismo y en blanco y negro\nPorque hacen el gráfico más pequeño\nPorque ordenan las categoríasComprobar respuesta\n\n\nAlrededor de 1 de cada 12 hombres tiene alguna forma de daltonismo; el rojo y el verde son la combinación más problemática. Estas paletas están diseñadas para seguir siendo distinguibles."
+  },
+  {
+    "objectID": "autoevaluacion-3.html#objetivo-4-exportar-gráficos",
+    "href": "autoevaluacion-3.html#objetivo-4-exportar-gráficos",
+    "title": "Autoevaluación Módulo 3",
+    "section": "Objetivo 4: Exportar gráficos",
+    "text": "Objetivo 4: Exportar gráficos\n\n7. ¿Por qué fijar width, height y units en ggsave()?\nPorque son obligatorios\nPorque si no, el tamaño depende de la ventana de RStudio y el gráfico\ncambia cada vez\nPara que el archivo pese menos\nPara cambiar los coloresComprobar respuesta\n\n\nSin tamaño fijo, ggsave() usa el del panel de gráficos. Fijándolo, el mismo código produce siempre la misma figura, con el texto del tamaño que esperas.\n\n\n\n\n8. Para una publicación que pide figuras que se vean nítidas a cualquier tamaño, ¿qué formato eliges?\npng a 72 dpi\njpg\npdf o svg (formatos vectoriales)\nUna captura de pantallaComprobar respuesta\n\n\nLos formatos vectoriales guardan las formas, no los píxeles: se amplían sin perder nitidez. Para Word y presentaciones, un png a 300 dpi suele bastar.\n\n\n\n¿Fallaste alguna? Vuelve a la parte correspondiente de las diapositivas o de los ejercicios."
+  },
+  {
+    "objectID": "recursos.html",
+    "href": "recursos.html",
+    "title": "Recursos",
+    "section": "",
+    "text": "Instala los programas en este orden, antes de la primera clase:\n\nR, desde CRAN: elige tu sistema operativo y descarga la versión más reciente.\nRStudio Desktop, desde Posit (versión gratuita).\nAbre RStudio y, en la consola, instala los paquetes que usaremos:\n\ninstall.packages(c(\"tidyverse\", \"readxl\", \"patchwork\", \"knitr\"))\n\n\n\n\n\n\n¿No puedes instalar R todavía?\n\n\n\nLos ejercicios de este sitio corren en tu navegador, así que puedes empezar a practicar mientras resuelves la instalación. Si tienes problemas, escribe al correo del curso antes del primer domingo.\n\n\n\nQuarto ya viene incluido en las versiones recientes de RStudio. Si tu RStudio es antiguo, instálalo desde quarto.org.\nPara reportes en PDF, instala además TinyTeX desde la consola de RStudio:\n\ninstall.packages(\"tinytex\")\ntinytex::install_tinytex()"
+  },
+  {
+    "objectID": "recursos.html#instalacion",
+    "href": "recursos.html#instalacion",
+    "title": "Recursos",
+    "section": "",
+    "text": "Instala los programas en este orden, antes de la primera clase:\n\nR, desde CRAN: elige tu sistema operativo y descarga la versión más reciente.\nRStudio Desktop, desde Posit (versión gratuita).\nAbre RStudio y, en la consola, instala los paquetes que usaremos:\n\ninstall.packages(c(\"tidyverse\", \"readxl\", \"patchwork\", \"knitr\"))\n\n\n\n\n\n\n¿No puedes instalar R todavía?\n\n\n\nLos ejercicios de este sitio corren en tu navegador, así que puedes empezar a practicar mientras resuelves la instalación. Si tienes problemas, escribe al correo del curso antes del primer domingo.\n\n\n\nQuarto ya viene incluido en las versiones recientes de RStudio. Si tu RStudio es antiguo, instálalo desde quarto.org.\nPara reportes en PDF, instala además TinyTeX desde la consola de RStudio:\n\ninstall.packages(\"tinytex\")\ntinytex::install_tinytex()"
+  },
+  {
+    "objectID": "recursos.html#libros-gratuitos-en-español",
+    "href": "recursos.html#libros-gratuitos-en-español",
+    "title": "Recursos",
+    "section": "Libros gratuitos en español",
+    "text": "Libros gratuitos en español\n\nR para Ciencia de Datos, de Hadley Wickham y Garrett Grolemund, traducción colaborativa de la comunidad de R de Latinoamérica: importación, manejo y visualización de datos."
+  },
+  {
+    "objectID": "recursos.html#libros-gratuitos-en-inglés",
+    "href": "recursos.html#libros-gratuitos-en-inglés",
+    "title": "Recursos",
+    "section": "Libros gratuitos en inglés",
+    "text": "Libros gratuitos en inglés\n\nLearning Statistics with R, de Danielle Navarro: una introducción amable a la estadística y a R.\nModern Statistics with R, de Måns Thulin: desde el manejo de datos hasta modelos más avanzados.\nHands-On Programming with R, de Garrett Grolemund: programación en R desde cero."
+  },
+  {
+    "objectID": "recursos.html#para-visualización-y-reportes",
+    "href": "recursos.html#para-visualización-y-reportes",
+    "title": "Recursos",
+    "section": "Para visualización y reportes",
+    "text": "Para visualización y reportes\n\nggplot2: Elegant Graphics for Data Analysis, de Hadley Wickham, Danielle Navarro y Thomas Lin Pedersen.\nFundamentals of Data Visualization, de Claus O. Wilke: cómo elegir y diseñar un buen gráfico.\nGuía de Quarto: la documentación oficial."
+  },
+  {
+    "objectID": "recursos.html#ayuda-dentro-de-r",
+    "href": "recursos.html#ayuda-dentro-de-r",
+    "title": "Recursos",
+    "section": "Ayuda dentro de R",
+    "text": "Ayuda dentro de R\n\n?mean o help(mean) abre la ayuda de una función.\nexample(mean) corre los ejemplos de la ayuda.\nLas hojas de referencia de Posit resumen RStudio y muchos paquetes en una página."
+  },
+  {
+    "objectID": "recursos.html#cursos-anteriores",
+    "href": "recursos.html#cursos-anteriores",
+    "title": "Recursos",
+    "section": "Cursos anteriores",
+    "text": "Cursos anteriores\n\nIntroducción a R (2026): el primer curso de esta serie, con pruebas t y ANOVA.\nBioestadística en R (2025): taller de 40 horas con R, {tidyverse}, {ggplot2}, inferencia, diseño de experimentos, modelos lineales y Quarto."
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#section",
+    "href": "diapositivas/modulo-1.html#section",
+    "title": "Visualización de datos en R",
+    "section": "",
+    "text": "Módulo 1: Generalidades e introducción a R\n\nMauricio Moreno, PhD\nsábado 14 de noviembre de 2026"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#acerca-del-curso",
+    "href": "diapositivas/modulo-1.html#acerca-del-curso",
+    "title": "Visualización de datos en R",
+    "section": "Acerca del curso",
+    "text": "Acerca del curso\n\nCuatro sesiones, de 9H00 a 12H00: sábado 14 de noviembre de 2026, sábado 21 de noviembre de 2026, sábado 28 de noviembre de 2026 y sábado 5 de diciembre de 2026.\nTodo el material está en la página web del curso: estas diapositivas, ejercicios interactivos, autoevaluaciones y recursos.\nLos ejercicios corren en el navegador: puedes practicar aunque todavía no tengas R instalado.\nEvaluación: 40% ejercicios en clase y 60% examen virtual. Con 7/10 obtienes el certificado de aprobación.\nPreguntas fuera de clase: mmorenozambrano@gmail.com"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#hoy",
+    "href": "diapositivas/modulo-1.html#hoy",
+    "title": "Visualización de datos en R",
+    "section": "Hoy",
+    "text": "Hoy\n\nR, RStudio y los proyectos de R\nReglas de sintaxis, tipos de datos y operadores\nObjetos: vectores, factores, tablas de datos y listas\nPaquetes e importación de datos\nOperaciones estadísticas básicas\n\n\nEntre cada bloque, ejercicios en la página del curso."
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#por-qué-r",
+    "href": "diapositivas/modulo-1.html#por-qué-r",
+    "title": "Visualización de datos en R",
+    "section": "¿Por qué R?",
+    "text": "¿Por qué R?\n\n\n\n\n\nUso de R comparado con SAS, SPSS y JMP en Ecología (Touchon y McCoy (2016), Ecosphere 7 (8))\n\n\n\n\nEs gratuito y de código abierto.\nTiene más de 20 000 paquetes para casi cualquier análisis.\nEs el estándar en muchas áreas de la biología, la agronomía y la salud.\nTodo queda escrito en un script: el análisis se puede repetir, revisar y compartir.\nUna comunidad enorme, también en español."
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#instalación-de-r-y-rstudio",
+    "href": "diapositivas/modulo-1.html#instalación-de-r-y-rstudio",
+    "title": "Visualización de datos en R",
+    "section": "Instalación de R y RStudio",
+    "text": "Instalación de R y RStudio\nSe instalan en este orden:\n\nR, desde CRAN: es el lenguaje, el que hace los cálculos.\nRStudio Desktop, desde Posit: es el entorno donde escribimos y ejecutamos el código.\n\n\n\n\n\n\n\n\nLa guía paso a paso está en la sección Recursos de la página del curso."
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#rstudio",
+    "href": "diapositivas/modulo-1.html#rstudio",
+    "title": "Visualización de datos en R",
+    "section": "RStudio",
+    "text": "RStudio"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#los-cuatro-paneles",
+    "href": "diapositivas/modulo-1.html#los-cuatro-paneles",
+    "title": "Visualización de datos en R",
+    "section": "Los cuatro paneles",
+    "text": "Los cuatro paneles\n\nScript (arriba a la izquierda): donde escribimos el código que queremos guardar. Ctrl + Enter ejecuta la línea actual.\nConsola (abajo a la izquierda): donde R ejecuta el código y muestra los resultados.\nEntorno (arriba a la derecha): los objetos que hemos creado.\nArchivos, gráficos, paquetes y ayuda (abajo a la derecha)."
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#por-qué-un-proyecto",
+    "href": "diapositivas/modulo-1.html#por-qué-un-proyecto",
+    "title": "Visualización de datos en R",
+    "section": "¿Por qué un proyecto?",
+    "text": "¿Por qué un proyecto?\n\nUn proyecto de R es una carpeta con un archivo .Rproj.\nAl abrirlo, RStudio fija esa carpeta como carpeta de trabajo.\nAsí podemos usar rutas relativas: \"datos/pinguinos.csv\" en lugar de \"C:/Users/Mauricio/Documentos/curso/datos/pinguinos.csv\".\nEl mismo código funciona en tu computador, en el mío y en el de un colega."
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#creando-un-proyecto",
+    "href": "diapositivas/modulo-1.html#creando-un-proyecto",
+    "title": "Visualización de datos en R",
+    "section": "Creando un proyecto",
+    "text": "Creando un proyecto\n\n\n\n\n\n\n\n\n\nFile (Archivo) → New Project… (Nuevo proyecto…)\nNew Directory (Nuevo directorio)\nNew Project (Nuevo proyecto)\nElegimos el nombre de la carpeta y dónde crearla."
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#creando-un-proyecto-1",
+    "href": "diapositivas/modulo-1.html#creando-un-proyecto-1",
+    "title": "Visualización de datos en R",
+    "section": "Creando un proyecto",
+    "text": "Creando un proyecto"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#una-estructura-sencilla",
+    "href": "diapositivas/modulo-1.html#una-estructura-sencilla",
+    "title": "Visualización de datos en R",
+    "section": "Una estructura sencilla",
+    "text": "Una estructura sencilla\n\n\ncurso_R/\n├── curso_R.Rproj\n├── datos/\n│   └── pinguinos.csv\n├── scripts/\n│   └── modulo_1.R\n└── resultados/\n\n\ndatos/: los datos originales. No se modifican a mano.\nscripts/: el código, un archivo por tarea o por sesión.\nresultados/: tablas y gráficos que produce el código."
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#reglas-generales",
+    "href": "diapositivas/modulo-1.html#reglas-generales",
+    "title": "Visualización de datos en R",
+    "section": "Reglas generales",
+    "text": "Reglas generales\n\nR distingue mayúsculas y minúsculas: Tabla y tabla son objetos distintos.\nAsignamos con &lt;- (también funciona =): x &lt;- 5.\nLos nombres no pueden empezar con un número ni tener espacios: mejor masa_final que masa final.\nTodo lo que va después de # es un comentario: R no lo ejecuta.\nEvitemos nombres que ya usa R, como T, F, c o mean.\n\n\n\n# Largo del pico de un pingüino, en mm\npico &lt;- 39.1\npico * 2\n\n[1] 78.2"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#tipos-de-datos",
+    "href": "diapositivas/modulo-1.html#tipos-de-datos",
+    "title": "Visualización de datos en R",
+    "section": "Tipos de datos",
+    "text": "Tipos de datos\n\n\n\nTipo\nEjemplo\nPara qué\n\n\n\n\nnumeric\n39.1, -3\nmediciones\n\n\ninteger\n5L\nconteos\n\n\ncharacter\n\"Hi\", \"control\"\ntexto\n\n\nlogical\nTRUE, FALSE\nsí o no\n\n\nfactor\nfactor(c(\"C\", \"L\"))\ngrupos o tratamientos\n\n\n\n\n\nclass(39.1)\n\n[1] \"numeric\"\n\nclass(\"control\")\n\n[1] \"character\""
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#operadores",
+    "href": "diapositivas/modulo-1.html#operadores",
+    "title": "Visualización de datos en R",
+    "section": "Operadores",
+    "text": "Operadores\n\n\nAritméticos\n+  -  *  /  ^\n\n2^10\n\n[1] 1024\n\n(4050 - 3750) / 3750 * 100\n\n[1] 8\n\n\n\nDe comparación\n==  !=  &lt;  &gt;  &lt;=  &gt;=\n\n5 == 5\n\n[1] TRUE\n\n5 != 3\n\n[1] TRUE\n\n\n\nLógicos\n& (y), | (o), ! (no)\n\n(5 &gt; 3) & (2 &gt; 4)\n\n[1] FALSE\n\n(5 &gt; 3) | (2 &gt; 4)\n\n[1] TRUE"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#vectores",
+    "href": "diapositivas/modulo-1.html#vectores",
+    "title": "Visualización de datos en R",
+    "section": "Vectores",
+    "text": "Vectores\nUn vector guarda varios valores del mismo tipo. Se crea con c().\n\nmasas &lt;- c(3750, 3800, 3250, 3450, 3650)\nlength(masas)\n\n[1] 5\n\nmasas[2]\n\n[1] 3800\n\nmasas[masas &gt; 3500]\n\n[1] 3750 3800 3650\n\n\n\nLas operaciones se aplican a todos los elementos:\n\nmasas / 1000\n\n[1] 3.75 3.80 3.25 3.45 3.65"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#factores",
+    "href": "diapositivas/modulo-1.html#factores",
+    "title": "Visualización de datos en R",
+    "section": "Factores",
+    "text": "Factores\nUn factor es un vector de grupos, con niveles.\n\nespecie &lt;- factor(c(\"Adelie\", \"Gentoo\", \"Chinstrap\", \"Adelie\", \"Gentoo\"))\nespecie\n\n[1] Adelie    Gentoo    Chinstrap Adelie    Gentoo   \nLevels: Adelie Chinstrap Gentoo\n\nlevels(especie)\n\n[1] \"Adelie\"    \"Chinstrap\" \"Gentoo\"   \n\ntable(especie)\n\nespecie\n   Adelie Chinstrap    Gentoo \n        2         1         2 \n\n\n\nLas especies, las islas y los tratamientos de un experimento son factores. En {ggplot2}, los factores definen colores y grupos."
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#tablas-de-datos",
+    "href": "diapositivas/modulo-1.html#tablas-de-datos",
+    "title": "Visualización de datos en R",
+    "section": "Tablas de datos",
+    "text": "Tablas de datos\nUn data.frame es una tabla: cada columna es un vector, y todas tienen el mismo largo.\n\naves &lt;- data.frame(\n  id = c(1, 2, 3),\n  especie = c(\"Adelie\", \"Gentoo\", \"Chinstrap\"),\n  masa = c(3750, 5500, 3700)\n)\naves\n\n  id   especie masa\n1  1    Adelie 3750\n2  2    Gentoo 5500\n3  3 Chinstrap 3700\n\n\n\n\naves$masa          # una columna, con $\n\n[1] 3750 5500 3700\n\naves[2, ]          # una fila: [fila, columna]\n\n  id especie masa\n2  2  Gentoo 5500\n\naves[3, \"masa\"]    # un valor\n\n[1] 3700"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#listas",
+    "href": "diapositivas/modulo-1.html#listas",
+    "title": "Visualización de datos en R",
+    "section": "Listas",
+    "text": "Listas\nUna lista guarda objetos de cualquier tipo, incluso otras tablas.\n\nestudio &lt;- list(nombre = \"Palmer\", aves = 344, tabla = aves)\nestudio$aves\n\n[1] 344\n\n\n\nMuchos resultados de R son listas; un gráfico de {ggplot2} también lo es."
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#section-1",
+    "href": "diapositivas/modulo-1.html#section-1",
+    "title": "Visualización de datos en R",
+    "section": "",
+    "text": "Ejercicios, Parte 1"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#paquetes",
+    "href": "diapositivas/modulo-1.html#paquetes",
+    "title": "Visualización de datos en R",
+    "section": "Paquetes",
+    "text": "Paquetes\n\nUn paquete agrega funciones a R. Se descargan de CRAN.\nSe instalan una sola vez en tu computador:\n\n\n\ninstall.packages(\"readxl\")\n\n\n\n\nSe cargan en cada sesión en que los uses:\n\n\n\n\nlibrary(readxl)"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#ayuda-en-r",
+    "href": "diapositivas/modulo-1.html#ayuda-en-r",
+    "title": "Visualización de datos en R",
+    "section": "Ayuda en R",
+    "text": "Ayuda en R\n\n\n\n?mean\nhelp(sd)\nexample(mean)\n\n\nLa ayuda explica los argumentos de cada función y trae ejemplos al final.\nUn mensaje de error copiado en un buscador casi siempre tiene respuesta."
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#importar-un-archivo-csv",
+    "href": "diapositivas/modulo-1.html#importar-un-archivo-csv",
+    "title": "Visualización de datos en R",
+    "section": "Importar un archivo csv",
+    "text": "Importar un archivo csv\nEn tu proyecto, con el archivo en la carpeta datos/:\n\npinguinos &lt;- read.csv(\"datos/pinguinos.csv\")\n\n\nLo primero, siempre: revisar lo que importamos.\n\nstr(pinguinos)\n\n'data.frame':   344 obs. of  8 variables:\n $ species          : chr  \"Adelie\" \"Adelie\" \"Adelie\" \"Adelie\" ...\n $ island           : chr  \"Torgersen\" \"Torgersen\" \"Torgersen\" \"Torgersen\" ...\n $ bill_length_mm   : num  39.1 39.5 40.3 NA 36.7 39.3 38.9 39.2 34.1 42 ...\n $ bill_depth_mm    : num  18.7 17.4 18 NA 19.3 20.6 17.8 19.6 18.1 20.2 ...\n $ flipper_length_mm: int  181 186 195 NA 193 190 181 195 193 190 ...\n $ body_mass_g      : int  3750 3800 3250 NA 3450 3650 3625 4675 3475 4250 ...\n $ sex              : chr  \"male\" \"female\" \"female\" NA ...\n $ year             : int  2007 2007 2007 2007 2007 2007 2007 2007 2007 2007 ..."
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#importar-un-archivo-de-excel",
+    "href": "diapositivas/modulo-1.html#importar-un-archivo-de-excel",
+    "title": "Visualización de datos en R",
+    "section": "Importar un archivo de Excel",
+    "text": "Importar un archivo de Excel\n\nlibrary(readxl)\npinguinos &lt;- read_excel(\"datos/pinguinos.xlsx\", sheet = 1)\n\n\n\n\n\n\n\n\nAntes de importar\n\n\n\nUna fila por observación y una columna por variable.\nNombres de columna cortos, sin espacios ni tildes.\nSin celdas combinadas, colores ni totales al final."
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#los-datos-del-curso",
+    "href": "diapositivas/modulo-1.html#los-datos-del-curso",
+    "title": "Visualización de datos en R",
+    "section": "Los datos del curso",
+    "text": "Los datos del curso\npinguinos.csv: 344 pingüinos del archipiélago Palmer, Antártida (Gorman y estación Palmer LTER, paquete {palmerpenguins}, licencia CC0).\n\n\n\n\n\n\n\nVariable\nQué es\n\n\n\n\nspecies\nespecie: Adelie, Chinstrap, Gentoo\n\n\nisland\nisla: Biscoe, Dream, Torgersen\n\n\nbill_length_mm, bill_depth_mm\nlargo y profundidad del pico (mm)\n\n\nflipper_length_mm\nlargo de la aleta (mm)\n\n\nbody_mass_g\nmasa corporal (g)\n\n\nsex\nsexo: female, male\n\n\nyear\naño de la medición: 2007, 2008, 2009"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#section-2",
+    "href": "diapositivas/modulo-1.html#section-2",
+    "title": "Visualización de datos en R",
+    "section": "",
+    "text": "Ejercicios, Parte 2"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#valores-faltantes",
+    "href": "diapositivas/modulo-1.html#valores-faltantes",
+    "title": "Visualización de datos en R",
+    "section": "Valores faltantes",
+    "text": "Valores faltantes\nEn los datos reales casi siempre falta algo. En R, un valor faltante es NA.\n\nsummary(pinguinos$body_mass_g)\n\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.     NAs \n   2700    3550    4050    4202    4750    6300       2 \n\nmean(pinguinos$body_mass_g)\n\n[1] NA\n\n\n\nR no puede calcular la media si falta un dato. Le pedimos que lo ignore con na.rm = TRUE:\n\nmean(pinguinos$body_mass_g, na.rm = TRUE)\n\n[1] 4201.754\n\nsum(is.na(pinguinos$body_mass_g))\n\n[1] 2"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#tendencia-central-y-dispersión",
+    "href": "diapositivas/modulo-1.html#tendencia-central-y-dispersión",
+    "title": "Visualización de datos en R",
+    "section": "Tendencia central y dispersión",
+    "text": "Tendencia central y dispersión\n\nmedian(pinguinos$body_mass_g, na.rm = TRUE)\n\n[1] 4050\n\nsd(pinguinos$body_mass_g, na.rm = TRUE)\n\n[1] 801.9545\n\nquantile(pinguinos$body_mass_g, na.rm = TRUE)\n\n  0%  25%  50%  75% 100% \n2700 3550 4050 4750 6300 \n\n\n\n\\[\ns = \\sqrt{\\frac{\\sum_{i=1}^{n}(x_i - \\bar{x})^2}{n - 1}}\n\\]"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#resumir-por-grupos",
+    "href": "diapositivas/modulo-1.html#resumir-por-grupos",
+    "title": "Visualización de datos en R",
+    "section": "Resumir por grupos",
+    "text": "Resumir por grupos\n\ntapply(pinguinos$body_mass_g, pinguinos$species, mean, na.rm = TRUE)\n\n   Adelie Chinstrap    Gentoo \n 3700.662  3733.088  5076.016 \n\n\n\n\naggregate(body_mass_g ~ species, data = pinguinos, FUN = mean)\n\n    species body_mass_g\n1    Adelie    3700.662\n2 Chinstrap    3733.088\n3    Gentoo    5076.016\n\n\naggregate() con fórmula descarta las filas con NA por su cuenta."
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#variables-categóricas",
+    "href": "diapositivas/modulo-1.html#variables-categóricas",
+    "title": "Visualización de datos en R",
+    "section": "Variables categóricas",
+    "text": "Variables categóricas\n\ntable(pinguinos$species)\n\n\n   Adelie Chinstrap    Gentoo \n      152        68       124 \n\nprop.table(table(pinguinos$species))\n\n\n   Adelie Chinstrap    Gentoo \n0.4418605 0.1976744 0.3604651 \n\ntable(pinguinos$species, pinguinos$island)\n\n           \n            Biscoe Dream Torgersen\n  Adelie        44    56        52\n  Chinstrap      0    68         0\n  Gentoo       124     0         0\n\n\n\n¿Qué nos dice la tabla cruzada? Los Gentoo solo están en Biscoe y los Chinstrap solo en Dream. En el Módulo 2 haremos esto mismo con {dplyr} y lo veremos en un gráfico."
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#section-3",
+    "href": "diapositivas/modulo-1.html#section-3",
+    "title": "Visualización de datos en R",
+    "section": "",
+    "text": "Ejercicios, Parte 3"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#antes-de-la-próxima-sesión",
+    "href": "diapositivas/modulo-1.html#antes-de-la-próxima-sesión",
+    "title": "Visualización de datos en R",
+    "section": "Antes de la próxima sesión",
+    "text": "Antes de la próxima sesión\n\nCrea tu proyecto de R para el curso, con las carpetas datos/, scripts/ y resultados/.\nCompleta todos los ejercicios del Módulo 1: lo que no alcanzamos en clase, incluida la Parte 4, es tarea.\nImporta tus propios datos y calcula sus estadísticos básicos.\nHaz la autoevaluación del Módulo 1."
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#section-4",
+    "href": "diapositivas/modulo-1.html#section-4",
+    "title": "Visualización de datos en R",
+    "section": "",
+    "text": "Fin del módulo 1\n\n\n\n\n\n\n\nCréditos de fotos\n\n\nPortada por Becomes Co en Unsplash\nFoto final por Wolfgang Hasselmann en Unsplash\nResto de fotos: varias fuentes"
+  },
+  {
+    "objectID": "diapositivas/modulo-3.html#section",
+    "href": "diapositivas/modulo-3.html#section",
+    "title": "Visualización de datos en R",
+    "section": "",
+    "text": "Módulo 3: Visualización de datos con {ggplot2}\n\nMauricio Moreno, PhD\nsábado 28 de noviembre de 2026"
+  },
+  {
+    "objectID": "diapositivas/modulo-3.html#hoy",
+    "href": "diapositivas/modulo-3.html#hoy",
+    "title": "Visualización de datos en R",
+    "section": "Hoy",
+    "text": "Hoy\n\nElegir el gráfico según las variables\nGráficos comunes\nFiguras con estadísticos\nGráficos especiales: facetas y mapas de calor\nEscalas, etiquetas y temas\nExportar gráficos"
+  },
+  {
+    "objectID": "diapositivas/modulo-3.html#los-datos-de-hoy",
+    "href": "diapositivas/modulo-3.html#los-datos-de-hoy",
+    "title": "Visualización de datos en R",
+    "section": "Los datos de hoy",
+    "text": "Los datos de hoy\n\n\nMostrar el código\nlibrary(tidyverse)\npinguinos &lt;- read_csv(\"datos/pinguinos.csv\") |&gt;\n  filter(!is.na(sex)) |&gt;\n  mutate(species = factor(species), sex = factor(sex), island = factor(island))\npinguinos\n\n\n# A tibble: 333 × 8\n   species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g\n   &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;\n 1 Adelie  Torgersen           39.1          18.7               181        3750\n 2 Adelie  Torgersen           39.5          17.4               186        3800\n 3 Adelie  Torgersen           40.3          18                 195        3250\n 4 Adelie  Torgersen           36.7          19.3               193        3450\n 5 Adelie  Torgersen           39.3          20.6               190        3650\n 6 Adelie  Torgersen           38.9          17.8               181        3625\n 7 Adelie  Torgersen           39.2          19.6               195        4675\n 8 Adelie  Torgersen           41.1          17.6               182        3200\n 9 Adelie  Torgersen           38.6          21.2               191        3800\n10 Adelie  Torgersen           34.6          21.1               198        4400\n# ℹ 323 more rows\n# ℹ 2 more variables: sex &lt;fct&gt;, year &lt;dbl&gt;\n\n\nQuitamos las 11 filas sin sexo, para que no aparezca una categoría NA en los gráficos."
+  },
+  {
+    "objectID": "diapositivas/modulo-3.html#qué-gráfico-uso",
+    "href": "diapositivas/modulo-3.html#qué-gráfico-uso",
+    "title": "Visualización de datos en R",
+    "section": "¿Qué gráfico uso?",
+    "text": "¿Qué gráfico uso?\n\n\n\n\n\n\n\n\nVariables\nPregunta típica\nGráfico\n\n\n\n\n1 categórica\n¿Cuántos hay de cada grupo?\nbarras: geom_bar()\n\n\n1 numérica\n¿Cómo se distribuye?\nhistograma, densidad: geom_histogram(), geom_density()\n\n\n2 categóricas\n¿Cómo se combinan?\nbarras apiladas o agrupadas: geom_bar(position = ...)\n\n\nnumérica y categórica\n¿Difieren los grupos?\ncajas, violines, puntos: geom_boxplot(), geom_violin(), geom_jitter()\n\n\n2 numéricas\n¿Están relacionadas?\ndispersión: geom_point()\n\n\nnumérica en el tiempo\n¿Cómo cambia?\nlíneas: geom_line()"
+  },
+  {
+    "objectID": "diapositivas/modulo-3.html#barras",
+    "href": "diapositivas/modulo-3.html#barras",
+    "title": "Visualización de datos en R",
+    "section": "Barras",
+    "text": "Barras\n\n\n\nggplot(pinguinos, aes(x = species)) +\n  geom_bar()\n\n\n\n\n\n\n\n\n\n\nggplot(pinguinos, aes(x = island, fill = species)) +\n  geom_bar(position = \"dodge\")\n\n\n\n\n\n\n\n\n\ngeom_bar() cuenta las filas. Si ya tienes los conteos en una columna, usa geom_col()."
+  },
+  {
+    "objectID": "diapositivas/modulo-3.html#distribuciones",
+    "href": "diapositivas/modulo-3.html#distribuciones",
+    "title": "Visualización de datos en R",
+    "section": "Distribuciones",
+    "text": "Distribuciones\n\n\n\nggplot(pinguinos, aes(x = body_mass_g)) +\n  geom_histogram(binwidth = 200,\n                 color = \"white\")\n\n\n\n\n\n\n\n\n\n\nggplot(pinguinos, aes(x = body_mass_g, fill = species)) +\n  geom_density(alpha = 0.5)"
+  },
+  {
+    "objectID": "diapositivas/modulo-3.html#una-numérica-y-una-categórica",
+    "href": "diapositivas/modulo-3.html#una-numérica-y-una-categórica",
+    "title": "Visualización de datos en R",
+    "section": "Una numérica y una categórica",
+    "text": "Una numérica y una categórica\n\n\n\nggplot(pinguinos, aes(x = species, y = body_mass_g)) +\n  geom_boxplot()\n\n\n\n\n\n\n\n\n\n\nggplot(pinguinos, aes(x = species, y = body_mass_g)) +\n  geom_violin() +\n  geom_jitter(width = 0.15, alpha = 0.4)\n\n\n\n\n\n\n\n\n\nCon pocos datos, muestra los puntos: un diagrama de caja puede esconder cómo se reparten."
+  },
+  {
+    "objectID": "diapositivas/modulo-3.html#líneas",
+    "href": "diapositivas/modulo-3.html#líneas",
+    "title": "Visualización de datos en R",
+    "section": "Líneas",
+    "text": "Líneas\nDatos economics, incluidos en {ggplot2}: desempleo mensual en EE. UU.\n\nggplot(economics, aes(x = date, y = unemploy / 1000)) +\n  geom_line() +\n  labs(x = NULL, y = \"Desempleados (millones)\")"
+  },
+  {
+    "objectID": "diapositivas/modulo-3.html#medias-y-barras-de-error",
+    "href": "diapositivas/modulo-3.html#medias-y-barras-de-error",
+    "title": "Visualización de datos en R",
+    "section": "Medias y barras de error",
+    "text": "Medias y barras de error\nstat_summary() calcula el estadístico por nosotros: aquí, la media ± un error estándar.\n\nggplot(pinguinos, aes(x = species, y = body_mass_g)) +\n  geom_jitter(width = 0.15, alpha = 0.3) +\n  stat_summary(fun.data = mean_se, color = \"#D55E00\", size = 0.8)"
+  },
+  {
+    "objectID": "diapositivas/modulo-3.html#medias-y-barras-de-error-calculadas-antes",
+    "href": "diapositivas/modulo-3.html#medias-y-barras-de-error-calculadas-antes",
+    "title": "Visualización de datos en R",
+    "section": "Medias y barras de error, calculadas antes",
+    "text": "Medias y barras de error, calculadas antes\n\n\nMostrar el código\nresumen &lt;- pinguinos |&gt;\n  group_by(species, sex) |&gt;\n  summarise(media = mean(body_mass_g),\n            ee = sd(body_mass_g) / sqrt(n()), .groups = \"drop\")\n\n\n\nggplot(resumen, aes(x = species, y = media, color = sex)) +\n  geom_point(size = 3, position = position_dodge(width = 0.4)) +\n  geom_errorbar(aes(ymin = media - ee, ymax = media + ee), width = 0.15,\n                position = position_dodge(width = 0.4))"
+  },
+  {
+    "objectID": "diapositivas/modulo-3.html#líneas-de-tendencia",
+    "href": "diapositivas/modulo-3.html#líneas-de-tendencia",
+    "title": "Visualización de datos en R",
+    "section": "Líneas de tendencia",
+    "text": "Líneas de tendencia\n\nggplot(pinguinos, aes(x = flipper_length_mm, y = body_mass_g, color = species)) +\n  geom_point(alpha = 0.5) +\n  geom_smooth(method = \"lm\")\n\n\nmethod = \"lm\" ajusta una recta; la banda es su intervalo de confianza del 95%."
+  },
+  {
+    "objectID": "diapositivas/modulo-3.html#section-1",
+    "href": "diapositivas/modulo-3.html#section-1",
+    "title": "Visualización de datos en R",
+    "section": "",
+    "text": "Ejercicios, Partes 1 y 2"
+  },
+  {
+    "objectID": "diapositivas/modulo-3.html#facetas",
+    "href": "diapositivas/modulo-3.html#facetas",
+    "title": "Visualización de datos en R",
+    "section": "Facetas",
+    "text": "Facetas\n\n\n\nggplot(pinguinos, aes(x = flipper_length_mm,\n                      y = body_mass_g)) +\n  geom_point() +\n  facet_wrap(~ species)\n\n\n\n\n\n\n\n\n\n\nggplot(pinguinos, aes(x = body_mass_g)) +\n  geom_histogram(binwidth = 250) +\n  facet_grid(sex ~ species)\n\n\n\n\n\n\n\n\n\nfacet_wrap(~ a): un panel por nivel. facet_grid(filas ~ columnas): una cuadrícula con dos factores."
+  },
+  {
+    "objectID": "diapositivas/modulo-3.html#mapas-de-calor",
+    "href": "diapositivas/modulo-3.html#mapas-de-calor",
+    "title": "Visualización de datos en R",
+    "section": "Mapas de calor",
+    "text": "Mapas de calor\n\n\nMostrar el código\nconteos &lt;- pinguinos |&gt; count(species, island)\n\n\n\nggplot(conteos, aes(x = island, y = species, fill = n)) +\n  geom_tile(color = \"white\") +\n  geom_text(aes(label = n)) +\n  scale_fill_gradient(low = \"#e8f1f8\", high = \"#1f5f8b\")"
+  },
+  {
+    "objectID": "diapositivas/modulo-3.html#un-gráfico-por-defecto",
+    "href": "diapositivas/modulo-3.html#un-gráfico-por-defecto",
+    "title": "Visualización de datos en R",
+    "section": "Un gráfico por defecto…",
+    "text": "Un gráfico por defecto…\n\np &lt;- ggplot(pinguinos, aes(x = bill_length_mm, y = bill_depth_mm, color = species)) +\n  geom_point()\np\n\n\n\nUn gráfico es un objeto: lo guardamos en p y le seguimos sumando capas."
+  },
+  {
+    "objectID": "diapositivas/modulo-3.html#paso-a-paso-listo-para-un-informe",
+    "href": "diapositivas/modulo-3.html#paso-a-paso-listo-para-un-informe",
+    "title": "Visualización de datos en R",
+    "section": "…paso a paso, listo para un informe",
+    "text": "…paso a paso, listo para un informe\n\np +\n  scale_color_manual(values = c(Adelie = \"#E69F00\", Chinstrap = \"#56B4E9\", Gentoo = \"#009E73\")) +\n  labs(x = \"Largo del pico (mm)\", y = \"Profundidad del pico (mm)\", color = \"Especie\",\n       title = \"Cada especie tiene una forma de pico distinta\",\n       caption = \"Datos: Gorman et al. (2014), {palmerpenguins}\") +\n  theme_minimal(base_size = 14) +\n  theme(legend.position = \"bottom\")"
+  },
+  {
+    "objectID": "diapositivas/modulo-3.html#escalas-y-paletas",
+    "href": "diapositivas/modulo-3.html#escalas-y-paletas",
+    "title": "Visualización de datos en R",
+    "section": "Escalas y paletas",
+    "text": "Escalas y paletas\n\nscale_color_*() y scale_fill_*() controlan los colores: _manual(), _brewer(), _viridis_d() (discreta) y _viridis_c() (continua).\nUsa paletas aptas para daltonismo: viridis u Okabe-Ito (la del gráfico anterior).\nscale_x_continuous() y scale_y_continuous(): límites, cortes y etiquetas de los ejes.\nscale_y_log10(): eje logarítmico."
+  },
+  {
+    "objectID": "diapositivas/modulo-3.html#temas",
+    "href": "diapositivas/modulo-3.html#temas",
+    "title": "Visualización de datos en R",
+    "section": "Temas",
+    "text": "Temas\n\n\n\np + theme_bw()\n\n\n\n\n\n\n\n\n\n\np + theme_classic()\n\n\n\n\n\n\n\n\n\ntheme() ajusta cualquier detalle: tamaño del texto, posición de la leyenda, líneas de la cuadrícula…"
+  },
+  {
+    "objectID": "diapositivas/modulo-3.html#ggsave",
+    "href": "diapositivas/modulo-3.html#ggsave",
+    "title": "Visualización de datos en R",
+    "section": "ggsave()",
+    "text": "ggsave()\n\ngrafico &lt;- p + theme_minimal()\n\nggsave(\"resultados/picos.png\", plot = grafico, width = 16, height = 10, units = \"cm\", dpi = 300)\nggsave(\"resultados/picos.pdf\", plot = grafico, width = 16, height = 10, units = \"cm\")\n\n\npng con dpi = 300 para Word y presentaciones; pdf o svg (vectoriales) para publicaciones.\nFija width y height: si no, el tamaño depende de la ventana de RStudio."
+  },
+  {
+    "objectID": "diapositivas/modulo-3.html#combinar-gráficos-con-patchwork",
+    "href": "diapositivas/modulo-3.html#combinar-gráficos-con-patchwork",
+    "title": "Visualización de datos en R",
+    "section": "Combinar gráficos con {patchwork}",
+    "text": "Combinar gráficos con {patchwork}\n\nlibrary(patchwork)\ng1 &lt;- ggplot(pinguinos, aes(x = species, y = body_mass_g)) + geom_boxplot()\ng2 &lt;- ggplot(pinguinos, aes(x = flipper_length_mm, y = body_mass_g)) + geom_point()\ng1 + g2 + plot_annotation(tag_levels = \"A\")"
+  },
+  {
+    "objectID": "diapositivas/modulo-3.html#section-2",
+    "href": "diapositivas/modulo-3.html#section-2",
+    "title": "Visualización de datos en R",
+    "section": "",
+    "text": "Ejercicios, Parte 3"
+  },
+  {
+    "objectID": "diapositivas/modulo-3.html#antes-de-la-próxima-sesión",
+    "href": "diapositivas/modulo-3.html#antes-de-la-próxima-sesión",
+    "title": "Visualización de datos en R",
+    "section": "Antes de la próxima sesión",
+    "text": "Antes de la próxima sesión\n\nCompleta todos los ejercicios del Módulo 3: lo que no alcanzamos en clase, incluida la Parte 4, es tarea.\nCon tus propios datos, haz un gráfico listo para un informe y expórtalo con ggsave().\nHaz la autoevaluación del Módulo 3."
+  },
+  {
+    "objectID": "diapositivas/modulo-3.html#section-3",
+    "href": "diapositivas/modulo-3.html#section-3",
+    "title": "Visualización de datos en R",
+    "section": "",
+    "text": "Fin del módulo 3\n\n\n\n\n\n\n\nCréditos\n\n\nDatos: Gorman KB, Williams TD, Fraser WR (2014), PLoS ONE 9(3): e90081, distribuidos en el paquete {palmerpenguins} (CC0).\nFoto final por Peter Robbins en Unsplash\nResto de fotos: varias fuentes"
+  }
+]

@@ -1,0 +1,563 @@
+---
+pagetitle: "Módulo 1: Generalidades e introducción a R"
+logo: images/icon1_nb.png
+lang: es
+filters:
+  - timer
+format:
+  letterbox-revealjs:
+    theme: custom.scss
+    progress: false
+    menu: true
+    width: 1400
+    height: 720
+    slide-number: true
+    preview-links: auto
+    touch: true
+    chalkboard:
+      theme: whiteboard
+      boardmarker-width: 4
+      buttons: false
+    revealjs-plugins:
+      - pointer
+execute:
+  echo: true
+  warning: false
+  message: false
+code-summary: "Mostrar el código"
+callout-appearance: simple
+---
+
+## {}
+
+::: columns
+::: {.column width="37.5%"}
+![](images/icon1_nb.png){style="margin-left:-40px"}
+:::
+
+::: {.column width="60%"}
+::: {.title data-id="title"}
+Módulo 1: Generalidades e introducción a R
+:::
+
+Mauricio Moreno, PhD
+
+{{< var fecha-m1 >}}
+:::
+:::
+
+![](images/becomes-co-s_FHDDSVp1s-unsplash.jpg){.image-left}
+
+## Acerca del curso {.smaller}
+
+::: incremental
+-   Cuatro sesiones, de {{< var horario >}}: **{{< var fecha-m1 >}}, {{< var fecha-m2 >}}, {{< var fecha-m3 >}} y {{< var fecha-m4 >}}**.
+-   Todo el material está en la [página web del curso](../index.html){target="_blank"}: estas diapositivas, ejercicios interactivos, autoevaluaciones y recursos.
+-   Los ejercicios corren **en el navegador**: puedes practicar aunque todavía no tengas R instalado.
+-   Evaluación: **40%** ejercicios en clase y **60%** examen virtual. Con **7/10** obtienes el certificado de aprobación.
+-   Preguntas fuera de clase: **mmorenozambrano\@gmail.com**
+:::
+
+## Hoy
+
+1.  R, RStudio y los proyectos de R
+2.  Reglas de sintaxis, tipos de datos y operadores
+3.  Objetos: vectores, factores, tablas de datos y listas
+4.  Paquetes e importación de datos
+5.  Operaciones estadísticas básicas
+
+. . .
+
+Entre cada bloque, **ejercicios** en la página del curso.
+
+# R y RStudio
+
+## ¿Por qué R? {.smaller}
+
+::: columns
+::: {.column width="50%"}
+![[Uso de R comparado con SAS, SPSS y JMP en Ecología (Touchon y McCoy (2016), *Ecosphere* **7** (8))](https://esajournals.onlinelibrary.wiley.com/doi/10.1002/ecs2.1394){target="_blank"}](images/use.jpg){fig-align="center"}
+:::
+
+::: {.column width="50%"}
+::: incremental
+-   Es **gratuito** y de código abierto.
+-   Tiene más de 20 000 paquetes para casi cualquier análisis.
+-   Es el estándar en muchas áreas de la biología, la agronomía y la salud.
+-   Todo queda escrito en un **script**: el análisis se puede repetir, revisar y compartir.
+-   Una comunidad enorme, también en español.
+:::
+:::
+:::
+
+## Instalación de R y RStudio {.smaller}
+
+Se instalan **en este orden**:
+
+1.  **R**, desde [CRAN](https://cran.r-project.org/){target="_blank"}: es el lenguaje, el que hace los cálculos.
+2.  **RStudio Desktop**, desde [Posit](https://posit.co/download/rstudio-desktop/){target="_blank"}: es el entorno donde escribimos y ejecutamos el código.
+
+. . .
+
+::: callout-tip
+La guía paso a paso está en la sección [Recursos](../recursos.html#instalacion){target="_blank"} de la página del curso.
+:::
+
+## RStudio
+
+![](images/gui.png){fig-align="center"}
+
+## Los cuatro paneles {.smaller}
+
+::: incremental
+-   **Script** (arriba a la izquierda): donde escribimos el código que queremos guardar. `Ctrl + Enter` ejecuta la línea actual.
+-   **Consola** (abajo a la izquierda): donde R ejecuta el código y muestra los resultados.
+-   **Entorno** (arriba a la derecha): los objetos que hemos creado.
+-   **Archivos, gráficos, paquetes y ayuda** (abajo a la derecha).
+:::
+
+# Proyectos de R
+
+## ¿Por qué un proyecto? {.smaller}
+
+::: incremental
+-   Un **proyecto de R** es una carpeta con un archivo `.Rproj`.
+-   Al abrirlo, RStudio fija esa carpeta como **carpeta de trabajo**.
+-   Así podemos usar **rutas relativas**: `"datos/pinguinos.csv"` en lugar de `"C:/Users/Mauricio/Documentos/curso/datos/pinguinos.csv"`.
+-   El mismo código funciona en tu computador, en el mío y en el de un colega.
+:::
+
+## Creando un proyecto {.smaller}
+
+::: columns
+::: {.column width="40%"}
+![](images/win1.png){fig-align="center"}
+:::
+
+::: {.column width="60%"}
+1.  *File* (Archivo) → *New Project...* (Nuevo proyecto...)
+2.  *New Directory* (Nuevo directorio)
+3.  *New Project* (Nuevo proyecto)
+4.  Elegimos el nombre de la carpeta y dónde crearla.
+:::
+:::
+
+## Creando un proyecto {visibility="uncounted"}
+
+![](images/win4.png){fig-align="center"}
+
+## Una estructura sencilla {.smaller}
+
+::: columns
+::: {.column width="45%"}
+```
+curso_R/
+├── curso_R.Rproj
+├── datos/
+│   └── pinguinos.csv
+├── scripts/
+│   └── modulo_1.R
+└── resultados/
+```
+:::
+
+::: {.column width="55%"}
+::: incremental
+-   `datos/`: los datos originales. **No se modifican a mano.**
+-   `scripts/`: el código, un archivo por tarea o por sesión.
+-   `resultados/`: tablas y gráficos que produce el código.
+:::
+:::
+:::
+
+# Sintaxis, tipos de datos y operadores
+
+## Reglas generales {.smaller}
+
+::: incremental
+-   R distingue mayúsculas y minúsculas: `Tabla` y `tabla` son objetos distintos.
+-   Asignamos con `<-` (también funciona `=`): `x <- 5`.
+-   Los nombres no pueden empezar con un número ni tener espacios: mejor `masa_final` que `masa final`.
+-   Todo lo que va después de `#` es un **comentario**: R no lo ejecuta.
+-   Evitemos nombres que ya usa R, como `T`, `F`, `c` o `mean`.
+:::
+
+. . .
+
+```{r}
+# Largo del pico de un pingüino, en mm
+pico <- 39.1
+pico * 2
+```
+
+## Tipos de datos
+
+| Tipo | Ejemplo | Para qué |
+|:--|:--|:--|
+| `numeric` | `39.1`, `-3` | mediciones |
+| `integer` | `5L` | conteos |
+| `character` | `"Hi"`, `"control"` | texto |
+| `logical` | `TRUE`, `FALSE` | sí o no |
+| `factor` | `factor(c("C", "L"))` | grupos o tratamientos |
+
+. . .
+
+```{r}
+class(39.1)
+class("control")
+```
+
+## Operadores {.smaller}
+
+::: columns
+::: {.column width="33%"}
+**Aritméticos**
+
+`+  -  *  /  ^`
+
+```{r}
+2^10
+(4050 - 3750) / 3750 * 100
+```
+:::
+
+::: {.column width="33%"}
+**De comparación**
+
+`==  !=  <  >  <=  >=`
+
+```{r}
+5 == 5
+5 != 3
+```
+:::
+
+::: {.column width="33%"}
+**Lógicos**
+
+`&` (y), `|` (o), `!` (no)
+
+```{r}
+(5 > 3) & (2 > 4)
+(5 > 3) | (2 > 4)
+```
+:::
+:::
+
+# Objetos
+
+## Vectores {.smaller}
+
+Un vector guarda varios valores **del mismo tipo**. Se crea con `c()`.
+
+```{r}
+masas <- c(3750, 3800, 3250, 3450, 3650)
+length(masas)
+masas[2]
+masas[masas > 3500]
+```
+
+. . .
+
+Las operaciones se aplican a **todos** los elementos:
+
+```{r}
+masas / 1000
+```
+
+## Factores {.smaller}
+
+Un factor es un vector de grupos, con **niveles**.
+
+```{r}
+especie <- factor(c("Adelie", "Gentoo", "Chinstrap", "Adelie", "Gentoo"))
+especie
+levels(especie)
+table(especie)
+```
+
+. . .
+
+Las especies, las islas y los tratamientos de un experimento son factores. En `{ggplot2}`, los factores definen colores y grupos.
+
+## Tablas de datos {.smaller}
+
+Un `data.frame` es una tabla: cada columna es un vector, y todas tienen el mismo largo.
+
+```{r}
+aves <- data.frame(
+  id = c(1, 2, 3),
+  especie = c("Adelie", "Gentoo", "Chinstrap"),
+  masa = c(3750, 5500, 3700)
+)
+aves
+```
+
+. . .
+
+```{r}
+aves$masa          # una columna, con $
+aves[2, ]          # una fila: [fila, columna]
+aves[3, "masa"]    # un valor
+```
+
+## Listas {.smaller}
+
+Una lista guarda objetos **de cualquier tipo**, incluso otras tablas.
+
+```{r}
+estudio <- list(nombre = "Palmer", aves = 344, tabla = aves)
+estudio$aves
+```
+
+. . .
+
+Muchos resultados de R son listas; un gráfico de `{ggplot2}` también lo es.
+
+## {}
+
+::: columns
+::: {.column width="37.5%"}
+:::
+
+::: {.column width="60%"}
+::: {.title data-id="title"}
+[Ejercicios, Parte 1](../ejercicios-1.html#parte-1){target="_blank"}
+:::
+
+::: {.timer #Timer1 seconds=900 starton=interaction}
+:::
+:::
+:::
+
+![](images/ragun.png){.image-left}
+
+# Paquetes e importación de datos
+
+## Paquetes {.smaller}
+
+::: incremental
+-   Un **paquete** agrega funciones a R. Se descargan de [CRAN](https://cran.r-project.org/){target="_blank"}.
+-   Se **instalan una sola vez** en tu computador:
+:::
+
+. . .
+
+```{r}
+#| eval: false
+install.packages("readxl")
+```
+
+. . .
+
+::: incremental
+-   Se **cargan en cada sesión** en que los uses:
+:::
+
+. . .
+
+```{r}
+#| eval: false
+library(readxl)
+```
+
+## Ayuda en R {.smaller}
+
+::: columns
+::: {.column width="45%"}
+```{r}
+#| eval: false
+?mean
+help(sd)
+example(mean)
+```
+
+::: incremental
+-   La ayuda explica los **argumentos** de cada función y trae ejemplos al final.
+-   Un mensaje de error copiado en un buscador casi siempre tiene respuesta.
+:::
+:::
+
+::: {.column width="55%"}
+![](images/help.png){fig-align="center"}
+:::
+:::
+
+## Importar un archivo csv {.smaller}
+
+En tu proyecto, con el archivo en la carpeta `datos/`:
+
+```{r}
+pinguinos <- read.csv("datos/pinguinos.csv")
+```
+
+. . .
+
+Lo primero, siempre: revisar lo que importamos.
+
+```{r}
+str(pinguinos)
+```
+
+## Importar un archivo de Excel {.smaller}
+
+```{r}
+#| eval: false
+library(readxl)
+pinguinos <- read_excel("datos/pinguinos.xlsx", sheet = 1)
+```
+
+. . .
+
+::: callout-tip
+## Antes de importar
+
+-   Una fila por observación y una columna por variable.
+-   Nombres de columna cortos, sin espacios ni tildes.
+-   Sin celdas combinadas, colores ni totales al final.
+:::
+
+## Los datos del curso {.smaller}
+
+`pinguinos.csv`: 344 pingüinos del archipiélago Palmer, Antártida (Gorman y estación Palmer LTER, paquete `{palmerpenguins}`, licencia CC0).
+
+| Variable | Qué es |
+|:--|:--|
+| `species` | especie: Adelie, Chinstrap, Gentoo |
+| `island` | isla: Biscoe, Dream, Torgersen |
+| `bill_length_mm`, `bill_depth_mm` | largo y profundidad del pico (mm) |
+| `flipper_length_mm` | largo de la aleta (mm) |
+| `body_mass_g` | masa corporal (g) |
+| `sex` | sexo: female, male |
+| `year` | año de la medición: 2007, 2008, 2009 |
+
+## {}
+
+::: columns
+::: {.column width="37.5%"}
+:::
+
+::: {.column width="60%"}
+::: {.title data-id="title"}
+[Ejercicios, Parte 2](../ejercicios-1.html#parte-2){target="_blank"}
+:::
+
+::: {.timer #Timer2 seconds=600 starton=interaction}
+:::
+:::
+:::
+
+![](images/korean.png){.image-left}
+
+# Operaciones estadísticas básicas
+
+## Valores faltantes {.smaller}
+
+En los datos reales casi siempre falta algo. En R, un valor faltante es `NA`.
+
+```{r}
+summary(pinguinos$body_mass_g)
+mean(pinguinos$body_mass_g)
+```
+
+. . .
+
+R no puede calcular la media si falta un dato. Le pedimos que lo ignore con `na.rm = TRUE`:
+
+```{r}
+mean(pinguinos$body_mass_g, na.rm = TRUE)
+sum(is.na(pinguinos$body_mass_g))
+```
+
+## Tendencia central y dispersión {.smaller}
+
+```{r}
+median(pinguinos$body_mass_g, na.rm = TRUE)
+sd(pinguinos$body_mass_g, na.rm = TRUE)
+quantile(pinguinos$body_mass_g, na.rm = TRUE)
+```
+
+. . .
+
+$$
+s = \sqrt{\frac{\sum_{i=1}^{n}(x_i - \bar{x})^2}{n - 1}}
+$$
+
+## Resumir por grupos {.smaller}
+
+```{r}
+tapply(pinguinos$body_mass_g, pinguinos$species, mean, na.rm = TRUE)
+```
+
+. . .
+
+```{r}
+aggregate(body_mass_g ~ species, data = pinguinos, FUN = mean)
+```
+
+`aggregate()` con fórmula descarta las filas con `NA` por su cuenta.
+
+## Variables categóricas {.smaller}
+
+```{r}
+table(pinguinos$species)
+prop.table(table(pinguinos$species))
+table(pinguinos$species, pinguinos$island)
+```
+
+. . .
+
+¿Qué nos dice la tabla cruzada? Los Gentoo solo están en Biscoe y los Chinstrap solo en Dream. En el [Módulo 2](modulo-2.html) haremos esto mismo con `{dplyr}` y lo veremos en un gráfico.
+
+## {}
+
+::: columns
+::: {.column width="37.5%"}
+:::
+
+::: {.column width="60%"}
+::: {.title data-id="title"}
+[Ejercicios, Parte 3](../ejercicios-1.html#parte-3){target="_blank"}
+:::
+
+::: {.timer #Timer3 seconds=900 starton=interaction}
+:::
+:::
+:::
+
+![](images/french.png){.image-left}
+
+## Antes de la próxima sesión {.smaller}
+
+::: incremental
+1.  Crea tu **proyecto de R** para el curso, con las carpetas `datos/`, `scripts/` y `resultados/`.
+2.  Completa **todos** los [ejercicios](../ejercicios-1.html){target="_blank"} del Módulo 1: lo que no alcanzamos en clase, incluida la Parte 4, es tarea.
+3.  Importa tus propios datos y calcula sus estadísticos básicos.
+4.  Haz la [autoevaluación](../autoevaluacion-1.html){target="_blank"} del Módulo 1.
+:::
+
+## {}
+
+::: columns
+::: {.column width="60%"}
+::: {.title data-id="title"}
+Fin del módulo 1
+:::
+
+::: callout-tip
+## Créditos de fotos
+
+Portada por <a href="https://unsplash.com/@becomes?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Becomes Co</a> en <a href="https://unsplash.com/photos/2-men-sitting-on-black-office-rolling-chairs-s_FHDDSVp1s?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+
+Foto final por <a href="https://unsplash.com/@wolfgang_hasselmann?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Wolfgang Hasselmann</a> en <a href="https://unsplash.com/photos/dandelion-flower-under-golden-hour-Kovuf0yU8NU?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+
+Resto de fotos: varias fuentes
+:::
+:::
+
+::: {.column width="37.5%"}
+![](images/icon1_nb.png){style="margin-left:125px"}
+:::
+:::
+
+![](images/wolfgang-hasselmann-Kovuf0yU8NU-unsplash.jpg){.image-right}

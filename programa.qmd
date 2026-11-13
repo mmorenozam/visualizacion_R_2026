@@ -1,0 +1,96 @@
+---
+title: "Programa"
+subtitle: "De la tabla de datos al reporte reproducible"
+---
+
+El curso tiene cuatro módulos de tres horas. Cada módulo se apoya en el anterior: primero ponemos a punto R y los datos, luego aprendemos a ordenarlos y a hacer los primeros gráficos, después construimos figuras completas con `{ggplot2}` y, al final, reunimos análisis, figuras y texto en un reporte con Quarto.
+
+```{mermaid}
+flowchart LR
+  M1["<b>Módulo 1</b><br/>Generalidades e<br/>introducción a R"] --> M2["<b>Módulo 2</b><br/>tidyverse y<br/>primeros gráficos"]
+  M2 --> M3["<b>Módulo 3</b><br/>Visualización<br/>con ggplot2"]
+  M3 --> M4["<b>Módulo 4</b><br/>Introducción<br/>a Quarto"]
+  classDef default fill:#ffffff,stroke:#333333,color:#000000;
+  style M1 fill:#ffffff,stroke:#0072B2,stroke-width:3px,color:#000000
+  style M2 fill:#ffffff,stroke:#D55E00,stroke-width:3px,color:#000000
+  style M3 fill:#ffffff,stroke:#009E73,stroke-width:3px,color:#000000
+  style M4 fill:#ffffff,stroke:#CC79A7,stroke-width:3px,color:#000000
+```
+
+## Objetivos de aprendizaje
+
+Al finalizar el curso podrás:
+
+1. **Utilizar** el entorno de R y RStudio para la gestión de proyectos y el análisis de datos.
+2. **Manipular y transformar** datos con herramientas del ecosistema `{tidyverse}`.
+3. **Construir** visualizaciones claras y efectivas con `{ggplot2}`, usando distintos tipos de gráficos y capas.
+4. **Integrar** el análisis estadístico y la visualización para comunicar resultados de forma clara y profesional.
+5. **Exportar** gráficos y resultados para informes y presentaciones.
+6. **Generar** reportes reproducibles con Quarto.
+
+## Formato y horario
+
+- **Modalidad:** 100% en línea, clases virtuales en tiempo real.
+- **Horario:** cuatro sesiones, de {{< var horario >}}.
+- **Duración:** 12 horas de clases virtuales y 24 horas de aprendizaje autónomo individual, **36 horas** en total.
+- **Cada sesión** combina exposiciones cortas con trabajo práctico en R. Lo que no se alcance en clase queda como tarea: se espera que completes **todos** los ejercicios de cada módulo.
+
+| Sesión | Fecha | Módulo |
+|:--|:--|:--|
+| 1 | {{< var fecha-m1 >}} | [Generalidades e introducción a R](modulo-1.qmd) |
+| 2 | {{< var fecha-m2 >}} | [Introducción al `{tidyverse}` y a `{ggplot2}`](modulo-2.qmd) |
+| 3 | {{< var fecha-m3 >}} | [Visualización de datos con `{ggplot2}`](modulo-3.qmd) |
+| 4 | {{< var fecha-m4 >}} | [Introducción a Quarto](modulo-4.qmd) |
+
+: Calendario del curso. {tbl-colwidths="[10,30,60]"}
+
+## Requisitos {#requisitos}
+
+**Indispensables:**
+
+- Computador con al menos 2 GB de RAM y procesador de 64 bits, para los talleres y las tareas.
+- Conexión estable a internet.
+
+**Ideales, pero no indispensables:**
+
+- Haber tomado el curso *Introducción a R*, o conocimientos básicos de R.
+- Conocimientos básicos de estadística.
+- Sistema operativo Windows 10/11.
+- Microsoft Office (o LibreOffice).
+
+## Contenidos y alineación
+
+Cada módulo indica qué podrás hacer al terminarlo, cómo lo practicamos y cómo se comprueba. Los números entre paréntesis remiten a los objetivos de aprendizaje.
+
+::: {.alignment}
+
+| Módulo | Al terminar podrás... | Actividades | Evaluación |
+|:--|:--|:--|:--|
+| **[1. Generalidades e introducción a R](modulo-1.qmd)** | instalar R y RStudio y trabajar en un proyecto; usar tipos de datos, objetos y paquetes; importar una tabla; calcular operaciones estadísticas básicas (1) | instalación guiada, programación en vivo, ejercicios cortos | [ejercicios](ejercicios-1.qmd), [autoevaluación](autoevaluacion-1.qmd) |
+| **[2. `{tidyverse}` y primeros gráficos](modulo-2.qmd)** | encadenar operaciones con el operador de cascada; reconocer datos ordenados; filtrar, seleccionar, transformar y resumir tablas con `{dplyr}`; construir un gráfico con `ggplot()`, una geometría y estéticas (2, 3) | "¿qué observas?" con un gráfico, programación en vivo | [ejercicios](ejercicios-2.qmd), [autoevaluación](autoevaluacion-2.qmd) |
+| **[3. Visualización con `{ggplot2}`](modulo-3.qmd)** | elegir el gráfico según el tipo de variables; añadir estadísticos; usar facetas, escalas, etiquetas y temas; exportar con `ggsave()` (3, 4, 5) | mejorar un gráfico paso a paso, elegir el gráfico para cinco preguntas | [ejercicios](ejercicios-3.qmd), [autoevaluación](autoevaluacion-3.qmd) |
+| **[4. Introducción a Quarto](modulo-4.qmd)** | crear un documento de Quarto; usar el encabezado YAML, Markdown y fragmentos de código con opciones; incluir figuras y tablas; generar un reporte en html, Word o PDF (4, 5, 6) | construir un reporte del curso de principio a fin | [ejercicios](ejercicios-4.qmd), [autoevaluación](autoevaluacion-4.qmd), examen |
+
+:::
+
+## Evaluación {#evaluacion}
+
+La nota final se pondera sobre un máximo de **10 puntos**:
+
+| Componente | Peso |
+|:--|:--:|
+| Resolución de ejercicios durante cada sesión | 40% |
+| Examen (disponible a partir del {{< var fecha-examen >}}) | 60% |
+
+- El **examen** tiene dos partes: un script de R para completar (manejo de datos y gráficos) y un pequeño reporte de Quarto. Lo completas en tu proyecto con los datos del examen y entregas los dos archivos.
+- Con una nota de **7 puntos o más** obtienes el **certificado de aprobación**.
+- Si no alcanzas la nota mínima, tienes derecho a un **certificado de asistencia**.
+- Las [autoevaluaciones](autoevaluacion-1.qmd) de este sitio no cuentan para la nota: son para que compruebes por tu cuenta qué ideas necesitan un repaso.
+
+## Comunicación
+
+Las preguntas fuera de la hora de clase se dirigen al correo electrónico **mmorenozambrano\@gmail.com**.
+
+## Secuencialidad
+
+Lo ideal es haber tomado antes el curso **Introducción a R**. Para quienes no lo tomaron, el Módulo 1 pone a todos a la par.

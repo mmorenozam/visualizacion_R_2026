@@ -1,0 +1,22 @@
+---
+title: "Acerca de"
+toc: false
+---
+
+## Sobre el instructor
+
+**Mauricio Moreno, PhD**
+
+Ingeniero en Biotecnología (Universidad de las Fuerzas Armadas ESPE), con un máster en Estadística con mención en Biometría (KU Leuven, Bélgica) y un doctorado en Bioinformática (Jacobs University Bremen, Alemania). Tiene más de quince años de experiencia en programación estadística en R.
+
+Ha trabajado como consultor independiente, profesor, analista de estadísticas ambientales e investigador postdoctoral. Actualmente es Científico Bioestadístico en la función de Soluciones de Campo en Bayer Crop Science, Alemania, donde lidera proyectos de investigación y desarrollo, incluida la migración de procesos estadísticos a la nube y la determinación de tamaños de muestra mediante simulaciones Montecarlo basadas en cadenas de Markov.
+
+En su tiempo libre imparte cursos gratuitos de estadística en línea. El más reciente, [*Bioestadística en R*](https://mmorenozam.github.io/biohack_progR/){target="_blank"} (2025), fue un taller de 40 horas para estudiantes e investigadores de biología y agricultura.
+
+## Contacto
+
+Preguntas fuera de la hora de clase: **mmorenozambrano\@gmail.com**
+
+## Sobre este sitio
+
+Sitio construido con [Quarto](https://quarto.org/){target="_blank"}. Los ejercicios interactivos usan [webR](https://docs.r-wasm.org/webr/latest/){target="_blank"} mediante la extensión [quarto-live](https://r-wasm.github.io/quarto-live/){target="_blank"}, que corre R directamente en el navegador.

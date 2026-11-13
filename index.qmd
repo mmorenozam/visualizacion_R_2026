@@ -1,0 +1,112 @@
+---
+title: "Visualización de datos en R"
+subtitle: "Ordenar, transformar y graficar datos, y comunicar los resultados en reportes reproducibles"
+toc: false
+---
+
+::: {.callout-important appearance="simple"}
+## Anuncios
+
+- **Bienvenidos.** La primera clase es el **{{< var fecha-m1 >}}**, de {{< var horario >}}. Antes, revisa los [requisitos](programa.qmd#requisitos) e instala R, RStudio y los paquetes del curso siguiendo la guía de [Recursos](recursos.qmd#instalacion).
+:::
+
+Este curso te introduce en el análisis y la visualización de datos con R. Vas a **manipular y transformar tablas** con el ecosistema `{tidyverse}`, a **construir gráficos claros y profesionales** con `{ggplot2}` y a **comunicar tus resultados** en reportes reproducibles con Quarto.
+
+Está dirigido a una audiencia diversa: **no hace falta experiencia previa en programación** ni conocimientos avanzados de estadística. Si ya tomaste *Introducción a R*, el primer módulo te sirve de repaso; si no, te pone al día. Al terminar, podrás obtener un certificado.
+
+## Cuatro módulos, un mismo camino
+
+::: {.grid}
+
+::: {.g-col-12 .g-col-md-6 .g-col-lg-3}
+::: {.card-box .mod-1}
+[{{< var fecha-m1 >}}]{.mod-meta}
+
+### 1. Generalidades e introducción a R
+
+R y RStudio, proyectos, objetos, paquetes, importación de datos y operaciones estadísticas básicas.
+
+[Ir al módulo](modulo-1.qmd)
+:::
+:::
+
+::: {.g-col-12 .g-col-md-6 .g-col-lg-3}
+::: {.card-box .mod-2}
+[{{< var fecha-m2 >}}]{.mod-meta}
+
+### 2. `{tidyverse}` y primeros gráficos
+
+El operador `|>`, tablas ordenadas, `{dplyr}`, y la gramática de `{ggplot2}`: datos, estéticas, geometrías y capas.
+
+[Ir al módulo](modulo-2.qmd)
+:::
+:::
+
+::: {.g-col-12 .g-col-md-6 .g-col-lg-3}
+::: {.card-box .mod-3}
+[{{< var fecha-m3 >}}]{.mod-meta}
+
+### 3. Visualización con `{ggplot2}`
+
+Gráficos comunes, figuras con estadísticos, facetas, escalas y temas, y exportar gráficos.
+
+[Ir al módulo](modulo-3.qmd)
+:::
+:::
+
+::: {.g-col-12 .g-col-md-6 .g-col-lg-3}
+::: {.card-box .mod-4}
+[{{< var fecha-m4 >}}]{.mod-meta}
+
+### 4. Introducción a Quarto
+
+Estructura de un documento, fragmentos de código, figuras y tablas, y reportes en html, Word y PDF.
+
+[Ir al módulo](modulo-4.qmd)
+:::
+:::
+
+:::
+
+[Ver el programa completo →](programa.qmd){.btn .btn-primary}
+
+## Cómo aprendemos
+
+- **Primero la pregunta, luego el gráfico.** Cada figura empieza con la pregunta que debe responder.
+- **Practicar desde el primer día.** Exposiciones cortas seguidas de trabajo práctico en R, en clase y en casa.
+- **Tus propios datos.** Te animamos a aplicar cada técnica a tus datos, a la par de los ejemplos del curso.
+- **Reproducible desde el inicio.** Proyectos de R, scripts ordenados y reportes que se vuelven a generar con un clic.
+- **Materiales abiertos.** Diapositivas, ejercicios y datos están disponibles en este sitio.
+
+## Explora
+
+::: {.grid}
+
+::: {.g-col-12 .g-col-md-4}
+::: {.card-box}
+### Ejercicios
+Ejercicios interactivos de R que corren **en tu navegador**, sin instalar nada. Lo que no terminemos en clase es tarea: completa todos los ejercicios de cada módulo.
+
+[Empezar con el Módulo 1](ejercicios-1.qmd)
+:::
+:::
+
+::: {.g-col-12 .g-col-md-4}
+::: {.card-box}
+### Autoevaluación
+Preguntas cortas de opción múltiple, anónimas, con explicaciones. Te muestran qué ideas necesitan un repaso.
+
+[Autoevaluación del Módulo 1](autoevaluacion-1.qmd)
+:::
+:::
+
+::: {.g-col-12 .g-col-md-4}
+::: {.card-box}
+### Evaluación y certificado
+40% ejercicios en clase, 60% examen. Con 7 de 10 puntos obtienes el certificado de aprobación.
+
+[Cómo se evalúa](programa.qmd#evaluacion)
+:::
+:::
+
+:::

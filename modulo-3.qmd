@@ -1,0 +1,46 @@
+---
+title: "Módulo 3: Visualización de datos con `{ggplot2}`"
+subtitle: "{{< var fecha-m3 >}} · {{< var horario >}}"
+---
+
+[Ver las diapositivas](diapositivas/modulo-3.html){.btn .btn-primary target="_blank"} [Hacer los ejercicios](ejercicios-3.qmd){.btn .btn-outline-primary} [Hacer la autoevaluación](autoevaluacion-3.qmd){.btn .btn-outline-primary}
+
+## Contexto
+
+- **Para quién:** participantes que ya saben hacer un gráfico sencillo con `ggplot()` y preparar los datos con `{dplyr}` ([Módulo 2](modulo-2.qmd)).
+- **Lugar en el curso:** tercera sesión. Pasamos de un gráfico que funciona a un gráfico que comunica, listo para un informe.
+- **Duración:** 3 horas de clase virtual y unas 6 horas de trabajo autónomo.
+
+## Objetivos de la sesión
+
+Al terminar, podrás:
+
+1. **Elegir** el gráfico adecuado según el tipo de variables y la pregunta.
+2. **Añadir** estadísticos a una figura: medias, barras de error y líneas de tendencia.
+3. **Mejorar** un gráfico con facetas, escalas de color, etiquetas y temas.
+4. **Exportar** un gráfico con el tamaño y la resolución adecuados con `ggsave()`.
+
+## Estructura
+
+| Parte | Qué hacemos | Objetivo |
+|:--|:--|:--:|
+| Elegir el gráfico | Una variable o dos; categóricas o numéricas: qué gráfico usar en cada caso | 1 |
+| Gráficos comunes | Barras, histogramas, densidades, dispersión, líneas, cajas y violines | 1 |
+| Figuras con estadísticos | `stat_summary()` para medias y barras de error; `geom_smooth()` | 2 |
+| Gráficos especiales | Facetas con `facet_wrap()` y `facet_grid()`; mapas de calor con `geom_tile()` | 3 |
+| Formato | Escalas y paletas accesibles, `labs()`, temas y `theme()` | 3 |
+| **Mejorar un gráfico paso a paso** | De un gráfico por defecto a uno listo para publicar | 3 |
+| Exportar gráficos | `ggsave()`: formato, tamaño y resolución; combinar figuras con `{patchwork}` | 4 |
+
+## Trabajo autónomo
+
+Después de la clase:
+
+1. **Completa todos los [ejercicios](ejercicios-3.qmd)**: lo que no alcancemos en clase, incluida la Parte 4 (Más práctica), es tarea.
+2. **Con tus propios datos**, haz un gráfico listo para un informe: etiquetas, colores accesibles y tema limpio, exportado con `ggsave()`.
+3. Haz la **[autoevaluación](autoevaluacion-3.qmd)**.
+
+## Datos y materiales
+
+- **`pinguinos.csv`** ([descargar](datos/pinguinos.csv)): 344 pingüinos de tres especies del archipiélago Palmer (Antártida), con medidas del pico, de la aleta y de la masa corporal. Datos de Kristen Gorman y la estación Palmer (LTER), publicados en el paquete [`{palmerpenguins}`](https://allisonhorst.github.io/palmerpenguins/){target="_blank"} de Allison Horst, Alison Hill y Kristen Gorman (licencia CC0). La usamos en todo el curso.
+- [Diapositivas del Módulo 3](diapositivas/modulo-3.html){target="_blank"}.

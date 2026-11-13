@@ -1,0 +1,48 @@
+---
+title: "Módulo 4: Introducción a Quarto"
+subtitle: "{{< var fecha-m4 >}} · {{< var horario >}}"
+---
+
+[Ver las diapositivas](diapositivas/modulo-4.html){.btn .btn-primary target="_blank"} [Hacer los ejercicios](ejercicios-4.qmd){.btn .btn-outline-primary} [Hacer la autoevaluación](autoevaluacion-4.qmd){.btn .btn-outline-primary}
+
+## Contexto
+
+- **Para quién:** participantes que ya saben preparar datos y gráficos en R ([Módulo 3](modulo-3.qmd)).
+- **Lugar en el curso:** última sesión. Reunimos el código, los gráficos y el texto en un solo documento que se vuelve a generar con un clic.
+- **Duración:** 3 horas de clase virtual y unas 6 horas de trabajo autónomo, incluido el examen.
+
+## Objetivos de la sesión
+
+Al terminar, podrás:
+
+1. **Crear** un documento de Quarto en un proyecto de RStudio y renderizarlo.
+2. **Usar** el encabezado YAML, el formato Markdown y los fragmentos de código con sus opciones.
+3. **Incluir** figuras y tablas con títulos, tamaños y referencias.
+4. **Generar** un reporte en html, Word o PDF a partir del mismo archivo.
+
+## Estructura
+
+| Parte | Qué hacemos | Objetivo |
+|:--|:--|:--:|
+| ¿Qué es Quarto? | Documentos que mezclan texto, código y resultados; del script al reporte | 1 |
+| Preparar el ambiente | Instalar Quarto y TinyTeX; crear un proyecto de Quarto en RStudio | 1 |
+| Estructura básica | Encabezado YAML, texto en Markdown y fragmentos de código | 2 |
+| Opciones de los fragmentos | `echo`, `eval`, `include`, `warning`, `message`; opciones globales | 2 |
+| Figuras | `fig-cap`, `fig-width`, `fig-height`, etiquetas `fig-` y referencias cruzadas | 3 |
+| Tablas | `knitr::kable()`, títulos y referencias | 3 |
+| **Construir un reporte** | Del análisis de los pingüinos a un reporte completo | 3, 4 |
+| Formatos de salida | html, Word (`docx`) y PDF desde el mismo archivo | 4 |
+| Antes de terminar | Repaso del curso, examen y certificado |  |
+
+## Trabajo autónomo
+
+Después de la clase:
+
+1. **Completa todos los [ejercicios](ejercicios-4.qmd)**: lo que no alcancemos en clase, incluida la Parte 4 (Más práctica), es tarea.
+2. **Haz un reporte de Quarto** con tus propios datos: una tabla, dos gráficos y tus conclusiones.
+3. Haz la **[autoevaluación](autoevaluacion-4.qmd)** y luego el **examen**, disponible a partir del {{< var fecha-examen >}} (ver [Evaluación](programa.qmd#evaluacion)).
+
+## Datos y materiales
+
+- **`pinguinos.csv`** ([descargar](datos/pinguinos.csv)): 344 pingüinos de tres especies del archipiélago Palmer (Antártida), con medidas del pico, de la aleta y de la masa corporal. Datos de Kristen Gorman y la estación Palmer (LTER), publicados en el paquete [`{palmerpenguins}`](https://allisonhorst.github.io/palmerpenguins/){target="_blank"} de Allison Horst, Alison Hill y Kristen Gorman (licencia CC0). La usamos en todo el curso.
+- [Diapositivas del Módulo 4](diapositivas/modulo-4.html){target="_blank"}.

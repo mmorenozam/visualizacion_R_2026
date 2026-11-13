@@ -1,0 +1,129 @@
+---
+title: "Autoevaluación Módulo 3"
+subtitle: "Visualización de datos con {ggplot2}"
+filters:
+  - selfcheck.lua
+include-after-body: selfcheck.html
+toc: false
+---
+
+Ocho preguntas cortas sobre el [Módulo 3](modulo-3.qmd), dos por cada objetivo de la sesión. Tienes dos intentos por pregunta; después verás la respuesta y una explicación. **Es anónima: no se guarda ni se envía nada.**
+
+::: {.callout-note appearance="simple"}
+<span id="sc-score"></span>
+:::
+
+
+## Objetivo 1: Elegir el gráfico
+
+::: {.selfcheck}
+**1. Quieres ver si la masa corporal está relacionada con el largo de la aleta. ¿Qué gráfico usas?**
+
+- [ ] Barras
+- [x] Dispersión (`geom_point()`)
+- [ ] Histograma
+- [ ] Mapa de calor
+
+::: {.explanation}
+Dos variables **numéricas**: gráfico de dispersión. Si además quieres la tendencia, agrega `geom_smooth()`.
+:::
+:::
+
+::: {.selfcheck}
+**2. Quieres comparar la distribución de la masa entre las tres especies. ¿Qué opción es la **menos** adecuada?**
+
+- [ ] Diagramas de caja por especie
+- [ ] Violines con los puntos
+- [ ] Densidades superpuestas por especie
+- [x] Un gráfico de líneas de la masa en el orden de las filas
+
+::: {.explanation}
+Una numérica frente a una categórica: cajas, violines, densidades o puntos. Una línea une valores **en orden**, y aquí el orden de las filas no significa nada.
+:::
+:::
+
+## Objetivo 2: Figuras con estadísticos
+
+::: {.selfcheck}
+**3. ¿Qué dibuja `stat_summary(fun.data = mean_se)`?**
+
+- [ ] La mediana y los cuartiles
+- [x] La media y la media ± un error estándar, en cada grupo
+- [ ] La media ± dos desviaciones estándar
+- [ ] Una recta de regresión
+
+::: {.explanation}
+`stat_summary()` calcula un resumen por grupo; `mean_se` devuelve la media y ± un error estándar. Para la desviación estándar, `mean_sdl` (con `fun.args = list(mult = 1)`).
+:::
+:::
+
+::: {.selfcheck}
+**4. En una figura, ¿por qué hay que decir si las barras de error son la desviación estándar o el error estándar?**
+
+- [ ] No importa, son lo mismo
+- [x] Porque la desviación estándar describe cuánto varían los datos, y el error estándar cuánta incertidumbre tiene la media; el error estándar es mucho menor
+- [ ] Porque `{ggplot2}` solo dibuja una de las dos
+- [ ] Por estética
+
+::: {.explanation}
+El error estándar es $s/\sqrt{n}$: con 70 pingüinos, unas 8 veces más pequeño que la desviación estándar. Sin aclararlo, el lector no puede interpretar las barras.
+:::
+:::
+
+## Objetivo 3: Facetas, escalas, etiquetas y temas
+
+::: {.selfcheck}
+**5. ¿Qué hace `facet_wrap(~ island)`?**
+
+- [ ] Colorea por isla
+- [x] Dibuja un panel por isla, con los mismos ejes
+- [ ] Ordena las islas
+- [ ] Quita las islas con pocos datos
+
+::: {.explanation}
+Las facetas dividen el gráfico en paneles, uno por nivel. `facet_grid(filas ~ columnas)` hace una cuadrícula con dos variables.
+:::
+:::
+
+::: {.selfcheck}
+**6. ¿Por qué conviene usar paletas como viridis u Okabe-Ito?**
+
+- [ ] Porque son las únicas que acepta `{ggplot2}`
+- [x] Porque se distinguen también con daltonismo y en blanco y negro
+- [ ] Porque hacen el gráfico más pequeño
+- [ ] Porque ordenan las categorías
+
+::: {.explanation}
+Alrededor de 1 de cada 12 hombres tiene alguna forma de daltonismo; el rojo y el verde son la combinación más problemática. Estas paletas están diseñadas para seguir siendo distinguibles.
+:::
+:::
+
+## Objetivo 4: Exportar gráficos
+
+::: {.selfcheck}
+**7. ¿Por qué fijar `width`, `height` y `units` en `ggsave()`?**
+
+- [ ] Porque son obligatorios
+- [x] Porque si no, el tamaño depende de la ventana de RStudio y el gráfico cambia cada vez
+- [ ] Para que el archivo pese menos
+- [ ] Para cambiar los colores
+
+::: {.explanation}
+Sin tamaño fijo, `ggsave()` usa el del panel de gráficos. Fijándolo, el mismo código produce siempre la misma figura, con el texto del tamaño que esperas.
+:::
+:::
+
+::: {.selfcheck}
+**8. Para una publicación que pide figuras que se vean nítidas a cualquier tamaño, ¿qué formato eliges?**
+
+- [ ] png a 72 dpi
+- [ ] jpg
+- [x] pdf o svg (formatos vectoriales)
+- [ ] Una captura de pantalla
+
+::: {.explanation}
+Los formatos **vectoriales** guardan las formas, no los píxeles: se amplían sin perder nitidez. Para Word y presentaciones, un png a 300 dpi suele bastar.
+:::
+:::
+
+¿Fallaste alguna? Vuelve a la parte correspondiente de las [diapositivas](diapositivas/modulo-3.html){target="_blank"} o de los [ejercicios](ejercicios-3.qmd).

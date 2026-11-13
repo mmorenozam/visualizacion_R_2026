@@ -1,0 +1,56 @@
+---
+title: "Recursos"
+subtitle: "Instalación, libros gratuitos y ayuda para seguir aprendiendo"
+---
+
+## Instalación {#instalacion}
+
+Instala los programas **en este orden**, antes de la primera clase:
+
+1. **R**, desde [CRAN](https://cran.r-project.org/){target="_blank"}: elige tu sistema operativo y descarga la versión más reciente.
+2. **RStudio Desktop**, desde [Posit](https://posit.co/download/rstudio-desktop/){target="_blank"} (versión gratuita).
+3. Abre RStudio y, en la consola, instala los paquetes que usaremos:
+
+```r
+install.packages(c("tidyverse", "readxl", "patchwork", "knitr"))
+```
+
+::: {.callout-tip}
+## ¿No puedes instalar R todavía?
+Los [ejercicios](ejercicios-1.qmd) de este sitio corren en tu navegador, así que puedes empezar a practicar mientras resuelves la instalación. Si tienes problemas, escribe al correo del curso antes del primer domingo.
+:::
+
+4. **Quarto** ya viene incluido en las versiones recientes de RStudio. Si tu RStudio es antiguo, instálalo desde [quarto.org](https://quarto.org/docs/get-started/){target="_blank"}.
+5. Para reportes en **PDF**, instala además TinyTeX desde la consola de RStudio:
+
+```r
+install.packages("tinytex")
+tinytex::install_tinytex()
+```
+
+## Libros gratuitos en español
+
+- [R para Ciencia de Datos](https://es.r4ds.hadley.nz/){target="_blank"}, de Hadley Wickham y Garrett Grolemund, traducción colaborativa de la comunidad de R de Latinoamérica: importación, manejo y visualización de datos.
+
+## Libros gratuitos en inglés
+
+- [Learning Statistics with R](https://learningstatisticswithr.com/){target="_blank"}, de Danielle Navarro: una introducción amable a la estadística y a R.
+- [Modern Statistics with R](https://modernstatisticswithr.com/){target="_blank"}, de Måns Thulin: desde el manejo de datos hasta modelos más avanzados.
+- [Hands-On Programming with R](https://rstudio-education.github.io/hopr/){target="_blank"}, de Garrett Grolemund: programación en R desde cero.
+
+## Para visualización y reportes
+
+- [ggplot2: Elegant Graphics for Data Analysis](https://ggplot2-book.org/){target="_blank"}, de Hadley Wickham, Danielle Navarro y Thomas Lin Pedersen.
+- [Fundamentals of Data Visualization](https://clauswilke.com/dataviz/){target="_blank"}, de Claus O. Wilke: cómo elegir y diseñar un buen gráfico.
+- [Guía de Quarto](https://quarto.org/docs/guide/){target="_blank"}: la documentación oficial.
+
+## Ayuda dentro de R
+
+- `?mean` o `help(mean)` abre la ayuda de una función.
+- `example(mean)` corre los ejemplos de la ayuda.
+- Las [hojas de referencia de Posit](https://posit.co/resources/cheatsheets/){target="_blank"} resumen RStudio y muchos paquetes en una página.
+
+## Cursos anteriores
+
+- [Introducción a R](https://mmorenozam.github.io/introduccion_R_2026/){target="_blank"} (2026): el primer curso de esta serie, con pruebas t y ANOVA.
+- [Bioestadística en R](https://mmorenozam.github.io/biohack_progR/){target="_blank"} (2025): taller de 40 horas con R, `{tidyverse}`, `{ggplot2}`, inferencia, diseño de experimentos, modelos lineales y Quarto.

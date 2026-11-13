@@ -1,0 +1,11 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+/.quarto/
+
+# Clave del examen: no publicar
+examen/clave/
+examen/revision/
+examen/entregas/

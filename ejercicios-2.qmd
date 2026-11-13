@@ -1,0 +1,781 @@
+---
+title: "Ejercicios Módulo 2"
+subtitle: "Introducción al {tidyverse} y a {ggplot2}"
+lang: es
+format:
+  live-html:
+    theme:
+      light: [cosmo, theme.scss]
+    toc: true
+    toc-location: right
+    toc-title: En esta página
+    code-copy: true
+    code-overflow: wrap
+webr:
+  packages: [dplyr, tidyr, ggplot2]
+  resources:
+    - datos/pinguinos.csv
+# Soluciones de este módulo: cambia a true después de la sesión y vuelve a renderizar.
+live:
+  show-solutions: false
+filters:
+  - soluciones.lua
+engine: knitr
+---
+
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
+
+Estos ejercicios siguen el [Módulo 2](modulo-2.qmd). El código corre **en tu navegador**. Donde veas `____`, complétalo y presiona **Run Code**. ¿Te atascaste? Abre la pestaña **Pista**. Las soluciones se publican después de la sesión.
+
+::: {.callout-note}
+## Antes de empezar
+- La primera vez, cargar R y los paquetes `{dplyr}`, `{tidyr}` y `{ggplot2}` en el navegador puede tardar uno o dos minutos.
+- La tabla `pinguinos` ya está cargada como **tibble** (abre "Ver el código que prepara los datos" para ver cómo).
+- En tu computador, `library(tidyverse)` carga estos paquetes y algunos más de una vez.
+:::
+
+::: {.callout-important appearance="simple"}
+## Lo que no terminemos en clase es tarea
+En clase avanzamos por las partes 1 a 3. **Completa todos los ejercicios de esta página antes de la próxima sesión**, incluida la **Parte 4: Más práctica**.
+:::
+
+```{webr}
+#| setup: true
+#| exercise:
+#|   - ex_1_1
+#|   - ex_1_2
+#|   - ex_2_1
+#|   - ex_2_2
+#|   - ex_2_3
+#|   - ex_2_4
+#|   - ex_2_5
+#|   - ex_3_1
+#|   - ex_3_2
+#|   - ex_3_3
+#|   - ex_3_4
+#|   - ex_3_5
+#|   - ex_4_1
+#|   - ex_4_2
+#|   - ex_4_3
+#|   - ex_4_4
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+pinguinos <- as_tibble(read.csv("datos/pinguinos.csv"))
+```
+
+::: {.callout-tip collapse="true"}
+## Ver el código que prepara los datos
+
+Este código ya se ejecutó por ti en esta página. En RStudio, córrelo al inicio de tu script.
+
+```r
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+pinguinos <- as_tibble(read.csv("datos/pinguinos.csv"))
+# En tu computador: library(tidyverse); pinguinos <- read_csv("datos/pinguinos.csv")
+```
+:::
+
+## Parte 1: El operador de cascada y los tipos de tablas {#parte-1}
+
+### Ejercicio 1.1: Del anidado a la cascada
+
+**Reescribe `round(sd(pinguinos$body_mass_g, na.rm = TRUE), 1)` con el operador `|>`, de modo que se lea de izquierda a derecha.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_1_1
+round(sd(pinguinos$body_mass_g, na.rm = TRUE), 1)
+
+pinguinos$body_mass_g |>
+  sd(na.rm = ____) |>
+  ____(1)
+```
+
+## Pista
+
+::: {.hint exercise="ex_1_1"}
+`x |> f(y)` es lo mismo que `f(x, y)`: el resultado de la izquierda entra como **primer argumento** de la función de la derecha.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_1_1"}
+```r
+round(sd(pinguinos$body_mass_g, na.rm = TRUE), 1)
+
+pinguinos$body_mass_g |>
+  sd(na.rm = TRUE) |>
+  round(1)
+```
+
+Las dos formas dan 802 g. La segunda se lee como una receta: toma las masas, *y luego* calcula la desviación estándar, *y luego* redondea.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m2 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 1.2: Tibbles
+
+**Compara cómo se imprime `pinguinos` (un tibble) con `as.data.frame(pinguinos)`. ¿Qué clase tiene cada uno?**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_1_2
+pinguinos
+class(pinguinos)
+
+head(as.data.frame(pinguinos))
+class(____(pinguinos))
+```
+
+## Pista
+
+::: {.hint exercise="ex_1_2"}
+Un tibble se imprime con sus dimensiones, solo las primeras filas y el tipo de cada columna (`<chr>`, `<dbl>`, `<int>`).
+:::
+
+## Solución
+
+::: {.solution exercise="ex_1_2"}
+```r
+pinguinos
+class(pinguinos)
+
+head(as.data.frame(pinguinos))
+class(as.data.frame(pinguinos))
+```
+
+El tibble muestra `# A tibble: 344 × 8`, las primeras 10 filas y el tipo de cada columna. Su clase incluye `"tbl_df"`, `"tbl"` y `"data.frame"`: **es** un `data.frame`, con mejoras. El `data.frame` normal solo tiene la clase `"data.frame"`.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m2 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 1.3: De ancho a largo
+
+**La tabla `picos` tiene una columna por medida. Pásala a formato largo, con una columna `medida` y otra `mm`. ¿Cuántas filas tiene ahora?**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_1_3
+picos <- tibble(id = c(1, 2, 3),
+                largo = c(39.1, 46.5, 50.0),
+                profundidad = c(18.7, 17.9, 15.2))
+picos
+
+picos |>
+  pivot_longer(cols = c(largo, ____), names_to = "____", values_to = "mm")
+```
+
+## Pista
+
+::: {.hint exercise="ex_1_3"}
+`cols` son las columnas que se van a apilar; `names_to` es el nombre de la nueva columna con sus nombres; `values_to`, el de la columna con sus valores.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_1_3"}
+```r
+picos <- tibble(id = c(1, 2, 3),
+                largo = c(39.1, 46.5, 50.0),
+                profundidad = c(18.7, 17.9, 15.2))
+picos
+
+picos |>
+  pivot_longer(cols = c(largo, profundidad), names_to = "medida", values_to = "mm")
+```
+
+La tabla larga tiene 6 filas: una por cada combinación de pingüino y medida. Este es el formato que espera `{ggplot2}` para, por ejemplo, colorear por `medida`.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m2 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+## Parte 2: Operaciones con tablas en {dplyr} {#parte-2}
+
+### Ejercicio 2.1: Filtrar filas
+
+**¿Cuántos Chinstrap pesan más de 4000 g?**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_2_1
+pinguinos |>
+  filter(species == "____", body_mass_g ____ 4000) |>
+  nrow()
+```
+
+## Pista
+
+::: {.hint exercise="ex_2_1"}
+Dentro de `filter()`, las condiciones separadas por coma deben cumplirse **a la vez**. `filter()` descarta solo las filas donde la condición es `NA`.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_2_1"}
+```r
+pinguinos |>
+  filter(species == "Chinstrap", body_mass_g > 4000) |>
+  nrow()
+```
+
+Son 15 Chinstrap de 68.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m2 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 2.2: Seleccionar y ordenar
+
+**Muestra la especie, la isla, el sexo y la masa de los pingüinos, del más pesado al más liviano. ¿Cómo son los cuatro más pesados?**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_2_2
+pinguinos |>
+  select(species, island, ____, body_mass_g) |>
+  arrange(____(body_mass_g)) |>
+  head(4)
+```
+
+## Pista
+
+::: {.hint exercise="ex_2_2"}
+`arrange()` ordena de menor a mayor; para el orden inverso, envuelve la columna en `desc()`.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_2_2"}
+```r
+pinguinos |>
+  select(species, island, sex, body_mass_g) |>
+  arrange(desc(body_mass_g)) |>
+  head(4)
+```
+
+Los cuatro más pesados son Gentoo machos de Biscoe: 6300, 6050, 6000 y 6000 g.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m2 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 2.3: Crear columnas
+
+**Crea la columna `masa_kg` y calcula la masa media en kilogramos de los Gentoo.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_2_3
+pinguinos |>
+  mutate(masa_kg = body_mass_g / ____) |>
+  filter(species == "Gentoo") |>
+  summarise(masa_media_kg = mean(____, na.rm = TRUE))
+```
+
+## Pista
+
+::: {.hint exercise="ex_2_3"}
+`mutate()` crea (o modifica) columnas usando las que ya existen. `summarise()` reduce la tabla a una fila de resumen.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_2_3"}
+```r
+pinguinos |>
+  mutate(masa_kg = body_mass_g / 1000) |>
+  filter(species == "Gentoo") |>
+  summarise(masa_media_kg = mean(masa_kg, na.rm = TRUE))
+```
+
+Los Gentoo pesan en promedio 5.08 kg.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m2 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 2.4: Resumir por grupos
+
+**Para cada especie, calcula el número de pingüinos y el largo medio de la aleta. ¿Qué especie tiene las aletas más largas?**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_2_4
+pinguinos |>
+  group_by(____) |>
+  summarise(n = n(),
+            aleta_media = mean(flipper_length_mm, ____))
+```
+
+## Pista
+
+::: {.hint exercise="ex_2_4"}
+`group_by()` no cambia la tabla: le dice a `summarise()` que calcule por separado en cada grupo. `n()` cuenta las filas del grupo.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_2_4"}
+```r
+pinguinos |>
+  group_by(species) |>
+  summarise(n = n(),
+            aleta_media = mean(flipper_length_mm, na.rm = TRUE))
+```
+
+Adelie: 152 pingüinos y 189.95 mm; Chinstrap: 68 y 195.82 mm; Gentoo: 124 y 217.19 mm. Los **Gentoo** tienen las aletas más largas.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m2 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 2.5: Contar combinaciones
+
+**Cuenta cuántos pingüinos hay de cada especie en cada isla con `count()`. Compara con la tabla cruzada del Módulo 1.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_2_5
+pinguinos |>
+  count(species, ____)
+```
+
+## Pista
+
+::: {.hint exercise="ex_2_5"}
+`count(a, b)` es un atajo de `group_by(a, b) |> summarise(n = n())`. Devuelve una tabla en formato largo.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_2_5"}
+```r
+pinguinos |>
+  count(species, island)
+```
+
+Cinco combinaciones: Adelie en Biscoe (44), Dream (56) y Torgersen (52); Chinstrap en Dream (68); Gentoo en Biscoe (124). Es la misma información que `table(species, island)`, pero como tabla de datos y sin las combinaciones vacías.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m2 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+## Parte 3: Primeros gráficos con {ggplot2} {#parte-3}
+
+### Ejercicio 3.1: Un gráfico de dispersión
+
+**Haz un gráfico de dispersión del largo de la aleta (eje x) frente a la masa corporal (eje y). ¿Qué relación observas?**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_3_1
+ggplot(pinguinos, aes(x = ____, y = body_mass_g)) +
+  geom_____()
+```
+
+## Pista
+
+::: {.hint exercise="ex_3_1"}
+`ggplot()` recibe los datos y el mapeo con `aes()`; la geometría de los puntos es `geom_point()`. `{ggplot2}` avisa que quitó 2 filas con `NA`.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_3_1"}
+```r
+ggplot(pinguinos, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point()
+```
+
+Una relación **positiva** y bastante fuerte: los pingüinos con aletas más largas pesan más.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m2 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 3.2: Color por especie
+
+**Repite el gráfico, coloreando los puntos según la especie. ¿Qué especie ocupa la esquina superior derecha?**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_3_2
+ggplot(pinguinos, aes(x = flipper_length_mm, y = body_mass_g, color = ____)) +
+  geom_point()
+```
+
+## Pista
+
+::: {.hint exercise="ex_3_2"}
+Para que el color **dependa de una variable**, va dentro de `aes()`. `{ggplot2}` elige los colores y agrega la leyenda.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_3_2"}
+```r
+ggplot(pinguinos, aes(x = flipper_length_mm, y = body_mass_g, color = species)) +
+  geom_point()
+```
+
+Los **Gentoo** forman un grupo aparte arriba a la derecha: aletas más largas y más masa. Adelie y Chinstrap se superponen en la parte inferior izquierda.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m2 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 3.3: Un histograma
+
+**Haz un histograma de la masa corporal con barras de 250 g. ¿Dónde se concentran los valores? ¿Es simétrico?**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_3_3
+ggplot(pinguinos, aes(x = body_mass_g)) +
+  geom_histogram(binwidth = ____)
+```
+
+## Pista
+
+::: {.hint exercise="ex_3_3"}
+`binwidth` es el ancho de cada barra, en las unidades de la variable.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_3_3"}
+```r
+ggplot(pinguinos, aes(x = body_mass_g)) +
+  geom_histogram(binwidth = 250)
+```
+
+La mayoría está entre 3250 y 4000 g, con una cola larga hacia la derecha, hasta más de 6000 g. Esa cola corresponde sobre todo a los Gentoo: el histograma mezcla especies distintas, y en el Módulo 3 lo separaremos por especie.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m2 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 3.4: Diagramas de caja
+
+**Compara el largo del pico (`bill_length_mm`) entre especies con diagramas de caja.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_3_4
+ggplot(pinguinos, aes(x = ____, y = bill_length_mm)) +
+  geom_boxplot()
+```
+
+## Pista
+
+::: {.hint exercise="ex_3_4"}
+Con una variable categórica en el eje x y una numérica en el eje y, `geom_boxplot()` dibuja una caja por grupo.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_3_4"}
+```r
+ggplot(pinguinos, aes(x = species, y = bill_length_mm)) +
+  geom_boxplot()
+```
+
+Los Adelie tienen el pico más corto (unos 39 mm en promedio); Chinstrap y Gentoo, parecidos y más largos (unos 49 y 48 mm).
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m2 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 3.5: Dentro o fuera de aes()
+
+**Este código pretende pintar todos los puntos de azul, pero no funciona como esperamos. Ejecútalo, mira qué pasa y corrígelo.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_3_5
+ggplot(pinguinos, aes(x = flipper_length_mm, y = body_mass_g, color = "blue")) +
+  geom_point()
+
+ggplot(pinguinos, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point(____ = "blue")
+```
+
+## Pista
+
+::: {.hint exercise="ex_3_5"}
+Dentro de `aes()`, `"blue"` se trata como un dato (una columna con el texto "blue"), no como un color. Un valor fijo va **fuera** de `aes()`, en la geometría.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_3_5"}
+```r
+ggplot(pinguinos, aes(x = flipper_length_mm, y = body_mass_g, color = "blue")) +
+  geom_point()
+
+ggplot(pinguinos, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point(color = "blue")
+```
+
+El primer gráfico pinta los puntos de rojo y agrega una leyenda que dice "blue": `{ggplot2}` creó un grupo llamado "blue" y le asignó el primer color de su paleta. En el segundo, `color = "blue"` fuera de `aes()` pinta todos los puntos de azul, sin leyenda.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m2 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+## Parte 4: Más práctica {#parte-4}
+
+### Ejercicio 4.1: Varias condiciones
+
+**¿Cuántos pingüinos de Biscoe o Dream tienen el sexo registrado?**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_4_1
+pinguinos |>
+  filter(island %in% c("Biscoe", "____"), !is.na(____)) |>
+  nrow()
+```
+
+## Pista
+
+::: {.hint exercise="ex_4_1"}
+`%in%` pregunta si el valor está en un conjunto. `!is.na(x)` se queda con las filas donde `x` **no** falta.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_4_1"}
+```r
+pinguinos |>
+  filter(island %in% c("Biscoe", "Dream"), !is.na(sex)) |>
+  nrow()
+```
+
+Son 286 pingüinos.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m2 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 4.2: Resumir por dos grupos
+
+**Sin los pingüinos de sexo desconocido, calcula el largo medio del pico por especie y sexo. ¿En qué especie es mayor la diferencia entre machos y hembras?**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_4_2
+pinguinos |>
+  filter(!is.na(sex)) |>
+  group_by(species, ____) |>
+  summarise(n = n(), pico_medio = mean(bill_length_mm), .groups = "drop")
+```
+
+## Pista
+
+::: {.hint exercise="ex_4_2"}
+`group_by()` acepta varias columnas. `.groups = "drop"` quita la agrupación al terminar (y evita un mensaje).
+:::
+
+## Solución
+
+::: {.solution exercise="ex_4_2"}
+```r
+pinguinos |>
+  filter(!is.na(sex)) |>
+  group_by(species, sex) |>
+  summarise(n = n(), pico_medio = mean(bill_length_mm), .groups = "drop")
+```
+
+Hembras y machos: Adelie 37.26 y 40.39 mm; Chinstrap 46.57 y 51.09 mm; Gentoo 45.56 y 49.47 mm. La mayor diferencia es en **Chinstrap**, unos 4.5 mm.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m2 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 4.3: De largo a ancho
+
+**Convierte el conteo de especies por isla en una tabla ancha, con una columna por isla y ceros donde no hay pingüinos.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_4_3
+pinguinos |>
+  count(species, island) |>
+  pivot_wider(names_from = ____, values_from = n, values_fill = ____)
+```
+
+## Pista
+
+::: {.hint exercise="ex_4_3"}
+`pivot_wider()` es el inverso de `pivot_longer()`: `names_from` da los nombres de las nuevas columnas y `values_from`, sus valores. `values_fill` rellena las combinaciones que faltan.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_4_3"}
+```r
+pinguinos |>
+  count(species, island) |>
+  pivot_wider(names_from = island, values_from = n, values_fill = 0)
+```
+
+Una fila por especie y una columna por isla: Adelie 44, 56 y 52; Chinstrap 0, 68 y 0; Gentoo 124, 0 y 0. Para leer, la tabla ancha es más cómoda; para graficar, la larga.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m2 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 4.4: La paradoja de los picos
+
+**Grafica el largo del pico (x) frente a su profundidad (y) con una recta de tendencia para todos los pingüinos. Luego repite coloreando por especie. ¿Qué cambia?**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+```{webr}
+#| exercise: ex_4_4
+ggplot(pinguinos, aes(x = bill_length_mm, y = bill_depth_mm)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)
+
+ggplot(pinguinos, aes(x = bill_length_mm, y = bill_depth_mm, color = ____)) +
+  geom_point() +
+  geom_smooth(method = "____", se = FALSE)
+```
+
+## Pista
+
+::: {.hint exercise="ex_4_4"}
+Cuando el color está en `ggplot(aes(...))`, todas las capas lo heredan: `geom_smooth()` ajusta una recta por especie.
+:::
+
+## Solución
+
+::: {.solution exercise="ex_4_4"}
+```r
+ggplot(pinguinos, aes(x = bill_length_mm, y = bill_depth_mm)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)
+
+ggplot(pinguinos, aes(x = bill_length_mm, y = bill_depth_mm, color = species)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+Con todos juntos, la recta **baja**: parece que los picos más largos son menos profundos. Dentro de cada especie, la recta **sube**. La relación global se invierte porque las especies difieren en ambas medidas (es un ejemplo de la paradoja de Simpson). Moraleja: mirar los grupos puede cambiar la conclusión.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m2 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+## Con tus propios datos
+
+Escribe una cadena de `{dplyr}` que filtre, cree una columna y resuma una variable por grupo. Luego haz un gráfico de dispersión de dos variables numéricas, coloreado por un grupo.

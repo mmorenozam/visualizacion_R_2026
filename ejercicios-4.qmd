@@ -1,0 +1,744 @@
+---
+title: "Ejercicios Módulo 4"
+subtitle: "Introducción a Quarto"
+lang: es
+format:
+  live-html:
+    theme:
+      light: [cosmo, theme.scss]
+    toc: true
+    toc-location: right
+    toc-title: En esta página
+    code-copy: true
+    code-overflow: wrap
+webr:
+  packages: []
+  resources:
+    - datos/pinguinos.csv
+# Soluciones de este módulo: cambia a true después de la sesión y vuelve a renderizar.
+live:
+  show-solutions: false
+filters:
+  - soluciones.lua
+engine: knitr
+---
+
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
+
+Estos ejercicios siguen el [Módulo 4](modulo-4.qmd). Todos se hacen **en RStudio**: vas a construir, paso a paso, un reporte de Quarto sobre los pingüinos. Copia cada fragmento en tu documento, completa los `____` y presiona **Render**. ¿Te atascaste? Abre la pestaña **Pista**. Las soluciones se publican después de la sesión.
+
+::: {.callout-note}
+## Antes de empezar
+- Necesitas RStudio con Quarto (viene incluido en las versiones recientes) y los paquetes `{tidyverse}` y `{knitr}`. Para la parte de PDF, también TinyTeX (ver [Recursos](recursos.qmd#instalacion)).
+- Trabaja en un **proyecto de Quarto** con la carpeta `datos/` y el archivo `pinguinos.csv` ([descargar](datos/pinguinos.csv)).
+- Al final de las partes 1 a 3 tendrás un reporte completo. Guárdalo: te servirá de modelo para el examen.
+:::
+
+::: {.callout-important appearance="simple"}
+## Lo que no terminemos en clase es tarea
+En clase avanzamos por las partes 1 a 3. **Completa todos los ejercicios de esta página**, incluida la **Parte 4: Más práctica**, antes del examen.
+:::
+
+::: {.callout-tip collapse="true"}
+## Ver el código que prepara los datos
+
+Este código ya se ejecutó por ti en esta página. En RStudio, córrelo al inicio de tu script.
+
+```r
+# Al inicio de tu reporte (ejercicio 2.1):
+library(tidyverse)
+pinguinos <- read_csv("datos/pinguinos.csv")
+```
+:::
+
+## Parte 1: Un documento de Quarto {#parte-1}
+
+### Ejercicio 1.1: Crear y renderizar
+
+**Crea un proyecto de Quarto (*File → New Project... → New Directory → Quarto Project*), abre el documento de ejemplo y presiona Render. Luego crea un documento nuevo llamado `reporte.qmd` y deja solo el encabezado.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+::: {.callout-tip appearance="simple"}
+Este ejercicio se hace **en RStudio**, en tu proyecto del curso: copia el código, complétalo y córrelo (o renderiza el documento).
+:::
+
+````markdown
+---
+title: "____"
+format: html
+---
+````
+
+## Pista
+
+Si Render no funciona, revisa que RStudio esté actualizado (*Help → Check for Updates*). El documento debe guardarse antes de renderizar.
+
+## Solución
+
+::: {.solucion-local}
+````markdown
+---
+title: "Pingüinos del archipiélago Palmer"
+format: html
+---
+````
+
+Al renderizar, se abre un documento html con solo el título. Quarto creó `reporte.html` en la misma carpeta.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m4 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 1.2: El encabezado YAML
+
+**Completa el encabezado con título, autor, fecha de hoy y formato html con tabla de contenidos.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+::: {.callout-tip appearance="simple"}
+Este ejercicio se hace **en RStudio**, en tu proyecto del curso: copia el código, complétalo y córrelo (o renderiza el documento).
+:::
+
+````markdown
+---
+title: "Pingüinos del archipiélago Palmer"
+author: "____"
+date: today
+format:
+  html:
+    toc: ____
+---
+````
+
+## Pista
+
+`date: today` pone la fecha del día en que renderizas. Las opciones de un formato van con sangría, debajo de su nombre. En YAML, la sangría importa: usa espacios, no tabulaciones.
+
+## Solución
+
+::: {.solucion-local}
+````markdown
+---
+title: "Pingüinos del archipiélago Palmer"
+author: "Tu nombre"
+date: today
+format:
+  html:
+    toc: true
+---
+````
+
+El documento muestra el autor y la fecha bajo el título. La tabla de contenidos aparecerá cuando agregues secciones con `##`.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m4 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 1.3: Texto en Markdown
+
+**Debajo del encabezado, escribe una sección `Introducción` con un párrafo que tenga una palabra en negrita, una en cursiva, una lista de las tres especies y un enlace a la página del paquete `{palmerpenguins}`.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+::: {.callout-tip appearance="simple"}
+Este ejercicio se hace **en RStudio**, en tu proyecto del curso: copia el código, complétalo y córrelo (o renderiza el documento).
+:::
+
+````markdown
+## ____
+
+Analizamos la **masa corporal** de tres especies de *pingüinos* del archipiélago Palmer:
+
+- Adelie
+- ____
+- Gentoo
+
+Los datos vienen del paquete [palmerpenguins](____).
+````
+
+## Pista
+
+`##` es un título de segundo nivel; `**texto**`, negrita; `*texto*`, cursiva; `- `, una lista; `[texto](url)`, un enlace. La URL es https://allisonhorst.github.io/palmerpenguins/.
+
+## Solución
+
+::: {.solucion-local}
+````markdown
+## Introducción
+
+Analizamos la **masa corporal** de tres especies de *pingüinos* del archipiélago Palmer:
+
+- Adelie
+- Chinstrap
+- Gentoo
+
+Los datos vienen del paquete [palmerpenguins](https://allisonhorst.github.io/palmerpenguins/).
+````
+
+Deja una línea en blanco antes de una lista y antes de un título: si no, Markdown puede no reconocerlos.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m4 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+## Parte 2: Fragmentos de código {#parte-2}
+
+### Ejercicio 2.1: Importar los datos
+
+**Agrega un fragmento de código con la etiqueta `importar` que cargue el `{tidyverse}` e importe los datos, sin mostrar los mensajes de carga.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+::: {.callout-tip appearance="simple"}
+Este ejercicio se hace **en RStudio**, en tu proyecto del curso: copia el código, complétalo y córrelo (o renderiza el documento).
+:::
+
+````markdown
+```{{r}}
+#| label: ____
+#| message: ____
+library(tidyverse)
+pinguinos <- read_csv("datos/pinguinos.csv")
+```
+````
+
+## Pista
+
+Las opciones de un fragmento van al inicio, en líneas que empiezan con `#|`. `message: false` oculta los mensajes de `library()` y `read_csv()`. En RStudio, `Ctrl + Alt + I` inserta un fragmento nuevo.
+
+## Solución
+
+::: {.solucion-local}
+````markdown
+```{{r}}
+#| label: importar
+#| message: false
+library(tidyverse)
+pinguinos <- read_csv("datos/pinguinos.csv")
+```
+````
+
+Al renderizar se ve el código, pero no los mensajes. La ruta `datos/pinguinos.csv` es relativa a la carpeta del documento.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m4 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 2.2: Mostrar resultados sin el código
+
+**Para un reporte dirigido a otras personas, oculta el código de todo el documento con una opción global, y las advertencias también.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+::: {.callout-tip appearance="simple"}
+Este ejercicio se hace **en RStudio**, en tu proyecto del curso: copia el código, complétalo y córrelo (o renderiza el documento).
+:::
+
+````markdown
+---
+title: "Pingüinos del archipiélago Palmer"
+author: "Tu nombre"
+date: today
+format:
+  html:
+    toc: true
+execute:
+  echo: ____
+  warning: ____
+---
+````
+
+## Pista
+
+`execute:` en el encabezado aplica las opciones a **todos** los fragmentos. Un fragmento puede cambiarlas para sí mismo con su propio `#| echo: true`.
+
+## Solución
+
+::: {.solucion-local}
+````markdown
+---
+title: "Pingüinos del archipiélago Palmer"
+author: "Tu nombre"
+date: today
+format:
+  html:
+    toc: true
+execute:
+  echo: false
+  warning: false
+---
+````
+
+Ahora el reporte muestra solo resultados y texto. Si quieres que el lector pueda ver el código si lo desea, prueba `code-fold: true` dentro de `html:` (Parte 4).
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m4 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 2.3: Código en línea
+
+**Escribe una frase que diga cuántos pingüinos hay y cuál es su masa media, con los números calculados por R dentro del texto.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+::: {.callout-tip appearance="simple"}
+Este ejercicio se hace **en RStudio**, en tu proyecto del curso: copia el código, complétalo y córrelo (o renderiza el documento).
+:::
+
+````markdown
+Analizamos `r knitr::inline_expr("nrow(____)")` pingüinos, con una masa media de
+`r knitr::inline_expr("round(mean(pinguinos$body_mass_g, na.rm = ____))")` g.
+````
+
+## Pista
+
+`` `r knitr::inline_expr("expresión")` `` dentro del texto ejecuta la expresión y escribe el resultado. Si cambian los datos, la frase se actualiza sola al renderizar.
+
+## Solución
+
+::: {.solucion-local}
+````markdown
+Analizamos `r knitr::inline_expr("nrow(pinguinos)")` pingüinos, con una masa media de
+`r knitr::inline_expr("round(mean(pinguinos$body_mass_g, na.rm = TRUE))")` g.
+````
+
+Al renderizar se lee: "Analizamos 344 pingüinos, con una masa media de 4202 g." El código en línea funciona aunque `echo` sea `false`.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m4 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+## Parte 3: Figuras, tablas y formatos {#parte-3}
+
+### Ejercicio 3.1: Una figura numerada
+
+**Agrega una sección `Resultados` con un diagrama de caja de la masa por especie. Dale una etiqueta que empiece con `fig-`, un título y un tamaño, y cítala en el texto.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+::: {.callout-tip appearance="simple"}
+Este ejercicio se hace **en RStudio**, en tu proyecto del curso: copia el código, complétalo y córrelo (o renderiza el documento).
+:::
+
+````markdown
+## Resultados
+
+```{{r}}
+#| label: fig-____
+#| fig-cap: "____"
+#| fig-width: 6
+#| fig-height: 4
+ggplot(pinguinos, aes(x = species, y = body_mass_g)) +
+  geom_boxplot() +
+  labs(x = "Especie", y = "Masa corporal (g)")
+```
+
+Como muestra la @fig-____, los Gentoo son los más pesados.
+````
+
+## Pista
+
+Una etiqueta que empieza con `fig-` numera la figura ("Figura 1") y permite citarla con `@` y la etiqueta.
+
+## Solución
+
+::: {.solucion-local}
+````markdown
+## Resultados
+
+```{{r}}
+#| label: fig-masa
+#| fig-cap: "Masa corporal de los pingüinos por especie."
+#| fig-width: 6
+#| fig-height: 4
+ggplot(pinguinos, aes(x = species, y = body_mass_g)) +
+  geom_boxplot() +
+  labs(x = "Especie", y = "Masa corporal (g)")
+```
+
+Como muestra la @fig-masa, los Gentoo son los más pesados.
+````
+
+En el html, la figura aparece como "Figura 1" y `@fig-masa` se convierte en un enlace con el texto "Figura 1".
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m4 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 3.2: Una tabla numerada
+
+**Agrega una tabla con el número de pingüinos y la masa media por especie, con título, y cítala en el texto.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+::: {.callout-tip appearance="simple"}
+Este ejercicio se hace **en RStudio**, en tu proyecto del curso: copia el código, complétalo y córrelo (o renderiza el documento).
+:::
+
+````markdown
+```{{r}}
+#| label: tbl-____
+#| tbl-cap: "Número de pingüinos y masa media por especie."
+pinguinos |>
+  group_by(species) |>
+  summarise(n = n(), masa_media_g = mean(body_mass_g, na.rm = TRUE)) |>
+  knitr::____(digits = 0)
+```
+
+La @tbl-____ resume los datos de cada especie.
+````
+
+## Pista
+
+`knitr::kable()` convierte una tabla de datos en una tabla con formato. Las etiquetas de tablas empiezan con `tbl-`.
+
+## Solución
+
+::: {.solucion-local}
+````markdown
+```{{r}}
+#| label: tbl-masa
+#| tbl-cap: "Número de pingüinos y masa media por especie."
+pinguinos |>
+  group_by(species) |>
+  summarise(n = n(), masa_media_g = mean(body_mass_g, na.rm = TRUE)) |>
+  knitr::kable(digits = 0)
+```
+
+La @tbl-masa resume los datos de cada especie.
+````
+
+La tabla muestra Adelie (152; 3701 g), Chinstrap (68; 3733 g) y Gentoo (124; 5076 g), numerada como "Tabla 1".
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m4 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 3.3: Word y PDF
+
+**Cambia el encabezado para que el mismo documento se renderice también en Word y en PDF. Renderiza los tres formatos.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+::: {.callout-tip appearance="simple"}
+Este ejercicio se hace **en RStudio**, en tu proyecto del curso: copia el código, complétalo y córrelo (o renderiza el documento).
+:::
+
+````markdown
+format:
+  html:
+    toc: true
+  ____: default
+  pdf: ____
+````
+
+## Pista
+
+Cada formato es una entrada bajo `format:`; `default` usa las opciones por defecto. En RStudio, la flecha junto a Render elige el formato; `quarto render reporte.qmd` en la Terminal los genera todos. PDF necesita TinyTeX.
+
+## Solución
+
+::: {.solucion-local}
+````markdown
+format:
+  html:
+    toc: true
+  docx: default
+  pdf: default
+````
+
+Quarto crea `reporte.html`, `reporte.docx` y `reporte.pdf`. La figura y la tabla están numeradas en los tres. El documento de Word se puede editar como cualquier otro.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m4 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+## Parte 4: Más práctica {#parte-4}
+
+### Ejercicio 4.1: Secciones numeradas
+
+**Numera las secciones del reporte y agrega una sección `Conclusiones` con dos frases.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+::: {.callout-tip appearance="simple"}
+Este ejercicio se hace **en RStudio**, en tu proyecto del curso: copia el código, complétalo y córrelo (o renderiza el documento).
+:::
+
+````markdown
+format:
+  html:
+    toc: true
+    number-sections: ____
+
+...
+
+## ____
+
+Los Gentoo pesan unos 1300 g más que Adelie y Chinstrap. En las tres especies, los machos son más pesados que las hembras.
+````
+
+## Pista
+
+`number-sections: true` numera los títulos (1, 1.1, ...). Funciona en html, Word y PDF.
+
+## Solución
+
+::: {.solucion-local}
+````markdown
+format:
+  html:
+    toc: true
+    number-sections: true
+
+...
+
+## Conclusiones
+
+Los Gentoo pesan unos 1300 g más que Adelie y Chinstrap. En las tres especies, los machos son más pesados que las hembras.
+````
+
+Las secciones aparecen como "1 Introducción", "2 Resultados" y "3 Conclusiones", también en la tabla de contenidos.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m4 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 4.2: Una imagen guardada
+
+**Inserta en la introducción una imagen que tengas en la carpeta `images/` de tu proyecto, al 40% del ancho, con un título.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+::: {.callout-tip appearance="simple"}
+Este ejercicio se hace **en RStudio**, en tu proyecto del curso: copia el código, complétalo y córrelo (o renderiza el documento).
+:::
+
+````markdown
+![Pingüinos Gentoo en la Antártida.](images/____.jpg){width=____}
+````
+
+## Pista
+
+La sintaxis es `![título](ruta){opciones}`. La ruta es relativa al documento. `width=40%` controla el ancho.
+
+## Solución
+
+::: {.solucion-local}
+````markdown
+![Pingüinos Gentoo en la Antártida.](images/gentoo.jpg){width=40%}
+````
+
+Si le das una etiqueta, `{#fig-foto width=40%}`, también se numera y puedes citarla con `@fig-foto`.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m4 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 4.3: Un recuadro destacado
+
+**Agrega un recuadro de nota (*callout*) que explique de dónde vienen los datos.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+::: {.callout-tip appearance="simple"}
+Este ejercicio se hace **en RStudio**, en tu proyecto del curso: copia el código, complétalo y córrelo (o renderiza el documento).
+:::
+
+````markdown
+::: {.callout-____}
+## Sobre los datos
+Datos de Gorman, Williams y Fraser (2014), publicados en el paquete `{palmerpenguins}`.
+:::
+````
+
+## Pista
+
+Quarto tiene cinco tipos de recuadros: `note`, `tip`, `warning`, `important` y `caution`.
+
+## Solución
+
+::: {.solucion-local}
+````markdown
+::: {.callout-note}
+## Sobre los datos
+Datos de Gorman, Williams y Fraser (2014), publicados en el paquete `{palmerpenguins}`.
+:::
+````
+
+En html se ve un recuadro azul con su título. En Word y PDF también aparece, con otro estilo.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m4 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 4.4: Código plegable en html
+
+**En el formato html, muestra el código pero plegado, con un botón para desplegarlo.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+::: {.callout-tip appearance="simple"}
+Este ejercicio se hace **en RStudio**, en tu proyecto del curso: copia el código, complétalo y córrelo (o renderiza el documento).
+:::
+
+````markdown
+format:
+  html:
+    toc: true
+    code-fold: ____
+    code-summary: "____"
+execute:
+  echo: true
+````
+
+## Pista
+
+`code-fold: true` muestra el código plegado bajo un botón; `code-summary` cambia el texto del botón. Necesita `echo: true`: si el código no se muestra, no hay nada que plegar.
+
+## Solución
+
+::: {.solucion-local}
+````markdown
+format:
+  html:
+    toc: true
+    code-fold: true
+    code-summary: "Mostrar el código"
+execute:
+  echo: true
+````
+
+Cada fragmento aparece como un botón "Mostrar el código" sobre su resultado. Así, el mismo reporte sirve para quien solo quiere los resultados y para quien quiere revisar el análisis.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m4 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+### Ejercicio 4.5: Un reporte con tus datos
+
+**Usa tu reporte de los pingüinos como plantilla para un reporte con tus propios datos: introducción, una tabla, dos figuras numeradas y citadas, y conclusiones. Renderízalo en html y en Word.**
+
+::: {.panel-tabset}
+
+## Ejercicio
+
+::: {.callout-tip appearance="simple"}
+Este ejercicio se hace **en RStudio**, en tu proyecto del curso: copia el código, complétalo y córrelo (o renderiza el documento).
+:::
+
+````markdown
+---
+title: "____"
+author: "____"
+date: today
+format:
+  html:
+    toc: true
+    number-sections: true
+  docx: default
+execute:
+  echo: false
+  warning: false
+---
+
+## Introducción
+
+## Métodos
+
+## Resultados
+
+## Conclusiones
+````
+
+## Pista
+
+Empieza por copiar tu reporte de los pingüinos y cambiar los datos y las preguntas. Renderiza a menudo: es más fácil encontrar un error si cambiaste poco desde la última vez.
+
+## Solución
+
+::: {.solucion-local}
+No hay una única solución. Revisa que tu reporte:
+
+- se renderice sin errores en html y en Word;
+- tenga al menos una tabla (`tbl-`) y dos figuras (`fig-`) con título, todas citadas en el texto;
+- no muestre mensajes ni advertencias;
+- termine con conclusiones que respondan a la pregunta de la introducción.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m4 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+:::
+
+## Antes del examen
+
+El examen incluye un reporte corto de Quarto. Si completaste las partes 1 a 3, ya tienes todo lo necesario: encabezado, texto, fragmentos con opciones, una figura y una tabla numeradas, y el render a html.

@@ -1,0 +1,129 @@
+---
+title: "Autoevaluación Módulo 2"
+subtitle: "Introducción al {tidyverse} y a {ggplot2}"
+filters:
+  - selfcheck.lua
+include-after-body: selfcheck.html
+toc: false
+---
+
+Ocho preguntas cortas sobre el [Módulo 2](modulo-2.qmd), dos por cada objetivo de la sesión. Tienes dos intentos por pregunta; después verás la respuesta y una explicación. **Es anónima: no se guarda ni se envía nada.**
+
+::: {.callout-note appearance="simple"}
+<span id="sc-score"></span>
+:::
+
+
+## Objetivo 1: El operador de cascada
+
+::: {.selfcheck}
+**1. ¿Qué es equivalente a `pinguinos |> filter(species == "Gentoo")`?**
+
+- [ ] `filter(species == "Gentoo", pinguinos)`
+- [x] `filter(pinguinos, species == "Gentoo")`
+- [ ] `pinguinos(filter(species == "Gentoo"))`
+- [ ] `species == "Gentoo" |> filter(pinguinos)`
+
+::: {.explanation}
+`x |> f(y)` es `f(x, y)`: lo de la izquierda entra como **primer argumento**. Por eso las funciones del `{tidyverse}` reciben la tabla primero.
+:::
+:::
+
+::: {.selfcheck}
+**2. ¿Cómo se lee `pinguinos |> group_by(species) |> summarise(n = n())`?**
+
+- [ ] Resume y luego agrupa
+- [x] Toma los pingüinos, y luego agrúpalos por especie, y luego cuenta cuántos hay en cada grupo
+- [ ] Cuenta las especies y luego toma los pingüinos
+- [ ] Es un error: no se pueden encadenar tres funciones
+
+::: {.explanation}
+Cada `|>` se lee como "y luego". Se pueden encadenar tantos pasos como haga falta; conviene poner uno por línea.
+:::
+:::
+
+## Objetivo 2: Tibbles y datos ordenados
+
+::: {.selfcheck}
+**3. Una tabla tiene las columnas `especie`, `2007`, `2008`, `2009`, con la masa media de cada año. ¿Está ordenada (*tidy*)?**
+
+- [ ] Sí, porque cada fila es una especie
+- [x] No: el año es una variable repartida en tres columnas; en formato largo serían `especie`, `año` y `masa`
+- [ ] Sí, porque no hay valores faltantes
+- [ ] No, porque tiene números
+
+::: {.explanation}
+En datos ordenados, cada **variable** es una columna. Aquí el año está en los nombres de las columnas. `pivot_longer()` la ordena.
+:::
+:::
+
+::: {.selfcheck}
+**4. ¿Qué diferencia hay entre un `tibble` y un `data.frame`?**
+
+- [ ] Son incompatibles: hay que convertirlos para usar `{dplyr}`
+- [x] Un tibble es un `data.frame` moderno: se imprime mejor y no cambia los nombres de las columnas
+- [ ] Un tibble no admite columnas de texto
+- [ ] Un tibble solo funciona con `{ggplot2}`
+
+::: {.explanation}
+Un tibble **es** un `data.frame` (tiene esa clase), con mejoras para trabajar cómodamente. Todo lo que funciona con uno funciona con el otro.
+:::
+:::
+
+## Objetivo 3: Operaciones con {dplyr}
+
+::: {.selfcheck}
+**5. Quieres quedarte con las columnas `species` y `body_mass_g`. ¿Qué función usas?**
+
+- [ ] `filter()`
+- [x] `select()`
+- [ ] `mutate()`
+- [ ] `arrange()`
+
+::: {.explanation}
+`select()` elige **columnas**; `filter()` elige **filas**; `mutate()` crea columnas; `arrange()` ordena filas.
+:::
+:::
+
+::: {.selfcheck}
+**6. ¿Qué devuelve `pinguinos |> group_by(species) |> summarise(media = mean(body_mass_g))`?**
+
+- [ ] La masa media de cada especie, sin problemas
+- [x] Una tabla con una fila por especie, donde las medias de Adelie y Gentoo son `NA`
+- [ ] Un error
+- [ ] Una sola media para todos
+
+::: {.explanation}
+Adelie y Gentoo tienen un valor faltante cada uno, así que su media es `NA`. Falta `na.rm = TRUE` dentro de `mean()`, o filtrar antes con `filter(!is.na(body_mass_g))`.
+:::
+:::
+
+## Objetivo 4: La gramática de {ggplot2}
+
+::: {.selfcheck}
+**7. ¿Qué hace `ggplot(pinguinos, aes(x = flipper_length_mm, y = body_mass_g))` sin nada más?**
+
+- [ ] Un gráfico de dispersión
+- [x] Prepara el lienzo y los ejes, pero no dibuja datos: falta una geometría
+- [ ] Un error
+- [ ] Un histograma
+
+::: {.explanation}
+`ggplot()` define los datos y el mapeo. Los datos se dibujan al sumar una geometría con `+`, por ejemplo `+ geom_point()`.
+:::
+:::
+
+::: {.selfcheck}
+**8. Quieres que el color de los puntos dependa de la especie. ¿Dónde va `color = species`?**
+
+- [ ] Fuera de `aes()`, en `geom_point(color = species)`
+- [x] Dentro de `aes()`
+- [ ] En `labs()`
+- [ ] En `theme()`
+
+::: {.explanation}
+Lo que depende de una **variable** va dentro de `aes()`. Un valor **fijo**, como `color = "blue"`, va fuera de `aes()`, en la geometría.
+:::
+:::
+
+¿Fallaste alguna? Vuelve a la parte correspondiente de las [diapositivas](diapositivas/modulo-2.html){target="_blank"} o de los [ejercicios](ejercicios-2.qmd).
