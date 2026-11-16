@@ -51,16 +51,16 @@ website:
             text: "Módulo 3: Visualización con {ggplot2}"
           - href: modulo-4.qmd
             text: "Módulo 4: Introducción a Quarto"
-      - text: Diapositivas
-        menu:
-          - href: diapositivas/modulo-1.qmd
-            text: "Diapositivas Módulo 1"
-          - href: diapositivas/modulo-2.qmd
-            text: "Diapositivas Módulo 2"
-          - href: diapositivas/modulo-3.qmd
-            text: "Diapositivas Módulo 3"
-          - href: diapositivas/modulo-4.qmd
-            text: "Diapositivas Módulo 4"
+      # - text: Diapositivas
+      #   menu:
+      #     - href: diapositivas/modulo-1.qmd
+      #       text: "Diapositivas Módulo 1"
+      #     - href: diapositivas/modulo-2.qmd
+      #       text: "Diapositivas Módulo 2"
+      #     - href: diapositivas/modulo-3.qmd
+      #       text: "Diapositivas Módulo 3"
+      #     - href: diapositivas/modulo-4.qmd
+      #       text: "Diapositivas Módulo 4"
       - text: Ejercicios
         menu:
           - href: ejercicios-1.qmd

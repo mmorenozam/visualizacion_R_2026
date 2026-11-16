@@ -1,0 +1,108 @@
+Respuestas Ejercicios en Casa
+
+Modulo 1
+
+PREGUNTA 4.1
+
+## Solución
+
+::: {.solution exercise="ex_4_1"}
+```r
+masas <- c(3750, 3800, 3250, 3450, 3650)
+
+masas_kg <- masas / 1000
+sort(masas_kg)
+round(mean(masas_kg), digits = 2)
+```
+
+Ordenadas: 3.25, 3.45, 3.65, 3.75 y 3.80 kg. La media redondeada es 3.58 kg.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m1 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+
+
+PREGUNTA 4.2
+
+## Solución
+
+::: {.solution exercise="ex_4_2"}
+```r
+gentoo <- pinguinos[pinguinos$species == "Gentoo", ]
+nrow(gentoo)
+mean(gentoo$body_mass_g, na.rm = TRUE)
+
+gentoo_machos <- pinguinos[pinguinos$species == "Gentoo" & pinguinos$sex == "male", ]
+gentoo_machos <- gentoo_machos[!is.na(gentoo_machos$species), ]
+nrow(gentoo_machos)
+mean(gentoo_machos$body_mass_g)
+```
+
+Hay 124 Gentoo, con una masa media de 5076.02 g. De ellos, 61 son machos, con 5484.84 g en promedio. En el [Módulo 2](ejercicios-2.qmd) haremos esto mucho más fácil con `filter()`.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m1 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+
+
+PREGUNTA 4.3
+
+## Solución
+
+::: {.solution exercise="ex_4_3"}
+```r
+pinguinos$pico_relativo <- pinguinos$bill_length_mm / pinguinos$bill_depth_mm
+mean(pinguinos$pico_relativo, na.rm = TRUE)
+
+fila <- which.max(pinguinos$body_mass_g)
+fila
+pinguinos[fila, c("species", "island", "sex", "body_mass_g")]
+```
+
+El pico mide en promedio 2.61 veces más de largo que de profundidad. El más pesado está en la fila 170: un Gentoo macho de Biscoe, de 6300 g.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m1 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+
+
+PREGUNTA 4.4
+
+## Solución
+
+::: {.solution exercise="ex_4_4"}
+```r
+colSums(is.na(pinguinos))
+sum(complete.cases(pinguinos))
+```
+
+Faltan 2 valores en cada medida del cuerpo y 11 en `sex`. Hay 333 filas completas de 344.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m1 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::
+
+
+
+PREGUNTA 4.5
+
+## Solución
+
+::: {.solution exercise="ex_4_5"}
+```r
+aggregate(body_mass_g ~ species + sex, data = pinguinos, FUN = mean)
+```
+
+Hembras y machos: Adelie 3368.84 y 4043.49 g; Chinstrap 3527.21 y 3938.97 g; Gentoo 4679.74 y 5484.84 g. Los machos pesan unos 675 g más en Adelie, 412 g en Chinstrap y 805 g en Gentoo.
+:::
+
+::: {.sol-pendiente}
+La solución se publicará después de la sesión ({{< var fecha-m1 >}}). Mientras tanto, usa la pestaña **Pista**.
+:::

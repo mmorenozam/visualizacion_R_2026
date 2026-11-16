@@ -732,28 +732,28 @@
     "href": "ejercicios-1.html#parte-1",
     "title": "Ejercicios Módulo 1",
     "section": "Parte 1: R como calculadora y objetos",
-    "text": "Parte 1: R como calculadora y objetos\n\nEjercicio 1.1: R como calculadora\nUn pingüino pesaba 3750 g al inicio de la temporada y 4050 g al final. Guarda cada medida en un objeto, calcula cuánto aumentó y qué porcentaje representa ese aumento respecto a la masa inicial.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nAsignamos valores con &lt;-. El porcentaje es el aumento dividido para la masa inicial, multiplicado por 100.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 14 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 1.2: Vectores\nEstas son las masas (g) de cinco pingüinos. Crea el vector masas, calcula cuántos valores tiene, su media, y cuántos pingüinos pesan más de 3500 g.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nmasas &gt; 3500 devuelve un vector lógico (TRUE/FALSE). Al sumarlo, R cuenta cada TRUE como 1.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 14 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 1.3: Tipos de datos y factores\n¿Qué clase de objeto obtienes al combinar un número, un texto y un valor lógico? Luego convierte el vector especie en un factor y cuenta cuántas veces aparece cada nivel.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nUn vector solo puede contener datos de una clase, así que R convierte todo a la clase más general. Para crear un factor usa factor().\n\n\n\n\nLa solución se publicará después de la sesión (sábado 14 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 1.4: Tablas de datos\nConstruye una tabla de datos con tres pingüinos y extrae: (a) la columna masa con $, (b) la fila del segundo pingüino, y (c) la masa del tercero usando [fila, columna].\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nEn tabla[fila, columna], dejar un lugar vacío significa “todas”. aves[2, ] es toda la fila 2.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 14 de noviembre de 2026). Mientras tanto, usa la pestaña Pista."
+    "text": "Parte 1: R como calculadora y objetos\n\nEjercicio 1.1: R como calculadora\nUn pingüino pesaba 3750 g al inicio de la temporada y 4050 g al final. Guarda cada medida en un objeto, calcula cuánto aumentó y qué porcentaje representa ese aumento respecto a la masa inicial.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nAsignamos valores con &lt;-. El porcentaje es el aumento dividido para la masa inicial, multiplicado por 100.\n\n\n\n\ninicial &lt;- 3750\nfinal &lt;- 4050\n\naumento &lt;- final - inicial\naumento\n\nporcentaje &lt;- aumento / inicial * 100\nporcentaje\nAumentó 300 g, un 8% de su masa inicial.\n\n\n\n\n\n\nEjercicio 1.2: Vectores\nEstas son las masas (g) de cinco pingüinos. Crea el vector masas, calcula cuántos valores tiene, su media, y cuántos pingüinos pesan más de 3500 g.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nmasas &gt; 3500 devuelve un vector lógico (TRUE/FALSE). Al sumarlo, R cuenta cada TRUE como 1.\n\n\n\n\nmasas &lt;- c(3750, 3800, 3250, 3450, 3650)\n\nlength(masas)\nmean(masas)\n\nmasas &gt; 3500\nsum(masas &gt; 3500)\nSon 5 valores con una media de 3580 g, y 3 pingüinos pesan más de 3500 g.\n\n\n\n\n\n\nEjercicio 1.3: Tipos de datos y factores\n¿Qué clase de objeto obtienes al combinar un número, un texto y un valor lógico? Luego convierte el vector especie en un factor y cuenta cuántas veces aparece cada nivel.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nUn vector solo puede contener datos de una clase, así que R convierte todo a la clase más general. Para crear un factor usa factor().\n\n\n\n\nmezcla &lt;- c(1, \"a\", TRUE)\nclass(mezcla)\n\nespecie &lt;- c(\"Adelie\", \"Gentoo\", \"Chinstrap\", \"Adelie\", \"Gentoo\")\nespecie &lt;- factor(especie)\n\nlevels(especie)\ntable(especie)\nmezcla es de clase \"character\". El factor tiene tres niveles, en orden alfabético: Adelie, Chinstrap y Gentoo, que aparecen 2, 1 y 2 veces.\n\n\n\n\n\n\nEjercicio 1.4: Tablas de datos\nConstruye una tabla de datos con tres pingüinos y extrae: (a) la columna masa con $, (b) la fila del segundo pingüino, y (c) la masa del tercero usando [fila, columna].\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nEn tabla[fila, columna], dejar un lugar vacío significa “todas”. aves[2, ] es toda la fila 2.\n\n\n\n\naves &lt;- data.frame(\n  id = c(1, 2, 3),\n  especie = c(\"Adelie\", \"Gentoo\", \"Chinstrap\"),\n  masa = c(3750, 5500, 3700)\n)\n\naves$masa\naves[2, ]\naves[3, \"masa\"]\nLa masa del tercer pingüino es 3700 g. aves[2, ] devuelve una tabla de una fila; aves$masa, un vector."
   },
   {
     "objectID": "ejercicios-1.html#parte-2",
     "href": "ejercicios-1.html#parte-2",
     "title": "Ejercicios Módulo 1",
     "section": "Parte 2: Importar datos",
-    "text": "Parte 2: Importar datos\n\nEjercicio 2.1: Importar un archivo csv\nImporta el archivo datos/pinguinos.csv en un objeto llamado pinguinos. ¿Cuántas filas y columnas tiene? Revisa su estructura con str().\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nLa ruta va entre comillas, incluida la carpeta: \"datos/pinguinos.csv\". En tu computador, la ruta es relativa a la carpeta de tu proyecto de R.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 14 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 2.2: Explorar una tabla\nLa tabla pinguinos ya está cargada. Muestra sus primeras seis filas, las tres primeras filas de las columnas species y body_mass_g, y un resumen de todas las columnas. ¿Cuántos valores faltan en body_mass_g?\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nPara elegir varias columnas por su nombre, ponlas en un vector con c(). summary() cuenta los valores faltantes en la línea NA's.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 14 de noviembre de 2026). Mientras tanto, usa la pestaña Pista."
+    "text": "Parte 2: Importar datos\n\nEjercicio 2.1: Importar un archivo csv\nImporta el archivo datos/pinguinos.csv en un objeto llamado pinguinos. ¿Cuántas filas y columnas tiene? Revisa su estructura con str().\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nLa ruta va entre comillas, incluida la carpeta: \"datos/pinguinos.csv\". En tu computador, la ruta es relativa a la carpeta de tu proyecto de R.\n\n\n\n\npinguinos &lt;- read.csv(\"datos/pinguinos.csv\")\n\nnrow(pinguinos)\nncol(pinguinos)\nstr(pinguinos)\nLa tabla tiene 344 filas (una por pingüino) y 8 columnas. species, island y sex se importaron como texto (chr); las medidas del pico como números (num); la aleta, la masa y el año como enteros (int).\n\n\n\n\n\n\nEjercicio 2.2: Explorar una tabla\nLa tabla pinguinos ya está cargada. Muestra sus primeras seis filas, las tres primeras filas de las columnas species y body_mass_g, y un resumen de todas las columnas. ¿Cuántos valores faltan en body_mass_g?\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nPara elegir varias columnas por su nombre, ponlas en un vector con c(). summary() cuenta los valores faltantes en la línea NA's.\n\n\n\n\nhead(pinguinos)\npinguinos[1:3, c(\"species\", \"body_mass_g\")]\nsummary(pinguinos)\nLos tres primeros son Adelie, de 3750, 3800 y 3250 g. Según summary(), faltan 2 valores de body_mass_g."
   },
   {
     "objectID": "ejercicios-1.html#parte-3",
     "href": "ejercicios-1.html#parte-3",
     "title": "Ejercicios Módulo 1",
     "section": "Parte 3: Operaciones estadísticas básicas",
-    "text": "Parte 3: Operaciones estadísticas básicas\n\nEjercicio 3.1: Valores faltantes, media y dispersión\nCalcula la media de body_mass_g. ¿Qué devuelve? Repite con na.rm = TRUE, y calcula también la mediana y la desviación estándar.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nSi falta un valor, R no puede saber la media y devuelve NA. na.rm = TRUE le pide ignorar los faltantes; lo aceptan mean(), median(), sd(), sum() y muchas otras.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 14 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 3.2: Cuartiles\nCalcula los cuartiles de body_mass_g. ¿Entre qué valores está el 50% central de los pingüinos?\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nEl 50% central de los datos está entre el primer cuartil (0.25) y el tercero (0.75).\n\n\n\n\nLa solución se publicará después de la sesión (sábado 14 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 3.3: Variables categóricas\n¿Cuántos pingüinos hay de cada especie? Calcula también la proporción, y una tabla cruzada de especie por isla. ¿Qué especie vive en las tres islas?\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\ntable() cuenta las veces que aparece cada valor; prop.table() convierte los conteos en proporciones. Con dos variables, table() hace una tabla cruzada.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 14 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 3.4: Resumir por grupos\nCalcula la masa media de cada especie, primero con tapply() y luego con aggregate(). ¿Qué especie es la más pesada?\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\ntapply(variable, grupo, función) aplica la función dentro de cada grupo; los argumentos extra, como na.rm = TRUE, pasan a la función. aggregate() con fórmula descarta los NA por su cuenta.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 14 de noviembre de 2026). Mientras tanto, usa la pestaña Pista."
+    "text": "Parte 3: Operaciones estadísticas básicas\n\nEjercicio 3.1: Valores faltantes, media y dispersión\nCalcula la media de body_mass_g. ¿Qué devuelve? Repite con na.rm = TRUE, y calcula también la mediana y la desviación estándar.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nSi falta un valor, R no puede saber la media y devuelve NA. na.rm = TRUE le pide ignorar los faltantes; lo aceptan mean(), median(), sd(), sum() y muchas otras.\n\n\n\n\nmean(pinguinos$body_mass_g)\nmean(pinguinos$body_mass_g, na.rm = TRUE)\nmedian(pinguinos$body_mass_g, na.rm = TRUE)\nsd(pinguinos$body_mass_g, na.rm = TRUE)\nSin na.rm, la media es NA. Con na.rm = TRUE: media 4201.75 g, mediana 4050 g y desviación estándar 801.95 g.\n\n\n\n\n\n\nEjercicio 3.2: Cuartiles\nCalcula los cuartiles de body_mass_g. ¿Entre qué valores está el 50% central de los pingüinos?\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nEl 50% central de los datos está entre el primer cuartil (0.25) y el tercero (0.75).\n\n\n\n\nquantile(pinguinos$body_mass_g, na.rm = TRUE)\nquantile(pinguinos$body_mass_g, probs = c(0.25, 0.75), na.rm = TRUE)\nEl 50% central de los pingüinos pesa entre 3550 y 4750 g. El más liviano pesa 2700 g y el más pesado, 6300 g.\n\n\n\n\n\n\nEjercicio 3.3: Variables categóricas\n¿Cuántos pingüinos hay de cada especie? Calcula también la proporción, y una tabla cruzada de especie por isla. ¿Qué especie vive en las tres islas?\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\ntable() cuenta las veces que aparece cada valor; prop.table() convierte los conteos en proporciones. Con dos variables, table() hace una tabla cruzada.\n\n\n\n\ntable(pinguinos$species)\nprop.table(table(pinguinos$species))\ntable(pinguinos$species, pinguinos$island)\nHay 152 Adelie (44%), 68 Chinstrap (20%) y 124 Gentoo (36%). Solo los Adelie viven en las tres islas; los Chinstrap están solo en Dream y los Gentoo solo en Biscoe.\n\n\n\n\n\n\nEjercicio 3.4: Resumir por grupos\nCalcula la masa media de cada especie, primero con tapply() y luego con aggregate(). ¿Qué especie es la más pesada?\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\ntapply(variable, grupo, función) aplica la función dentro de cada grupo; los argumentos extra, como na.rm = TRUE, pasan a la función. aggregate() con fórmula descarta los NA por su cuenta.\n\n\n\n\ntapply(pinguinos$body_mass_g, pinguinos$species, mean, na.rm = TRUE)\n\naggregate(body_mass_g ~ species, data = pinguinos, FUN = mean)\nLas medias son 3700.66 g (Adelie), 3733.09 g (Chinstrap) y 5076.02 g (Gentoo). Los Gentoo pesan unos 1300 g más que las otras dos especies."
   },
   {
     "objectID": "ejercicios-1.html#parte-4",
     "href": "ejercicios-1.html#parte-4",
     "title": "Ejercicios Módulo 1",
     "section": "Parte 4: Más práctica",
-    "text": "Parte 4: Más práctica\n\nEjercicio 4.1: Operaciones con vectores\nConvierte las masas de los cinco pingüinos de gramos a kilogramos, ordénalas de menor a mayor y redondea su media en kilogramos a dos decimales.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nUn kilogramo tiene 1000 gramos. sort() ordena de menor a mayor; round(x, digits = 2) redondea a dos decimales.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 14 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 4.2: Filtrar filas\nQuédate solo con los Gentoo. ¿Cuántos son y cuál es su masa media? Luego filtra los Gentoo machos (sex == \"male\").\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nUna condición antes de la coma en [ , ] elige las filas donde es TRUE. Para dos condiciones a la vez, únelas con &. Las filas con sex faltante dan NA en la condición; la segunda línea las quita.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 14 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 4.3: Crear una columna nueva\nCrea la columna pico_relativo (largo del pico dividido para su profundidad) y calcula su media. ¿Qué fila tiene el pingüino más pesado, y de qué especie, isla y sexo es?\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nAsignar a tabla$nombre_nuevo crea una columna. which.max() devuelve la posición del valor más alto e ignora los NA.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 14 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 4.4: ¿Cuántos datos faltan?\nCuenta los valores faltantes de cada columna con colSums(is.na(...)), y cuántas filas están completas.\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nis.na() devuelve TRUE donde falta un valor; colSums() suma por columna. complete.cases() es TRUE en las filas sin ningún faltante.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 14 de noviembre de 2026). Mientras tanto, usa la pestaña Pista.\n\n\n\n\n\n\nEjercicio 4.5: Resumir por dos grupos\nCalcula la masa media para cada combinación de especie y sexo. ¿Cuánto más pesan los machos que las hembras en cada especie?\n\nEjercicioPistaSolución\n\n\n\n\n\n\n\n\n\n\n\n\n\nEn la fórmula de aggregate(), varios grupos se unen con +.\n\n\n\n\nLa solución se publicará después de la sesión (sábado 14 de noviembre de 2026). Mientras tanto, usa la pestaña Pista."
+    "text": "Parte 4: Más práctica\n\nEjercicio 4.1: Operaciones con vectores\nConvierte las masas de los cinco pingüinos de gramos a kilogramos, ordénalas de menor a mayor y redondea su media en kilogramos a dos decimales.\n\nEjercicioPista\n\n\n\n\n\n\n\n\n\n\n\n\n\nUn kilogramo tiene 1000 gramos. sort() ordena de menor a mayor; round(x, digits = 2) redondea a dos decimales.\n\n\n\n\n\n\nEjercicio 4.2: Filtrar filas\nQuédate solo con los Gentoo. ¿Cuántos son y cuál es su masa media? Luego filtra los Gentoo machos (sex == \"male\").\n\nEjercicioPista\n\n\n\n\n\n\n\n\n\n\n\n\n\nUna condición antes de la coma en [ , ] elige las filas donde es TRUE. Para dos condiciones a la vez, únelas con &. Las filas con sex faltante dan NA en la condición; la segunda línea las quita.\n\n\n\n\n\n\nEjercicio 4.3: Crear una columna nueva\nCrea la columna pico_relativo (largo del pico dividido para su profundidad) y calcula su media. ¿Qué fila tiene el pingüino más pesado, y de qué especie, isla y sexo es?\n\nEjercicioPista\n\n\n\n\n\n\n\n\n\n\n\n\n\nAsignar a tabla$nombre_nuevo crea una columna. which.max() devuelve la posición del valor más alto e ignora los NA.\n\n\n\n\n\n\nEjercicio 4.4: ¿Cuántos datos faltan?\nCuenta los valores faltantes de cada columna con colSums(is.na(...)), y cuántas filas están completas.\n\nEjercicioPista\n\n\n\n\n\n\n\n\n\n\n\n\n\nis.na() devuelve TRUE donde falta un valor; colSums() suma por columna. complete.cases() es TRUE en las filas sin ningún faltante.\n\n\n\n\n\n\nEjercicio 4.5: Resumir por dos grupos\nCalcula la masa media para cada combinación de especie y sexo. ¿Cuánto más pesan los machos que las hembras en cada especie?\n\nEjercicioPista\n\n\n\n\n\n\n\n\n\n\n\n\n\nEn la fórmula de aggregate(), varios grupos se unen con +."
   },
   {
     "objectID": "ejercicios-1.html#con-tus-propios-datos",
@@ -879,14 +879,14 @@
     "href": "recursos.html",
     "title": "Recursos",
     "section": "",
-    "text": "Instala los programas en este orden, antes de la primera clase:\n\nR, desde CRAN: elige tu sistema operativo y descarga la versión más reciente.\nRStudio Desktop, desde Posit (versión gratuita).\nAbre RStudio y, en la consola, instala los paquetes que usaremos:\n\ninstall.packages(c(\"tidyverse\", \"readxl\", \"patchwork\", \"knitr\"))\n\n\n\n\n\n\n¿No puedes instalar R todavía?\n\n\n\nLos ejercicios de este sitio corren en tu navegador, así que puedes empezar a practicar mientras resuelves la instalación. Si tienes problemas, escribe al correo del curso antes del primer domingo.\n\n\n\nQuarto ya viene incluido en las versiones recientes de RStudio. Si tu RStudio es antiguo, instálalo desde quarto.org.\nPara reportes en PDF, instala además TinyTeX desde la consola de RStudio:\n\ninstall.packages(\"tinytex\")\ntinytex::install_tinytex()"
+    "text": "Instala los programas en este orden, antes de la primera clase:\n\nR, desde CRAN: elige tu sistema operativo y descarga la versión más reciente.\nRStudio Desktop, desde Posit (versión gratuita).\nAbre RStudio y, en la consola, instala los paquetes que usaremos:\n\ninstall.packages(c(\"tidyverse\", \"readxl\", \"patchwork\", \"knitr\", \"tidycomm\", \"fdth\", \"flextable\"))\n\n\n\n\n\n\n¿No puedes instalar R todavía?\n\n\n\nLos ejercicios de este sitio corren en tu navegador, así que puedes empezar a practicar mientras resuelves la instalación. Si tienes problemas, escribe al correo del curso antes del primer domingo.\n\n\n\nQuarto ya viene incluido en las versiones recientes de RStudio. Si tu RStudio es antiguo, instálalo desde quarto.org.\nPara reportes en PDF, instala además TinyTeX desde la consola de RStudio:\n\ninstall.packages(\"tinytex\")\ntinytex::install_tinytex()"
   },
   {
     "objectID": "recursos.html#instalacion",
     "href": "recursos.html#instalacion",
     "title": "Recursos",
     "section": "",
-    "text": "Instala los programas en este orden, antes de la primera clase:\n\nR, desde CRAN: elige tu sistema operativo y descarga la versión más reciente.\nRStudio Desktop, desde Posit (versión gratuita).\nAbre RStudio y, en la consola, instala los paquetes que usaremos:\n\ninstall.packages(c(\"tidyverse\", \"readxl\", \"patchwork\", \"knitr\"))\n\n\n\n\n\n\n¿No puedes instalar R todavía?\n\n\n\nLos ejercicios de este sitio corren en tu navegador, así que puedes empezar a practicar mientras resuelves la instalación. Si tienes problemas, escribe al correo del curso antes del primer domingo.\n\n\n\nQuarto ya viene incluido en las versiones recientes de RStudio. Si tu RStudio es antiguo, instálalo desde quarto.org.\nPara reportes en PDF, instala además TinyTeX desde la consola de RStudio:\n\ninstall.packages(\"tinytex\")\ntinytex::install_tinytex()"
+    "text": "Instala los programas en este orden, antes de la primera clase:\n\nR, desde CRAN: elige tu sistema operativo y descarga la versión más reciente.\nRStudio Desktop, desde Posit (versión gratuita).\nAbre RStudio y, en la consola, instala los paquetes que usaremos:\n\ninstall.packages(c(\"tidyverse\", \"readxl\", \"patchwork\", \"knitr\", \"tidycomm\", \"fdth\", \"flextable\"))\n\n\n\n\n\n\n¿No puedes instalar R todavía?\n\n\n\nLos ejercicios de este sitio corren en tu navegador, así que puedes empezar a practicar mientras resuelves la instalación. Si tienes problemas, escribe al correo del curso antes del primer domingo.\n\n\n\nQuarto ya viene incluido en las versiones recientes de RStudio. Si tu RStudio es antiguo, instálalo desde quarto.org.\nPara reportes en PDF, instala además TinyTeX desde la consola de RStudio:\n\ninstall.packages(\"tinytex\")\ntinytex::install_tinytex()"
   },
   {
     "objectID": "recursos.html#libros-gratuitos-en-español",
@@ -922,6 +922,13 @@
     "title": "Recursos",
     "section": "Cursos anteriores",
     "text": "Cursos anteriores\n\nIntroducción a R (2026): el primer curso de esta serie, con pruebas t y ANOVA.\nBioestadística en R (2025): taller de 40 horas con R, {tidyverse}, {ggplot2}, inferencia, diseño de experimentos, modelos lineales y Quarto."
+  },
+  {
+    "objectID": "recursos.html#clases-grabadas",
+    "href": "recursos.html#clases-grabadas",
+    "title": "Recursos",
+    "section": "Clases grabadas",
+    "text": "Clases grabadas\n\nMódulo 1 (14.11.2026)"
   },
   {
     "objectID": "diapositivas/modulo-1.html#section",
@@ -1050,6 +1057,55 @@
     "text": "Listas\nUna lista guarda objetos de cualquier tipo, incluso otras tablas.\n\nestudio &lt;- list(nombre = \"Palmer\", aves = 344, tabla = aves)\nestudio$aves\n\n[1] 344\n\n\n\nMuchos resultados de R son listas; un gráfico de {ggplot2} también lo es."
   },
   {
+    "objectID": "diapositivas/modulo-1.html#operaciones-aritméticas",
+    "href": "diapositivas/modulo-1.html#operaciones-aritméticas",
+    "title": "Visualización de datos en R",
+    "section": "Operaciones aritméticas",
+    "text": "Operaciones aritméticas\n\nPodemos llevar a cabo las cinco operaciones básicas sobre la totalidad de elementos numéricos de un objeto sin mayor inconveniente. Ejemplo:\n\n\n\na &lt;- c(10, 20, -50, -10, 0)\na / 100\n\n[1]  0.1  0.2 -0.5 -0.1  0.0\n\na * 10\n\n[1]  100  200 -500 -100    0\n\na + 30\n\n[1]  40  50 -20  20  30\n\na - 30\n\n[1] -20 -10 -80 -40 -30\n\na ^ 2\n\n[1]  100  400 2500  100    0"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#operaciones-lógicas",
+    "href": "diapositivas/modulo-1.html#operaciones-lógicas",
+    "title": "Visualización de datos en R",
+    "section": "Operaciones lógicas",
+    "text": "Operaciones lógicas\n\nDe manera similar, los operadores lógicos también actúan sobre cada elemento de un objeto\n\n\n\na &lt;- c(10, 20, -50, -10, 0)\na &gt; 0\n\n[1]  TRUE  TRUE FALSE FALSE FALSE\n\na &gt;= 0\n\n[1]  TRUE  TRUE FALSE FALSE  TRUE\n\na == 0\n\n[1] FALSE FALSE FALSE FALSE  TRUE\n\na != 0\n\n[1]  TRUE  TRUE  TRUE  TRUE FALSE\n\na &lt; 0\n\n[1] FALSE FALSE  TRUE  TRUE FALSE\n\na &lt;= 0\n\n[1] FALSE FALSE  TRUE  TRUE  TRUE"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#concatenación-de-vectores",
+    "href": "diapositivas/modulo-1.html#concatenación-de-vectores",
+    "title": "Visualización de datos en R",
+    "section": "Concatenación de vectores",
+    "text": "Concatenación de vectores\n\nPodemos también concatenar uno o más objetos a un vector preexistente. Esto es útil, por ejemplo, al crear nuestras propias funciones. Veamos un ejemplo sencillo:\n\n\n\nb &lt;- c(a, 2)\nb\n\n[1]  10  20 -50 -10   0   2\n\nextra &lt;- c(3, 5)       # no lo llamamos c: ese nombre ya lo usa la función c()\nd &lt;- c(a, b, extra)\nd\n\n [1]  10  20 -50 -10   0  10  20 -50 -10   0   2   3   5"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#creación-de-factores",
+    "href": "diapositivas/modulo-1.html#creación-de-factores",
+    "title": "Visualización de datos en R",
+    "section": "Creación de factores",
+    "text": "Creación de factores\n\nEs muy importante el especificar cuando una variable es un factor.\nComo mencioné anteriormente, R reconocerá de manera automática como carácter cualquier valor que no sea numérico.\nEn caso de usar como factor una variable que R reconoce únicamente como carácter, R realizará todo análisis que le pidamos utilizando el orden alfabético de la variable como el orden de los niveles del factor. Esto puede ser problemático si:\n\nQueremos que los niveles del factor tengan un orden específico.\nLas pruebas estadísticas que realicemos requieren especificar un nivel como referencia.\nQueremos controlar el orden de las barras, las cajas o la leyenda en un gráfico: {ggplot2} usa el orden de los niveles."
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#creación-de-factores-1",
+    "href": "diapositivas/modulo-1.html#creación-de-factores-1",
+    "title": "Visualización de datos en R",
+    "section": "Creación de factores",
+    "text": "Creación de factores\nFactor ordenado alfabéticamente\n\nvariable_factor_1 &lt;- c(\"Gentoo\", \"Adelie\", \"Adelie\", \"Chinstrap\", \"Gentoo\", \"Adelie\")\nvariable_factor_1 &lt;- factor(variable_factor_1)\nstr(variable_factor_1)\n\n Factor w/ 3 levels \"Adelie\",\"Chinstrap\",..: 3 1 1 2 3 1\n\n\n\nFactor con orden distinto al alfabético\n\n\n\nvariable_factor_2 &lt;- c(\"Gentoo\", \"Adelie\", \"Adelie\", \"Chinstrap\", \"Gentoo\", \"Adelie\")\nvariable_factor_2 &lt;- factor(variable_factor_2, levels = c(\"Gentoo\", \"Chinstrap\", \"Adelie\"))\nstr(variable_factor_2)\n\n Factor w/ 3 levels \"Gentoo\",\"Chinstrap\",..: 1 3 3 2 1 3\n\n\n\n\nSi tuviésemos muchos niveles del factor, y solo estamos interesados en que uno de ellos sea la referencia:\n\nvariable_factor_2 &lt;- c(\"Gentoo\", \"Adelie\", \"Adelie\", \"Chinstrap\", \"Gentoo\", \"Adelie\")\nvariable_factor_2 &lt;- relevel(factor(variable_factor_2), ref = \"Gentoo\")\nstr(variable_factor_2)\n\n Factor w/ 3 levels \"Gentoo\",\"Adelie\",..: 1 2 2 3 1 2"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#transformación-de-valores",
+    "href": "diapositivas/modulo-1.html#transformación-de-valores",
+    "title": "Visualización de datos en R",
+    "section": "Transformación de valores",
+    "text": "Transformación de valores\n\nLas transformaciones más comunes de valores son a valores numéricos, caracteres y fechas.\nPara esto usaremos las funciones as.numeric(), as.character() y as.Date(), respectivamente.\n\n\nEjemplo as.numeric. A veces, al importar datos, R toma valores numéricos como caracteres (una causa común es marcar los valores perdidos con texto en el archivo de origen).\n\n\n\ntrans_num &lt;- c(1, 2, \"NA\", 3, 4)\nstr(trans_num)\n\n chr [1:5] \"1\" \"2\" \"NA\" \"3\" \"4\"\n\n\n\n\n\ntrans_num &lt;- as.numeric(trans_num)\nstr(trans_num)\n\n num [1:5] 1 2 NA 3 4\n\n\n\n\nEjemplo as.character.\n\nstr(variable_factor_2)\n\n Factor w/ 3 levels \"Gentoo\",\"Adelie\",..: 1 2 2 3 1 2\n\nvariable_factor_2 &lt;- as.character(variable_factor_2)\nstr(variable_factor_2)\n\n chr [1:6] \"Gentoo\" \"Adelie\" \"Adelie\" \"Chinstrap\" \"Gentoo\" \"Adelie\""
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#transformación-de-valores-1",
+    "href": "diapositivas/modulo-1.html#transformación-de-valores-1",
+    "title": "Visualización de datos en R",
+    "section": "Transformación de valores",
+    "text": "Transformación de valores\nFechas\n\nLa transformación de caracteres a fechas depende enormemente de los distintos formatos que existen para denotar una y de las unidades que se usan.\nPor tanto, no existe una solución única. Aquí abarcaremos el caso más sencillo en que el formato es YYYY-MM-DD.\nLa función base as.Date() abarca una gran diversidad de capacidades para transformar fechas. Sin embargo, su uso puede resultar un poco confuso. En caso de que necesites una solución más específica, recomiendo el paquete {lubridate} del conjunto de paquetes {tidyverse}.\n\n\nEjemplo as.Date\n\nfechas &lt;- c(\"1985-10-14\", \"2021-12-25\", \"2023-01-01\", \"1999-05-06\", \"1900-01-02\")\nstr(fechas)\n\n chr [1:5] \"1985-10-14\" \"2021-12-25\" \"2023-01-01\" \"1999-05-06\" \"1900-01-02\"\n\nfechas &lt;- as.Date(fechas)\nstr(fechas)\n\n Date[1:5], format: \"1985-10-14\" \"2021-12-25\" \"2023-01-01\" \"1999-05-06\" \"1900-01-02\""
+  },
+  {
     "objectID": "diapositivas/modulo-1.html#section-1",
     "href": "diapositivas/modulo-1.html#section-1",
     "title": "Visualización de datos en R",
@@ -1125,6 +1181,69 @@
     "title": "Visualización de datos en R",
     "section": "Variables categóricas",
     "text": "Variables categóricas\n\ntable(pinguinos$species)\n\n\n   Adelie Chinstrap    Gentoo \n      152        68       124 \n\nprop.table(table(pinguinos$species))\n\n\n   Adelie Chinstrap    Gentoo \n0.4418605 0.1976744 0.3604651 \n\ntable(pinguinos$species, pinguinos$island)\n\n           \n            Biscoe Dream Torgersen\n  Adelie        44    56        52\n  Chinstrap      0    68         0\n  Gentoo       124     0         0\n\n\n\n¿Qué nos dice la tabla cruzada? Los Gentoo solo están en Biscoe y los Chinstrap solo en Dream. En el Módulo 2 haremos esto mismo con {dplyr} y lo veremos en un gráfico."
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#otras-formas-de-calcular-estadísticos-descriptivos",
+    "href": "diapositivas/modulo-1.html#otras-formas-de-calcular-estadísticos-descriptivos",
+    "title": "Visualización de datos en R",
+    "section": "Otras formas de calcular estadísticos descriptivos",
+    "text": "Otras formas de calcular estadísticos descriptivos\n\nLa forma más sencilla de calcular los estadísticos descriptivos de una tabla de datos es la función base summary().\n\n\n\nsummary(pinguinos)\n\n      species          island    bill_length_mm  bill_depth_mm  \n Length   :344   Length   :344   Min.   :32.10   Min.   :13.10  \n N.unique :  3   N.unique :  3   1st Qu.:39.23   1st Qu.:15.60  \n N.blank  :  0   N.blank  :  0   Median :44.45   Median :17.30  \n Min.nchar:  6   Min.nchar:  5   Mean   :43.92   Mean   :17.15  \n Max.nchar:  9   Max.nchar:  9   3rd Qu.:48.50   3rd Qu.:18.70  \n                                 Max.   :59.60   Max.   :21.50  \n                                 NAs    :2       NAs    :2      \n flipper_length_mm  body_mass_g          sex           year     \n Min.   :172.0     Min.   :2700   Length   :344   Min.   :2007  \n 1st Qu.:190.0     1st Qu.:3550   N.unique :  2   1st Qu.:2007  \n Median :197.0     Median :4050   N.blank  :  0   Median :2008  \n Mean   :200.9     Mean   :4202   Min.nchar:  4   Mean   :2008  \n 3rd Qu.:213.0     3rd Qu.:4750   Max.nchar:  6   3rd Qu.:2009  \n Max.   :231.0     Max.   :6300   NAs      : 11   Max.   :2009  \n NAs    :2         NAs    :2"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#estadísticos-descriptivos",
+    "href": "diapositivas/modulo-1.html#estadísticos-descriptivos",
+    "title": "Visualización de datos en R",
+    "section": "Estadísticos descriptivos",
+    "text": "Estadísticos descriptivos\n\nsummary() resulta útil para hacer chequeos sobre la marcha, y además cuenta los NA de cada columna.\nPara obtener una tabla de estadísticos descriptivos lista para presentar resultados, usaremos dos funciones del paquete {tidycomm}:\n\ndescribe(): tablas de estadísticos descriptivos de variables cuantitativas\ndescribe_cat(): tablas de estadísticos descriptivos de variables categóricas\n\n\n\n\nlibrary(tidycomm)\ndescribe(pinguinos)\n\n# A tibble: 5 × 15\n  Variable           N Missing      M      SD    Min    Q25    Mdn    Q75    Max\n* &lt;chr&gt;          &lt;int&gt;   &lt;int&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;\n1 bill_length_mm   342       2   43.9   5.46    32.1   39.2   44.4   48.5   59.6\n2 bill_depth_mm    342       2   17.2   1.97    13.1   15.6   17.3   18.7   21.5\n3 flipper_lengt…   342       2  201.   14.1    172    190    197    213    231  \n4 body_mass_g      342       2 4202.  802.    2700   3550   4050   4750   6300  \n5 year             344       0 2008.    0.818 2007   2007   2008   2009   2009  \n# ℹ 5 more variables: Range &lt;dbl&gt;, CI_95_LL &lt;dbl&gt;, CI_95_UL &lt;dbl&gt;,\n#   Skewness &lt;dbl&gt;, Kurtosis &lt;dbl&gt;\n\n\n\n\n\ndescribe_cat(pinguinos)\n\n# A tibble: 3 × 6\n  Variable     N Missing Unique Mode   Mode_N\n* &lt;chr&gt;    &lt;int&gt;   &lt;int&gt;  &lt;dbl&gt; &lt;chr&gt;   &lt;int&gt;\n1 species    344       0      3 Adelie    152\n2 island     344       0      3 Biscoe    168\n3 sex        333      11      2 male      168"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#tablas-de-frecuencia",
+    "href": "diapositivas/modulo-1.html#tablas-de-frecuencia",
+    "title": "Visualización de datos en R",
+    "section": "Tablas de frecuencia",
+    "text": "Tablas de frecuencia\n\nExisten dos formas de crear tablas de frecuencia:\n\nA partir de variables categóricas\nCategorizando una variable continua\n\nUsualmente se presentan:\n\nFrecuencia absoluta: número de observaciones por categoría\nFrecuencia acumulada: suma de frecuencias absolutas\nFrecuencia relativa: frecuencia absoluta / total de observaciones\nFrecuencia relativa acumulada: suma de frecuencias relativas"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#tablas-de-frecuencia-1",
+    "href": "diapositivas/modulo-1.html#tablas-de-frecuencia-1",
+    "title": "Visualización de datos en R",
+    "section": "Tablas de frecuencia",
+    "text": "Tablas de frecuencia\n\nA partir de una variable categórica\n\n\n\nlibrary(fdth)                     # {fdth} calcula tablas de frecuencia"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#tablas-de-frecuencia-2",
+    "href": "diapositivas/modulo-1.html#tablas-de-frecuencia-2",
+    "title": "Visualización de datos en R",
+    "section": "Tablas de frecuencia",
+    "text": "Tablas de frecuencia\n\nA partir de una variable categórica\n\n\nlibrary(fdth)                     # {fdth} calcula tablas de frecuencia\ntabla_frec1 &lt;- fdt_cat(pinguinos$species)  # fdt_cat() hace la tabla de una variable categórica"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#tablas-de-frecuencia-3",
+    "href": "diapositivas/modulo-1.html#tablas-de-frecuencia-3",
+    "title": "Visualización de datos en R",
+    "section": "Tablas de frecuencia",
+    "text": "Tablas de frecuencia\n\nA partir de una variable categórica\n\n\nlibrary(fdth)                     # {fdth} calcula tablas de frecuencia\ntabla_frec1 &lt;- fdt_cat(pinguinos$species)  # fdt_cat() hace la tabla de una variable categórica\ntabla_frec1\n\n  Category   f   rf rf(%)  cf  cf(%)\n    Adelie 152 0.44 44.19 152  44.19\n    Gentoo 124 0.36 36.05 276  80.23\n Chinstrap  68 0.20 19.77 344 100.00\n\n\n\n\nf: frecuencia absoluta\nrf: frecuencia relativa, rf(%): frecuencia relativa en %\ncf: frecuencia acumulada, cf(%): frecuencia acumulada en %"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#tablas-de-frecuencia-4",
+    "href": "diapositivas/modulo-1.html#tablas-de-frecuencia-4",
+    "title": "Visualización de datos en R",
+    "section": "Tablas de frecuencia",
+    "text": "Tablas de frecuencia\n\nCategorizando una variable continua: la masa corporal (body_mass_g)\n\n\n\ntabla_frec2 &lt;- fdt(pinguinos$body_mass_g, na.rm = TRUE)"
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#tablas-de-frecuencia-5",
+    "href": "diapositivas/modulo-1.html#tablas-de-frecuencia-5",
+    "title": "Visualización de datos en R",
+    "section": "Tablas de frecuencia",
+    "text": "Tablas de frecuencia\n\nCategorizando una variable continua: la masa corporal (body_mass_g)\n\n\ntabla_frec2 &lt;- fdt(pinguinos$body_mass_g, na.rm = TRUE)\ntabla_frec2\n\n Class limits  f   rf rf(%)  cf  cf(%)\n  [2673,3042) 11 0.03  3.22  11   3.22\n  [3042,3411) 47 0.14 13.74  58  16.96\n  [3411,3780) 71 0.21 20.76 129  37.72\n  [3780,4149) 53 0.15 15.50 182  53.22\n  [4149,4518) 45 0.13 13.16 227  66.37\n  [4518,4887) 41 0.12 11.99 268  78.36\n  [4887,5256) 28 0.08  8.19 296  86.55\n  [5256,5625) 26 0.08  7.60 322  94.15\n  [5625,5994) 16 0.05  4.68 338  98.83\n  [5994,6363)  4 0.01  1.17 342 100.00\n\n\n\n{fdth} divide la variable continua en clases con uno de tres algoritmos. El predeterminado es el de Sturges (ver ?fdt)."
+  },
+  {
+    "objectID": "diapositivas/modulo-1.html#cómo-exporto-mis-tablas",
+    "href": "diapositivas/modulo-1.html#cómo-exporto-mis-tablas",
+    "title": "Visualización de datos en R",
+    "section": "¿Cómo exporto mis tablas?",
+    "text": "¿Cómo exporto mis tablas?\n\n\nExisten varias opciones para exportar tablas a otros formatos (.pdf, .docx, .html). Por ejemplo, con {flextable}:\n\n\n\n\nlibrary(flextable)\nft1 &lt;- flextable(tabla_frec1)\nft1 &lt;- autofit(ft1)\nft2 &lt;- flextable(tabla_frec2[[1]])   # tabla_frec2 es una lista: la tabla es su primer elemento\nft2 &lt;- autofit(ft2)\nsave_as_docx(\"Tabla 1\" = ft1, \"Tabla 2\" = ft2,\n             path = \"resultados/tablas.docx\")"
   },
   {
     "objectID": "diapositivas/modulo-1.html#section-3",

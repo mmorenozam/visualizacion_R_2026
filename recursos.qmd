@@ -12,7 +12,7 @@ Instala los programas **en este orden**, antes de la primera clase:
 3. Abre RStudio y, en la consola, instala los paquetes que usaremos:
 
 ```r
-install.packages(c("tidyverse", "readxl", "patchwork", "knitr"))
+install.packages(c("tidyverse", "readxl", "patchwork", "knitr", "tidycomm", "fdth", "flextable"))
 ```
 
 ::: {.callout-tip}
@@ -54,3 +54,7 @@ tinytex::install_tinytex()
 
 - [Introducción a R](https://mmorenozam.github.io/introduccion_R_2026/){target="_blank"} (2026): el primer curso de esta serie, con pruebas t y ANOVA.
 - [Bioestadística en R](https://mmorenozam.github.io/biohack_progR/){target="_blank"} (2025): taller de 40 horas con R, `{tidyverse}`, `{ggplot2}`, inferencia, diseño de experimentos, modelos lineales y Quarto.
+
+## Clases grabadas
+
+- [Módulo 1 (14.11.2026)](https://1drv.ms/v/c/93e2169fba83ef57/IQCJpmmbrM7NTJLjd-Epma2jAZZ-I_vvd6gnmiA3lNdg5Yw?e=TFnd8J){target="_blank"}
