@@ -48,12 +48,150 @@ Mauricio Moreno, PhD
 
 ![](images/tidy.png){.image-left}
 
+
 ## Hoy
 
-1.  El `{tidyverse}` y el operador de cascada
-2.  Tipos de tablas: `tibble` y datos ordenados
-3.  Operaciones con tablas en `{dplyr}`
-4.  Introducción a `{ggplot2}`: función de inicio, geometrías, estéticas y capas
+1.  Tipos de tablas y datos ordenados
+2.  El `{tidyverse}` y el operador de cascada
+3.  Cambiar formatos con `{tidyr}`
+4.  Operaciones con tablas en `{dplyr}`
+5.  Introducción a `{ggplot2}`: función de inicio, geometrías, estéticas y capas
+
+## Los datos de hoy {.smaller}
+
+- `pinguinos`: la tabla de los pingüinos de Palmer que ya usamos en el módulo 1.
+
+- `airquality` de base R: tabla que contiene datos de la calidad de aire en Nueva York de mayo a septiembre de 1973
+
+```{r}
+#| code-fold: true
+# install.packages("tidyverse")   # solo la primera vez
+library(tidyverse)
+pinguinos <- read_csv("datos/pinguinos.csv")
+data(airquality)
+```
+
+# Tipos de tablas y datos ordenados
+
+## Tipos de tablas
+
+-   Existen básicamente dos tipos de tablas de datos de acuerdo a su formato: ancho (*wide format*) y largo (*long format*)
+
+![[Figura tomada de listendata.com](https://www.listendata.com/2016/01/r-convert-data-from-wide-to-long-format.html){target="_blank"}](images/convert.png){fig-align="center"}
+
+## Datos ordenados (*Tidy data*) {.smaller}
+
+::: incremental
+-   Cuando llevamos registro de datos es muy común usar tablas de Excel.
+
+-   Por la libertad que tenemos en este software, es fácil el dejarnos llevar por prácticas que luego nos causarán dolores de cabeza.
+
+-   Por ello me parece importante el mencionar unas cuantas sugerencias para llevar el registro de datos:
+
+    -   Consistencia
+
+    -   Escoge buenos nombres
+
+    -   Escribir fechas en formato ISO 8601
+
+    -   Evitar filas/celdas vacías donde no son necesarias
+
+    -   Pon una sola cosa a la vez
+
+    -   Evita usar resaltador/colores de fuentes
+:::
+
+::: footer
+La mayor parte de ejemplos aquí tomados provienen de [*Data organization in Spreadsheets*](https://www.tandfonline.com/doi/full/10.1080/00031305.2017.1375989){target="_blank"} y las figuras del curso [*Tidyverse Skills for Data Science*](https://jhudatascience.org/tidyversecourse/){target="_blank"}.
+:::
+
+## Consistencia
+
+![](images/consistent.png){fig-align="center"}
+
+## Escoge buenos nombres {.smaller}
+
+::: incremental
+-   Como ya habíamos mencionado, R puede presentar problemas con el nombre que le asignemos a nuestras columnas ("variables"):
+
+    -   Si comienza con un número, antepondrá `X.` al nombre de la columna
+
+    -   Si tiene caracteres especiales, puede dar problemas en el espaciado o de lectura
+
+-   Adicionalmente, podemos mencionar las siguientes recomendaciones
+:::
+
+. . .
+
++-----------------------------------------------+-------------------+-------------------+
+|                                               | Esto está bien    | ¡Evita esto!      |
++===============================================+===================+===================+
+| Espacios extras                               | `"masculino"`     | `"masculino "`    |
++-----------------------------------------------+-------------------+-------------------+
+| Usa guiones bajos en lugar de espacios vacíos | `cultivo_control` | `cultivo control` |
++-----------------------------------------------+-------------------+-------------------+
+| Usa nombres informativos                      | `cultivo_control` | `C1`              |
++-----------------------------------------------+-------------------+-------------------+
+
+## Fechas en formato ISO 8601
+
+::: incremental
+-   Ya habíamos mencionado anteriormente que dar formato a fechas puede resultar difícil (aunque no imposible).
+
+-   Como parte de la consistencia, es recomendable que cuando trabajamos con fechas, registrarlas como "YYYY-MM-DD".
+
+-   Este formato es conocido como ISO 8601 y es reconocido sin problema por R (y otros lenguajes).
+
+-   Dependiendo de la configuración de nuestro ordenador, fechas en Excel como "14-Feb-23" pueden interpretarse mal o no reconocerse como fechas.
+:::
+
+## Evitar filas/celdas vacías
+
+![](images/celdas.png){fig-align="center"}
+
+## Una sola cosa a la vez
+
+![](images/cosa.png){fig-align="center"}
+
+## Evita resaltar/cambiar colores
+
+![](images/resalta.png){fig-align="center"}
+
+## Ejemplos de tablas "problemáticas"
+
+![](images/tab_prob1.png){fig-align="center"}
+
+## Ejemplos de tablas "problemáticas" {visibility="uncounted"}
+
+![](images/tab_prob2.png){fig-align="center"}
+
+## Principios de datos ordenados
+
+::: incremental
+-   Propuestos por [Hadley Wickham](https://en.wikipedia.org/wiki/Hadley_Wickham){target="_blank"} en su artículo titulado [*Tidy Data*](https://www.jstatsoft.org/article/view/v059i10){target="_blank"}.
+
+-   Son sugerencias que Wickham formula para armonizar la manera de registrar datos y su posterior procesamiento en modelos de ciencias de datos (discutiblemente estas sugerencias ya existían inherentemente en el lenguaje SQL).
+
+-   Tiene como premisa que los datos estén en una **tabla rectangular**: filas y columnas, sin celdas combinadas ni varias tablas en una misma hoja.
+
+-   Las tablas rectangulares nacen de nuestra predisposición a registrar datos de esta manera.
+:::
+
+## Principio 1: Una columna por variable
+
+![](images/principio1.png){fig-align="center"}
+
+## Principio 2: Una observación por fila
+
+![](images/principio2.png){fig-align="center"}
+
+## Principio 3: Una hoja de datos por tipo de datos
+
+![](images/principio3.png){fig-align="center"}
+
+## Principio 4: Una columna en común para unir tablas
+
+![](images/principio4.png){fig-align="center"}
 
 # El `{tidyverse}`
 
@@ -71,24 +209,19 @@ Mauricio Moreno, PhD
 -   Las funciones tienen nombres de **verbos**: `filter()`, `select()`, `mutate()`, `summarise()`.
 -   Todas reciben una tabla como primer argumento y devuelven una tabla.
 :::
-:::
-:::
 
-. . .
-
+::: {.fragment}
 ```{r}
+#| eval: false
+
+install.packages("tidyverse")
 library(tidyverse)
 ```
 
-## Los datos de hoy {.smaller}
+:::
 
-```{r}
-#| code-fold: true
-pinguinos <- read_csv("datos/pinguinos.csv")
-pinguinos
-```
-
-`read_csv()` (con guion bajo, de `{readr}`) devuelve un **tibble**.
+:::
+:::
 
 ## Tibbles {.smaller}
 
@@ -98,7 +231,24 @@ pinguinos
 -   Para convertir: `as_tibble(tabla)` y `as.data.frame(tabla)`.
 :::
 
-## El operador de cascada {.smaller}
+## Operador de cascada {.smaller}
+
+::: incremental
+-   El operador de cascada: `%>%` es una función de la librería `{magrittr}`. 
+
+-   Entendamos a `%>%` como la palabra "entonces". En términos sencillos, es algo como: "Tengo harina `%>%` hago pan"
+
+-   En lenguaje R, esto se interpreta como si tuviéramos un objeto `A` sobre el cual deseamos aplicar una función `B`. Esto se vería como: `B(A)`
+
+-   Alternativamente, podemos expresarlo como `A %>% B`.
+
+-   En base R: `D(C(B(A)))`
+
+-   Con el operador de cascada: `A %>% B %>% C %>% D`
+
+:::
+
+## Operador de cascada {.smaller visibility="uncounted"}
 
 Sin el operador, leemos de adentro hacia afuera:
 
@@ -108,66 +258,85 @@ round(mean(pinguinos$body_mass_g, na.rm = TRUE), 1)
 
 . . .
 
-Con `|>`, leemos de izquierda a derecha, como una receta: "toma esto, **y luego** haz aquello".
+Con `%>%`, leemos de izquierda a derecha, como una receta: "toma esto, **y luego** haz aquello".
 
 ```{r}
-pinguinos$body_mass_g |>
-  mean(na.rm = TRUE) |>
+pinguinos$body_mass_g %>%
+  mean(na.rm = TRUE) %>%
   round(1)
 ```
 
 . . .
 
 ::: callout-tip
-`x |> f(y)` es lo mismo que `f(x, y)`. En RStudio: `Ctrl + Shift + M`. También verás `%>%`, la versión de `{magrittr}`; para este curso funcionan igual.
+`x %>% f(y)` es lo mismo que `f(x, y)`. En RStudio: `Ctrl + Shift + M`. Desde la versión 4.1, R también tiene su propio operador, `|>`, que funciona casi igual; en este curso usaremos `%>%`.
 :::
 
-# Tipos de tablas
 
-## Datos ordenados (*tidy data*) {.smaller}
-
-::: columns
-::: {.column width="50%"}
-![](images/principio1.png){fig-align="center"}
-:::
-
-::: {.column width="50%"}
-::: incremental
-1.  Cada **variable** es una columna.
-2.  Cada **observación** es una fila.
-3.  Cada **valor** está en su propia celda.
-:::
-
-. . .
-
-`{ggplot2}` y `{dplyr}` esperan datos ordenados.
-:::
-:::
+# Cambiar el formato con `{tidyr}`
 
 ## Formato ancho y formato largo {.smaller}
 
-```{r}
-ancho <- tibble(especie = c("Adelie", "Gentoo"),
-                `2007` = c(3700, 5070), `2008` = c(3740, 5020), `2009` = c(3670, 5140))
-ancho
-```
+**De formato ancho a largo**
+
+-   Utilizaremos la función `pivot_longer()` del paquete `{tidyr}` con la tabla de base `airquality`
+
+-   Con `names_to` y `values_to` elegimos los nombres de las nuevas columnas.
 
 . . .
 
-```{r}
-largo <- ancho |>
-  pivot_longer(cols = c(`2007`, `2008`, `2009`), names_to = "año", values_to = "masa_g")
-largo
+```{r echo=T, eval=F}
+tabla_larga <- airquality %>%
+  pivot_longer(-c(Month, Day), names_to = "variable", values_to = "valores")
 ```
 
-`pivot_wider()` hace el camino inverso.
+## Formato ancho y formato largo {.smaller visibility="uncounted"}
+
+**De formato ancho a largo**
+
+-   Utilizaremos la función `pivot_longer()` del paquete `{tidyr}` con la tabla de base `airquality`
+
+-   Con `names_to` y `values_to` elegimos los nombres de las nuevas columnas.
+
+
+```{r echo=T, eval=T}
+tabla_larga <- airquality %>%
+  pivot_longer(-c(Month, Day), names_to = "variable", values_to = "valores")
+
+tabla_larga
+```
+
+## Formato ancho y formato largo {.smaller visibility="uncounted"}
+
+**De formato largo a ancho**
+
+-   Utilizaremos la función `pivot_wider()`: `names_from` indica de qué columna salen los nombres de las nuevas columnas y `values_from`, de cuál salen sus valores.
+
+```{r echo=T, eval=F}
+tabla_ancha <- tabla_larga %>%
+  pivot_wider(names_from = "variable", values_from = "valores")
+```
+
+## Formato ancho y formato largo {.smaller visibility="uncounted"}
+
+**De formato largo a ancho**
+
+-   Utilizaremos la función `pivot_wider()`: `names_from` indica de qué columna salen los nombres de las nuevas columnas y `values_from`, de cuál salen sus valores.
+
+```{r echo=T, eval=T}
+tabla_ancha <- tabla_larga %>%
+  pivot_wider(names_from = "variable", values_from = "valores")
+
+tabla_ancha
+```
+
 
 # Operaciones con tablas en `{dplyr}`
 
 ## Filtrar filas: `filter()` {.smaller}
 
 ```{r}
-pinguinos |>
+pinguinos %>%
   filter(species == "Gentoo", body_mass_g > 5500)
 ```
 
@@ -178,26 +347,26 @@ Condiciones: `==`, `!=`, `>`, `<`, `%in%`, y `!is.na(x)` para descartar faltante
 ## Seleccionar y ordenar: `select()` y `arrange()` {.smaller}
 
 ```{r}
-pinguinos |>
-  select(species, island, body_mass_g) |>
+pinguinos %>%
+  select(species, island, body_mass_g) %>%
   arrange(desc(body_mass_g))
 ```
 
 ## Crear columnas: `mutate()` {.smaller}
 
 ```{r}
-pinguinos |>
+pinguinos %>%
   mutate(masa_kg = body_mass_g / 1000,
-         pico_relativo = bill_length_mm / bill_depth_mm) |>
+         pico_relativo = bill_length_mm / bill_depth_mm) %>%
   select(species, masa_kg, pico_relativo)
 ```
 
 ## Resumir por grupos: `group_by()` y `summarise()` {.smaller}
 
 ```{r}
-pinguinos |>
-  filter(!is.na(body_mass_g)) |>
-  group_by(species) |>
+pinguinos %>%
+  filter(!is.na(body_mass_g)) %>%
+  group_by(species) %>%
   summarise(n = n(),
             masa_media = mean(body_mass_g),
             masa_de = sd(body_mass_g))

@@ -218,12 +218,162 @@
 <section id="hoy" class="slide level2">
 <h2>Hoy</h2>
 <ol type="1">
+<li>Tipos de tablas y datos ordenados</li>
 <li>El <code>{tidyverse}</code> y el operador de cascada</li>
-<li>Tipos de tablas: <code>tibble</code> y datos ordenados</li>
+<li>Cambiar formatos con <code>{tidyr}</code></li>
 <li>Operaciones con tablas en <code>{dplyr}</code></li>
 <li>Introducción a <code>{ggplot2}</code>: función de inicio, geometrías, estéticas y capas</li>
 </ol>
 </section>
+<section id="los-datos-de-hoy" class="slide level2 smaller">
+<h2>Los datos de hoy</h2>
+<ul>
+<li><p><code>pinguinos</code>: la tabla de los pingüinos de Palmer que ya usamos en el módulo 1.</p></li>
+<li><p><code>airquality</code> de base R: tabla que contiene datos de la calidad de aire en Nueva York de mayo a septiembre de 1973</p></li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Mostrar el código</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="co"># install.packages("tidyverse")   # solo la primera vez</span></span>
+<span id="cb1-2"><a></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a></a>pinguinos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datos/pinguinos.csv"</span>)</span>
+<span id="cb1-4"><a></a><span class="fu">data</span>(airquality)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section>
+<section id="tipos-de-tablas-y-datos-ordenados" class="title-slide slide level1 center">
+<h1>Tipos de tablas y datos ordenados</h1>
+
+</section>
+<section id="tipos-de-tablas" class="slide level2">
+<h2>Tipos de tablas</h2>
+<ul>
+<li>Existen básicamente dos tipos de tablas de datos de acuerdo a su formato: ancho (<em>wide format</em>) y largo (<em>long format</em>)</li>
+</ul>
+
+<img data-src="images/convert.png" class="r-stretch quarto-figure-center"><p class="caption"><a href="https://www.listendata.com/2016/01/r-convert-data-from-wide-to-long-format.html" target="_blank">Figura tomada de listendata.com</a></p></section>
+<section id="datos-ordenados-tidy-data" class="slide level2 smaller">
+<h2>Datos ordenados (<em>Tidy data</em>)</h2>
+<ul>
+<li class="fragment"><p>Cuando llevamos registro de datos es muy común usar tablas de Excel.</p></li>
+<li class="fragment"><p>Por la libertad que tenemos en este software, es fácil el dejarnos llevar por prácticas que luego nos causarán dolores de cabeza.</p></li>
+<li class="fragment"><p>Por ello me parece importante el mencionar unas cuantas sugerencias para llevar el registro de datos:</p>
+<ul>
+<li class="fragment"><p>Consistencia</p></li>
+<li class="fragment"><p>Escoge buenos nombres</p></li>
+<li class="fragment"><p>Escribir fechas en formato ISO 8601</p></li>
+<li class="fragment"><p>Evitar filas/celdas vacías donde no son necesarias</p></li>
+<li class="fragment"><p>Pon una sola cosa a la vez</p></li>
+<li class="fragment"><p>Evita usar resaltador/colores de fuentes</p></li>
+</ul></li>
+</ul>
+<div class="footer">
+<p>La mayor parte de ejemplos aquí tomados provienen de <a href="https://www.tandfonline.com/doi/full/10.1080/00031305.2017.1375989" target="_blank"><em>Data organization in Spreadsheets</em></a> y las figuras del curso <a href="https://jhudatascience.org/tidyversecourse/" target="_blank"><em>Tidyverse Skills for Data Science</em></a>.</p>
+</div>
+</section>
+<section id="consistencia" class="slide level2">
+<h2>Consistencia</h2>
+
+<img data-src="images/consistent.png" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="escoge-buenos-nombres" class="slide level2 smaller">
+<h2>Escoge buenos nombres</h2>
+<ul>
+<li class="fragment"><p>Como ya habíamos mencionado, R puede presentar problemas con el nombre que le asignemos a nuestras columnas (“variables”):</p>
+<ul>
+<li class="fragment"><p>Si comienza con un número, antepondrá <code>X.</code> al nombre de la columna</p></li>
+<li class="fragment"><p>Si tiene caracteres especiales, puede dar problemas en el espaciado o de lectura</p></li>
+</ul></li>
+<li class="fragment"><p>Adicionalmente, podemos mencionar las siguientes recomendaciones</p></li>
+</ul>
+<div class="fragment">
+<table class="caption-top" style="width:99%;">
+<colgroup>
+<col style="width: 53%">
+<col style="width: 22%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Esto está bien</th>
+<th>¡Evita esto!</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Espacios extras</td>
+<td><code>"masculino"</code></td>
+<td><code>"masculino "</code></td>
+</tr>
+<tr class="even">
+<td>Usa guiones bajos en lugar de espacios vacíos</td>
+<td><code>cultivo_control</code></td>
+<td><code>cultivo control</code></td>
+</tr>
+<tr class="odd">
+<td>Usa nombres informativos</td>
+<td><code>cultivo_control</code></td>
+<td><code>C1</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="fechas-en-formato-iso-8601" class="slide level2">
+<h2>Fechas en formato ISO 8601</h2>
+<ul>
+<li class="fragment"><p>Ya habíamos mencionado anteriormente que dar formato a fechas puede resultar difícil (aunque no imposible).</p></li>
+<li class="fragment"><p>Como parte de la consistencia, es recomendable que cuando trabajamos con fechas, registrarlas como “YYYY-MM-DD”.</p></li>
+<li class="fragment"><p>Este formato es conocido como ISO 8601 y es reconocido sin problema por R (y otros lenguajes).</p></li>
+<li class="fragment"><p>Dependiendo de la configuración de nuestro ordenador, fechas en Excel como “14-Feb-23” pueden interpretarse mal o no reconocerse como fechas.</p></li>
+</ul>
+</section>
+<section id="evitar-filasceldas-vacías" class="slide level2">
+<h2>Evitar filas/celdas vacías</h2>
+
+<img data-src="images/celdas.png" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="una-sola-cosa-a-la-vez" class="slide level2">
+<h2>Una sola cosa a la vez</h2>
+
+<img data-src="images/cosa.png" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="evita-resaltarcambiar-colores" class="slide level2">
+<h2>Evita resaltar/cambiar colores</h2>
+
+<img data-src="images/resalta.png" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="ejemplos-de-tablas-problemáticas" class="slide level2">
+<h2>Ejemplos de tablas “problemáticas”</h2>
+
+<img data-src="images/tab_prob1.png" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="ejemplos-de-tablas-problemáticas-1" class="slide level2" data-visibility="uncounted">
+<h2>Ejemplos de tablas “problemáticas”</h2>
+
+<img data-src="images/tab_prob2.png" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="principios-de-datos-ordenados" class="slide level2">
+<h2>Principios de datos ordenados</h2>
+<ul>
+<li class="fragment"><p>Propuestos por <a href="https://en.wikipedia.org/wiki/Hadley_Wickham" target="_blank">Hadley Wickham</a> en su artículo titulado <a href="https://www.jstatsoft.org/article/view/v059i10" target="_blank"><em>Tidy Data</em></a>.</p></li>
+<li class="fragment"><p>Son sugerencias que Wickham formula para armonizar la manera de registrar datos y su posterior procesamiento en modelos de ciencias de datos (discutiblemente estas sugerencias ya existían inherentemente en el lenguaje SQL).</p></li>
+<li class="fragment"><p>Tiene como premisa que los datos estén en una <strong>tabla rectangular</strong>: filas y columnas, sin celdas combinadas ni varias tablas en una misma hoja.</p></li>
+<li class="fragment"><p>Las tablas rectangulares nacen de nuestra predisposición a registrar datos de esta manera.</p></li>
+</ul>
+</section>
+<section id="principio-1-una-columna-por-variable" class="slide level2">
+<h2>Principio 1: Una columna por variable</h2>
+
+<img data-src="images/principio1.png" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="principio-2-una-observación-por-fila" class="slide level2">
+<h2>Principio 2: Una observación por fila</h2>
+
+<img data-src="images/principio2.png" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="principio-3-una-hoja-de-datos-por-tipo-de-datos" class="slide level2">
+<h2>Principio 3: Una hoja de datos por tipo de datos</h2>
+
+<img data-src="images/principio3.png" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="principio-4-una-columna-en-común-para-unir-tablas" class="slide level2">
+<h2>Principio 4: Una columna en común para unir tablas</h2>
+
+<img data-src="images/principio4.png" class="quarto-figure quarto-figure-center r-stretch"></section></section>
 <section>
 <section id="el-tidyverse" class="title-slide slide level1 center">
 <h1>El <code>{tidyverse}</code></h1>
@@ -245,40 +395,13 @@
 <li class="fragment">Las funciones tienen nombres de <strong>verbos</strong>: <code>filter()</code>, <code>select()</code>, <code>mutate()</code>, <code>summarise()</code>.</li>
 <li class="fragment">Todas reciben una tabla como primer argumento y devuelven una tabla.</li>
 </ul>
-</div></div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="fu">install.packages</span>(<span class="st">"tidyverse"</span>)</span>
+<span id="cb2-2"><a></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-</section>
-<section id="los-datos-de-hoy" class="slide level2 smaller">
-<h2>Los datos de hoy</h2>
-<div class="cell">
-<details class="code-fold">
-<summary>Mostrar el código</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a>pinguinos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datos/pinguinos.csv"</span>)</span>
-<span id="cb2-2"><a></a>pinguinos</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 344 × 8
-   species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
-   &lt;chr&gt;   &lt;chr&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;
- 1 Adelie  Torgersen           39.1          18.7               181        3750
- 2 Adelie  Torgersen           39.5          17.4               186        3800
- 3 Adelie  Torgersen           40.3          18                 195        3250
- 4 Adelie  Torgersen           NA            NA                  NA          NA
- 5 Adelie  Torgersen           36.7          19.3               193        3450
- 6 Adelie  Torgersen           39.3          20.6               190        3650
- 7 Adelie  Torgersen           38.9          17.8               181        3625
- 8 Adelie  Torgersen           39.2          19.6               195        4675
- 9 Adelie  Torgersen           34.1          18.1               193        3475
-10 Adelie  Torgersen           42            20.2               190        4250
-# ℹ 334 more rows
-# ℹ 2 more variables: sex &lt;chr&gt;, year &lt;dbl&gt;</code></pre>
-</div>
-</div>
-<p><code>read_csv()</code> (con guion bajo, de <code>{readr}</code>) devuelve un <strong>tibble</strong>.</p>
+</div></div>
 </section>
 <section id="tibbles" class="slide level2 smaller">
 <h2>Tibbles</h2>
@@ -288,21 +411,32 @@
 <li class="fragment">Para convertir: <code>as_tibble(tabla)</code> y <code>as.data.frame(tabla)</code>.</li>
 </ul>
 </section>
-<section id="el-operador-de-cascada" class="slide level2 smaller">
-<h2>El operador de cascada</h2>
+<section id="operador-de-cascada" class="slide level2 smaller">
+<h2>Operador de cascada</h2>
+<ul>
+<li class="fragment"><p>El operador de cascada: <code>%&gt;%</code> es una función de la librería <code>{magrittr}</code>.</p></li>
+<li class="fragment"><p>Entendamos a <code>%&gt;%</code> como la palabra “entonces”. En términos sencillos, es algo como: “Tengo harina <code>%&gt;%</code> hago pan”</p></li>
+<li class="fragment"><p>En lenguaje R, esto se interpreta como si tuviéramos un objeto <code>A</code> sobre el cual deseamos aplicar una función <code>B</code>. Esto se vería como: <code>B(A)</code></p></li>
+<li class="fragment"><p>Alternativamente, podemos expresarlo como <code>A %&gt;% B</code>.</p></li>
+<li class="fragment"><p>En base R: <code>D(C(B(A)))</code></p></li>
+<li class="fragment"><p>Con el operador de cascada: <code>A %&gt;% B %&gt;% C %&gt;% D</code></p></li>
+</ul>
+</section>
+<section id="operador-de-cascada-1" class="slide level2 smaller" data-visibility="uncounted">
+<h2>Operador de cascada</h2>
 <p>Sin el operador, leemos de adentro hacia afuera:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">round</span>(<span class="fu">mean</span>(pinguinos<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">1</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">round</span>(<span class="fu">mean</span>(pinguinos<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">1</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 4201.8</code></pre>
 </div>
 </div>
 <div class="fragment">
-<p>Con <code>|&gt;</code>, leemos de izquierda a derecha, como una receta: “toma esto, <strong>y luego</strong> haz aquello”.</p>
+<p>Con <code>%&gt;%</code>, leemos de izquierda a derecha, como una receta: “toma esto, <strong>y luego</strong> haz aquello”.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a>pinguinos<span class="sc">$</span>body_mass_g <span class="sc">|&gt;</span></span>
-<span id="cb6-2"><a></a>  <span class="fu">mean</span>(<span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb6-3"><a></a>  <span class="fu">round</span>(<span class="dv">1</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>pinguinos<span class="sc">$</span>body_mass_g <span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a></a>  <span class="fu">mean</span>(<span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a></a>  <span class="fu">round</span>(<span class="dv">1</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 4201.8</code></pre>
 </div>
@@ -315,68 +449,99 @@
 <i class="callout-icon"></i>
 </div>
 <div class="callout-content">
-<p><code>x |&gt; f(y)</code> es lo mismo que <code>f(x, y)</code>. En RStudio: <code>Ctrl + Shift + M</code>. También verás <code>%&gt;%</code>, la versión de <code>{magrittr}</code>; para este curso funcionan igual.</p>
+<p><code>x %&gt;% f(y)</code> es lo mismo que <code>f(x, y)</code>. En RStudio: <code>Ctrl + Shift + M</code>. Desde la versión 4.1, R también tiene su propio operador, <code>|&gt;</code>, que funciona casi igual; en este curso usaremos <code>%&gt;%</code>.</p>
 </div>
 </div>
 </div>
 </div>
 </section></section>
 <section>
-<section id="tipos-de-tablas" class="title-slide slide level1 center">
-<h1>Tipos de tablas</h1>
+<section id="cambiar-el-formato-con-tidyr" class="title-slide slide level1 center">
+<h1>Cambiar el formato con <code>{tidyr}</code></h1>
 
-</section>
-<section id="datos-ordenados-tidy-data" class="slide level2 smaller">
-<h2>Datos ordenados (<em>tidy data</em>)</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="images/principio1.png" class="quarto-figure quarto-figure-center"></p>
-</figure>
-</div>
-</div><div class="column" style="width:50%;">
-<ol type="1">
-<li class="fragment">Cada <strong>variable</strong> es una columna.</li>
-<li class="fragment">Cada <strong>observación</strong> es una fila.</li>
-<li class="fragment">Cada <strong>valor</strong> está en su propia celda.</li>
-</ol>
-<p>. . .</p>
-<p><code>{ggplot2}</code> y <code>{dplyr}</code> esperan datos ordenados.</p>
-</div></div>
 </section>
 <section id="formato-ancho-y-formato-largo" class="slide level2 smaller">
 <h2>Formato ancho y formato largo</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>ancho <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">especie =</span> <span class="fu">c</span>(<span class="st">"Adelie"</span>, <span class="st">"Gentoo"</span>),</span>
-<span id="cb8-2"><a></a>                <span class="st">`</span><span class="at">2007</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">3700</span>, <span class="dv">5070</span>), <span class="st">`</span><span class="at">2008</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">3740</span>, <span class="dv">5020</span>), <span class="st">`</span><span class="at">2009</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">3670</span>, <span class="dv">5140</span>))</span>
-<span id="cb8-3"><a></a>ancho</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 4
-  especie `2007` `2008` `2009`
-  &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
-1 Adelie    3700   3740   3670
-2 Gentoo    5070   5020   5140</code></pre>
-</div>
-</div>
+<p><strong>De formato ancho a largo</strong></p>
+<ul>
+<li><p>Utilizaremos la función <code>pivot_longer()</code> del paquete <code>{tidyr}</code> con la tabla de base <code>airquality</code></p></li>
+<li><p>Con <code>names_to</code> y <code>values_to</code> elegimos los nombres de las nuevas columnas.</p></li>
+</ul>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>largo <span class="ot">&lt;-</span> ancho <span class="sc">|&gt;</span></span>
-<span id="cb10-2"><a></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(<span class="st">`</span><span class="at">2007</span><span class="st">`</span>, <span class="st">`</span><span class="at">2008</span><span class="st">`</span>, <span class="st">`</span><span class="at">2009</span><span class="st">`</span>), <span class="at">names_to =</span> <span class="st">"año"</span>, <span class="at">values_to =</span> <span class="st">"masa_g"</span>)</span>
-<span id="cb10-3"><a></a>largo</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>tabla_larga <span class="ot">&lt;-</span> airquality <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span><span class="fu">c</span>(Month, Day), <span class="at">names_to =</span> <span class="st">"variable"</span>, <span class="at">values_to =</span> <span class="st">"valores"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="formato-ancho-y-formato-largo-1" class="slide level2 smaller" data-visibility="uncounted">
+<h2>Formato ancho y formato largo</h2>
+<p><strong>De formato ancho a largo</strong></p>
+<ul>
+<li><p>Utilizaremos la función <code>pivot_longer()</code> del paquete <code>{tidyr}</code> con la tabla de base <code>airquality</code></p></li>
+<li><p>Con <code>names_to</code> y <code>values_to</code> elegimos los nombres de las nuevas columnas.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>tabla_larga <span class="ot">&lt;-</span> airquality <span class="sc">%&gt;%</span></span>
+<span id="cb8-2"><a></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span><span class="fu">c</span>(Month, Day), <span class="at">names_to =</span> <span class="st">"variable"</span>, <span class="at">values_to =</span> <span class="st">"valores"</span>)</span>
+<span id="cb8-3"><a></a></span>
+<span id="cb8-4"><a></a>tabla_larga</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 3
-  especie año   masa_g
-  &lt;chr&gt;   &lt;chr&gt;  &lt;dbl&gt;
-1 Adelie  2007    3700
-2 Adelie  2008    3740
-3 Adelie  2009    3670
-4 Gentoo  2007    5070
-5 Gentoo  2008    5020
-6 Gentoo  2009    5140</code></pre>
+<pre><code># A tibble: 612 × 4
+   Month   Day variable valores
+   &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt;
+ 1     5     1 Ozone       41  
+ 2     5     1 Solar.R    190  
+ 3     5     1 Wind         7.4
+ 4     5     1 Temp        67  
+ 5     5     2 Ozone       36  
+ 6     5     2 Solar.R    118  
+ 7     5     2 Wind         8  
+ 8     5     2 Temp        72  
+ 9     5     3 Ozone       12  
+10     5     3 Solar.R    149  
+# ℹ 602 more rows</code></pre>
 </div>
 </div>
-<p><code>pivot_wider()</code> hace el camino inverso.</p>
+</section>
+<section id="formato-ancho-y-formato-largo-2" class="slide level2 smaller" data-visibility="uncounted">
+<h2>Formato ancho y formato largo</h2>
+<p><strong>De formato largo a ancho</strong></p>
+<ul>
+<li>Utilizaremos la función <code>pivot_wider()</code>: <code>names_from</code> indica de qué columna salen los nombres de las nuevas columnas y <code>values_from</code>, de cuál salen sus valores.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>tabla_ancha <span class="ot">&lt;-</span> tabla_larga <span class="sc">%&gt;%</span></span>
+<span id="cb10-2"><a></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">"variable"</span>, <span class="at">values_from =</span> <span class="st">"valores"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="formato-ancho-y-formato-largo-3" class="slide level2 smaller" data-visibility="uncounted">
+<h2>Formato ancho y formato largo</h2>
+<p><strong>De formato largo a ancho</strong></p>
+<ul>
+<li>Utilizaremos la función <code>pivot_wider()</code>: <code>names_from</code> indica de qué columna salen los nombres de las nuevas columnas y <code>values_from</code>, de cuál salen sus valores.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>tabla_ancha <span class="ot">&lt;-</span> tabla_larga <span class="sc">%&gt;%</span></span>
+<span id="cb11-2"><a></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">"variable"</span>, <span class="at">values_from =</span> <span class="st">"valores"</span>)</span>
+<span id="cb11-3"><a></a></span>
+<span id="cb11-4"><a></a>tabla_ancha</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 153 × 6
+   Month   Day Ozone Solar.R  Wind  Temp
+   &lt;int&gt; &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1     5     1    41     190   7.4    67
+ 2     5     2    36     118   8      72
+ 3     5     3    12     149  12.6    74
+ 4     5     4    18     313  11.5    62
+ 5     5     5    NA      NA  14.3    56
+ 6     5     6    28      NA  14.9    66
+ 7     5     7    23     299   8.6    65
+ 8     5     8    19      99  13.8    59
+ 9     5     9     8      19  20.1    61
+10     5    10    NA     194   8.6    69
+# ℹ 143 more rows</code></pre>
+</div>
 </div>
 </section></section>
 <section>
@@ -387,8 +552,8 @@
 <section id="filtrar-filas-filter" class="slide level2 smaller">
 <h2>Filtrar filas: <code>filter()</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a>pinguinos <span class="sc">|&gt;</span></span>
-<span id="cb12-2"><a></a>  <span class="fu">filter</span>(species <span class="sc">==</span> <span class="st">"Gentoo"</span>, body_mass_g <span class="sc">&gt;</span> <span class="dv">5500</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a>pinguinos <span class="sc">%&gt;%</span></span>
+<span id="cb13-2"><a></a>  <span class="fu">filter</span>(species <span class="sc">==</span> <span class="st">"Gentoo"</span>, body_mass_g <span class="sc">&gt;</span> <span class="dv">5500</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 28 × 8
    species island bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
@@ -414,9 +579,9 @@
 <section id="seleccionar-y-ordenar-select-y-arrange" class="slide level2 smaller">
 <h2>Seleccionar y ordenar: <code>select()</code> y <code>arrange()</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a>pinguinos <span class="sc">|&gt;</span></span>
-<span id="cb14-2"><a></a>  <span class="fu">select</span>(species, island, body_mass_g) <span class="sc">|&gt;</span></span>
-<span id="cb14-3"><a></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(body_mass_g))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>pinguinos <span class="sc">%&gt;%</span></span>
+<span id="cb15-2"><a></a>  <span class="fu">select</span>(species, island, body_mass_g) <span class="sc">%&gt;%</span></span>
+<span id="cb15-3"><a></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(body_mass_g))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 344 × 3
    species island body_mass_g
@@ -438,10 +603,10 @@
 <section id="crear-columnas-mutate" class="slide level2 smaller">
 <h2>Crear columnas: <code>mutate()</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a>pinguinos <span class="sc">|&gt;</span></span>
-<span id="cb16-2"><a></a>  <span class="fu">mutate</span>(<span class="at">masa_kg =</span> body_mass_g <span class="sc">/</span> <span class="dv">1000</span>,</span>
-<span id="cb16-3"><a></a>         <span class="at">pico_relativo =</span> bill_length_mm <span class="sc">/</span> bill_depth_mm) <span class="sc">|&gt;</span></span>
-<span id="cb16-4"><a></a>  <span class="fu">select</span>(species, masa_kg, pico_relativo)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a>pinguinos <span class="sc">%&gt;%</span></span>
+<span id="cb17-2"><a></a>  <span class="fu">mutate</span>(<span class="at">masa_kg =</span> body_mass_g <span class="sc">/</span> <span class="dv">1000</span>,</span>
+<span id="cb17-3"><a></a>         <span class="at">pico_relativo =</span> bill_length_mm <span class="sc">/</span> bill_depth_mm) <span class="sc">%&gt;%</span></span>
+<span id="cb17-4"><a></a>  <span class="fu">select</span>(species, masa_kg, pico_relativo)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 344 × 3
    species masa_kg pico_relativo
@@ -463,12 +628,12 @@
 <section id="resumir-por-grupos-group_by-y-summarise" class="slide level2 smaller">
 <h2>Resumir por grupos: <code>group_by()</code> y <code>summarise()</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a>pinguinos <span class="sc">|&gt;</span></span>
-<span id="cb18-2"><a></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(body_mass_g)) <span class="sc">|&gt;</span></span>
-<span id="cb18-3"><a></a>  <span class="fu">group_by</span>(species) <span class="sc">|&gt;</span></span>
-<span id="cb18-4"><a></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(),</span>
-<span id="cb18-5"><a></a>            <span class="at">masa_media =</span> <span class="fu">mean</span>(body_mass_g),</span>
-<span id="cb18-6"><a></a>            <span class="at">masa_de =</span> <span class="fu">sd</span>(body_mass_g))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a>pinguinos <span class="sc">%&gt;%</span></span>
+<span id="cb19-2"><a></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(body_mass_g)) <span class="sc">%&gt;%</span></span>
+<span id="cb19-3"><a></a>  <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span></span>
+<span id="cb19-4"><a></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb19-5"><a></a>            <span class="at">masa_media =</span> <span class="fu">mean</span>(body_mass_g),</span>
+<span id="cb19-6"><a></a>            <span class="at">masa_de =</span> <span class="fu">sd</span>(body_mass_g))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 4
   species       n masa_media masa_de
@@ -509,7 +674,7 @@
 <section id="qué-observas" class="slide level2 smaller">
 <h2>¿Qué observas?</h2>
 
-<img data-src="modulo-2_files/figure-revealjs/unnamed-chunk-11-1.png" width="864" class="r-stretch"><p>¿Qué relación ves? ¿Qué información falta en este gráfico?</p>
+<img data-src="modulo-2_files/figure-revealjs/unnamed-chunk-13-1.png" width="864" class="r-stretch"><p>¿Qué relación ves? ¿Qué información falta en este gráfico?</p>
 </section>
 <section id="la-gramática-de-los-gráficos" class="slide level2 smaller">
 <h2>La gramática de los gráficos</h2>
@@ -532,43 +697,43 @@
 <section id="función-de-inicio" class="slide level2 smaller">
 <h2>Función de inicio</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a><span class="fu">ggplot</span>(<span class="at">data =</span> pinguinos, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">y =</span> body_mass_g))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a><span class="fu">ggplot</span>(<span class="at">data =</span> pinguinos, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">y =</span> body_mass_g))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="modulo-2_files/figure-revealjs/unnamed-chunk-12-1.png" width="960" class="r-stretch"><p><code>ggplot()</code> prepara el lienzo y los ejes, pero todavía no dibuja nada.</p>
+<img data-src="modulo-2_files/figure-revealjs/unnamed-chunk-14-1.png" width="960" class="r-stretch"><p><code>ggplot()</code> prepara el lienzo y los ejes, pero todavía no dibuja nada.</p>
 </section>
 <section id="geometrías" class="slide level2 smaller">
 <h2>Geometrías</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a><span class="fu">ggplot</span>(pinguinos, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">y =</span> body_mass_g)) <span class="sc">+</span></span>
-<span id="cb21-2"><a></a>  <span class="fu">geom_point</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a><span class="fu">ggplot</span>(pinguinos, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">y =</span> body_mass_g)) <span class="sc">+</span></span>
+<span id="cb22-2"><a></a>  <span class="fu">geom_point</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="modulo-2_files/figure-revealjs/unnamed-chunk-13-1.png" width="960" class="r-stretch"><div class="fragment">
+<img data-src="modulo-2_files/figure-revealjs/unnamed-chunk-15-1.png" width="960" class="r-stretch"><div class="fragment">
 <p>Otras: <code>geom_histogram()</code>, <code>geom_boxplot()</code>, <code>geom_bar()</code>, <code>geom_line()</code>, <code>geom_smooth()</code>…</p>
 </div>
 </section>
 <section id="mapeo-estético" class="slide level2 smaller">
 <h2>Mapeo estético</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a><span class="fu">ggplot</span>(pinguinos, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">y =</span> body_mass_g, <span class="at">color =</span> species)) <span class="sc">+</span></span>
-<span id="cb22-2"><a></a>  <span class="fu">geom_point</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="fu">ggplot</span>(pinguinos, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">y =</span> body_mass_g, <span class="at">color =</span> species)) <span class="sc">+</span></span>
+<span id="cb23-2"><a></a>  <span class="fu">geom_point</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="modulo-2_files/figure-revealjs/unnamed-chunk-14-1.png" width="960" class="r-stretch"><p>Dentro de <code>aes()</code>, <code>color = species</code> <strong>mapea</strong> una variable a un color, y <code>{ggplot2}</code> agrega la leyenda.</p>
+<img data-src="modulo-2_files/figure-revealjs/unnamed-chunk-16-1.png" width="960" class="r-stretch"><p>Dentro de <code>aes()</code>, <code>color = species</code> <strong>mapea</strong> una variable a un color, y <code>{ggplot2}</code> agrega la leyenda.</p>
 </section>
 <section id="dentro-o-fuera-de-aes" class="slide level2 smaller">
 <h2>Dentro o fuera de <code>aes()</code></h2>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="fu">ggplot</span>(pinguinos, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm,</span>
-<span id="cb23-2"><a></a>                      <span class="at">y =</span> body_mass_g)) <span class="sc">+</span></span>
-<span id="cb23-3"><a></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"steelblue"</span>, <span class="at">size =</span> <span class="dv">2</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a><span class="fu">ggplot</span>(pinguinos, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm,</span>
+<span id="cb24-2"><a></a>                      <span class="at">y =</span> body_mass_g)) <span class="sc">+</span></span>
+<span id="cb24-3"><a></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"steelblue"</span>, <span class="at">size =</span> <span class="dv">2</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="modulo-2_files/figure-revealjs/unnamed-chunk-15-1.png" width="960"></p>
+<p><img data-src="modulo-2_files/figure-revealjs/unnamed-chunk-17-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -584,36 +749,36 @@
 <section id="capas" class="slide level2 smaller">
 <h2>Capas</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a><span class="fu">ggplot</span>(pinguinos, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">y =</span> body_mass_g, <span class="at">color =</span> species)) <span class="sc">+</span></span>
-<span id="cb24-2"><a></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
-<span id="cb24-3"><a></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a><span class="fu">ggplot</span>(pinguinos, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">y =</span> body_mass_g, <span class="at">color =</span> species)) <span class="sc">+</span></span>
+<span id="cb25-2"><a></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb25-3"><a></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="modulo-2_files/figure-revealjs/unnamed-chunk-16-1.png" width="960" class="r-stretch"><p>Cada <code>+</code> agrega una capa. Las estéticas de <code>ggplot()</code> las heredan todas las capas.</p>
+<img data-src="modulo-2_files/figure-revealjs/unnamed-chunk-18-1.png" width="960" class="r-stretch"><p>Cada <code>+</code> agrega una capa. Las estéticas de <code>ggplot()</code> las heredan todas las capas.</p>
 </section>
 <section id="otras-geometrías" class="slide level2 smaller">
 <h2>Otras geometrías</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a><span class="fu">ggplot</span>(pinguinos, <span class="fu">aes</span>(<span class="at">x =</span> body_mass_g)) <span class="sc">+</span></span>
-<span id="cb25-2"><a></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">250</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a><span class="fu">ggplot</span>(pinguinos, <span class="fu">aes</span>(<span class="at">x =</span> body_mass_g)) <span class="sc">+</span></span>
+<span id="cb26-2"><a></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">250</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="modulo-2_files/figure-revealjs/unnamed-chunk-17-1.png" width="960"></p>
+<p><img data-src="modulo-2_files/figure-revealjs/unnamed-chunk-19-1.png" width="960"></p>
 </figure>
 </div>
 </div>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a><span class="fu">ggplot</span>(pinguinos, <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y =</span> body_mass_g)) <span class="sc">+</span></span>
-<span id="cb26-2"><a></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a><span class="fu">ggplot</span>(pinguinos, <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y =</span> body_mass_g)) <span class="sc">+</span></span>
+<span id="cb27-2"><a></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="modulo-2_files/figure-revealjs/unnamed-chunk-18-1.png" width="960"></p>
+<p><img data-src="modulo-2_files/figure-revealjs/unnamed-chunk-20-1.png" width="960"></p>
 </figure>
 </div>
 </div>

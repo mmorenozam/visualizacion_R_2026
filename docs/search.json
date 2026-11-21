@@ -130,21 +130,126 @@
     "href": "diapositivas/modulo-2.html#hoy",
     "title": "Visualización de datos en R",
     "section": "Hoy",
-    "text": "Hoy\n\nEl {tidyverse} y el operador de cascada\nTipos de tablas: tibble y datos ordenados\nOperaciones con tablas en {dplyr}\nIntroducción a {ggplot2}: función de inicio, geometrías, estéticas y capas"
-  },
-  {
-    "objectID": "diapositivas/modulo-2.html#qué-es-el-tidyverse",
-    "href": "diapositivas/modulo-2.html#qué-es-el-tidyverse",
-    "title": "Visualización de datos en R",
-    "section": "¿Qué es el {tidyverse}?",
-    "text": "¿Qué es el {tidyverse}?\n\n\n\n\n\n\n\n\n\nUna colección de paquetes que comparten una misma forma de trabajar con datos.\n{readr} importa, {tidyr} ordena, {dplyr} transforma, {ggplot2} grafica.\nLas funciones tienen nombres de verbos: filter(), select(), mutate(), summarise().\nTodas reciben una tabla como primer argumento y devuelven una tabla.\n\n\n\n\nlibrary(tidyverse)"
+    "text": "Hoy\n\nTipos de tablas y datos ordenados\nEl {tidyverse} y el operador de cascada\nCambiar formatos con {tidyr}\nOperaciones con tablas en {dplyr}\nIntroducción a {ggplot2}: función de inicio, geometrías, estéticas y capas"
   },
   {
     "objectID": "diapositivas/modulo-2.html#los-datos-de-hoy",
     "href": "diapositivas/modulo-2.html#los-datos-de-hoy",
     "title": "Visualización de datos en R",
     "section": "Los datos de hoy",
-    "text": "Los datos de hoy\n\n\nMostrar el código\npinguinos &lt;- read_csv(\"datos/pinguinos.csv\")\npinguinos\n\n\n# A tibble: 344 × 8\n   species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g\n   &lt;chr&gt;   &lt;chr&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;\n 1 Adelie  Torgersen           39.1          18.7               181        3750\n 2 Adelie  Torgersen           39.5          17.4               186        3800\n 3 Adelie  Torgersen           40.3          18                 195        3250\n 4 Adelie  Torgersen           NA            NA                  NA          NA\n 5 Adelie  Torgersen           36.7          19.3               193        3450\n 6 Adelie  Torgersen           39.3          20.6               190        3650\n 7 Adelie  Torgersen           38.9          17.8               181        3625\n 8 Adelie  Torgersen           39.2          19.6               195        4675\n 9 Adelie  Torgersen           34.1          18.1               193        3475\n10 Adelie  Torgersen           42            20.2               190        4250\n# ℹ 334 more rows\n# ℹ 2 more variables: sex &lt;chr&gt;, year &lt;dbl&gt;\n\n\nread_csv() (con guion bajo, de {readr}) devuelve un tibble."
+    "text": "Los datos de hoy\n\npinguinos: la tabla de los pingüinos de Palmer que ya usamos en el módulo 1.\nairquality de base R: tabla que contiene datos de la calidad de aire en Nueva York de mayo a septiembre de 1973\n\n\n\nMostrar el código\n# install.packages(\"tidyverse\")   # solo la primera vez\nlibrary(tidyverse)\npinguinos &lt;- read_csv(\"datos/pinguinos.csv\")\ndata(airquality)"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#tipos-de-tablas",
+    "href": "diapositivas/modulo-2.html#tipos-de-tablas",
+    "title": "Visualización de datos en R",
+    "section": "Tipos de tablas",
+    "text": "Tipos de tablas\n\nExisten básicamente dos tipos de tablas de datos de acuerdo a su formato: ancho (wide format) y largo (long format)\n\n\nFigura tomada de listendata.com"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#datos-ordenados-tidy-data",
+    "href": "diapositivas/modulo-2.html#datos-ordenados-tidy-data",
+    "title": "Visualización de datos en R",
+    "section": "Datos ordenados (Tidy data)",
+    "text": "Datos ordenados (Tidy data)\n\nCuando llevamos registro de datos es muy común usar tablas de Excel.\nPor la libertad que tenemos en este software, es fácil el dejarnos llevar por prácticas que luego nos causarán dolores de cabeza.\nPor ello me parece importante el mencionar unas cuantas sugerencias para llevar el registro de datos:\n\nConsistencia\nEscoge buenos nombres\nEscribir fechas en formato ISO 8601\nEvitar filas/celdas vacías donde no son necesarias\nPon una sola cosa a la vez\nEvita usar resaltador/colores de fuentes\n\n\n\nLa mayor parte de ejemplos aquí tomados provienen de Data organization in Spreadsheets y las figuras del curso Tidyverse Skills for Data Science."
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#consistencia",
+    "href": "diapositivas/modulo-2.html#consistencia",
+    "title": "Visualización de datos en R",
+    "section": "Consistencia",
+    "text": "Consistencia"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#escoge-buenos-nombres",
+    "href": "diapositivas/modulo-2.html#escoge-buenos-nombres",
+    "title": "Visualización de datos en R",
+    "section": "Escoge buenos nombres",
+    "text": "Escoge buenos nombres\n\nComo ya habíamos mencionado, R puede presentar problemas con el nombre que le asignemos a nuestras columnas (“variables”):\n\nSi comienza con un número, antepondrá X. al nombre de la columna\nSi tiene caracteres especiales, puede dar problemas en el espaciado o de lectura\n\nAdicionalmente, podemos mencionar las siguientes recomendaciones\n\n\n\n\n\n\n\n\n\n\n\nEsto está bien\n¡Evita esto!\n\n\n\n\nEspacios extras\n\"masculino\"\n\"masculino \"\n\n\nUsa guiones bajos en lugar de espacios vacíos\ncultivo_control\ncultivo control\n\n\nUsa nombres informativos\ncultivo_control\nC1"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#fechas-en-formato-iso-8601",
+    "href": "diapositivas/modulo-2.html#fechas-en-formato-iso-8601",
+    "title": "Visualización de datos en R",
+    "section": "Fechas en formato ISO 8601",
+    "text": "Fechas en formato ISO 8601\n\nYa habíamos mencionado anteriormente que dar formato a fechas puede resultar difícil (aunque no imposible).\nComo parte de la consistencia, es recomendable que cuando trabajamos con fechas, registrarlas como “YYYY-MM-DD”.\nEste formato es conocido como ISO 8601 y es reconocido sin problema por R (y otros lenguajes).\nDependiendo de la configuración de nuestro ordenador, fechas en Excel como “14-Feb-23” pueden interpretarse mal o no reconocerse como fechas."
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#evitar-filasceldas-vacías",
+    "href": "diapositivas/modulo-2.html#evitar-filasceldas-vacías",
+    "title": "Visualización de datos en R",
+    "section": "Evitar filas/celdas vacías",
+    "text": "Evitar filas/celdas vacías"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#una-sola-cosa-a-la-vez",
+    "href": "diapositivas/modulo-2.html#una-sola-cosa-a-la-vez",
+    "title": "Visualización de datos en R",
+    "section": "Una sola cosa a la vez",
+    "text": "Una sola cosa a la vez"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#evita-resaltarcambiar-colores",
+    "href": "diapositivas/modulo-2.html#evita-resaltarcambiar-colores",
+    "title": "Visualización de datos en R",
+    "section": "Evita resaltar/cambiar colores",
+    "text": "Evita resaltar/cambiar colores"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#ejemplos-de-tablas-problemáticas",
+    "href": "diapositivas/modulo-2.html#ejemplos-de-tablas-problemáticas",
+    "title": "Visualización de datos en R",
+    "section": "Ejemplos de tablas “problemáticas”",
+    "text": "Ejemplos de tablas “problemáticas”"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#ejemplos-de-tablas-problemáticas-1",
+    "href": "diapositivas/modulo-2.html#ejemplos-de-tablas-problemáticas-1",
+    "title": "Visualización de datos en R",
+    "section": "Ejemplos de tablas “problemáticas”",
+    "text": "Ejemplos de tablas “problemáticas”"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#principios-de-datos-ordenados",
+    "href": "diapositivas/modulo-2.html#principios-de-datos-ordenados",
+    "title": "Visualización de datos en R",
+    "section": "Principios de datos ordenados",
+    "text": "Principios de datos ordenados\n\nPropuestos por Hadley Wickham en su artículo titulado Tidy Data.\nSon sugerencias que Wickham formula para armonizar la manera de registrar datos y su posterior procesamiento en modelos de ciencias de datos (discutiblemente estas sugerencias ya existían inherentemente en el lenguaje SQL).\nTiene como premisa que los datos estén en una tabla rectangular: filas y columnas, sin celdas combinadas ni varias tablas en una misma hoja.\nLas tablas rectangulares nacen de nuestra predisposición a registrar datos de esta manera."
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#principio-1-una-columna-por-variable",
+    "href": "diapositivas/modulo-2.html#principio-1-una-columna-por-variable",
+    "title": "Visualización de datos en R",
+    "section": "Principio 1: Una columna por variable",
+    "text": "Principio 1: Una columna por variable"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#principio-2-una-observación-por-fila",
+    "href": "diapositivas/modulo-2.html#principio-2-una-observación-por-fila",
+    "title": "Visualización de datos en R",
+    "section": "Principio 2: Una observación por fila",
+    "text": "Principio 2: Una observación por fila"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#principio-3-una-hoja-de-datos-por-tipo-de-datos",
+    "href": "diapositivas/modulo-2.html#principio-3-una-hoja-de-datos-por-tipo-de-datos",
+    "title": "Visualización de datos en R",
+    "section": "Principio 3: Una hoja de datos por tipo de datos",
+    "text": "Principio 3: Una hoja de datos por tipo de datos"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#principio-4-una-columna-en-común-para-unir-tablas",
+    "href": "diapositivas/modulo-2.html#principio-4-una-columna-en-común-para-unir-tablas",
+    "title": "Visualización de datos en R",
+    "section": "Principio 4: Una columna en común para unir tablas",
+    "text": "Principio 4: Una columna en común para unir tablas"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#qué-es-el-tidyverse",
+    "href": "diapositivas/modulo-2.html#qué-es-el-tidyverse",
+    "title": "Visualización de datos en R",
+    "section": "¿Qué es el {tidyverse}?",
+    "text": "¿Qué es el {tidyverse}?\n\n\n\n\n\n\n\n\n\nUna colección de paquetes que comparten una misma forma de trabajar con datos.\n{readr} importa, {tidyr} ordena, {dplyr} transforma, {ggplot2} grafica.\nLas funciones tienen nombres de verbos: filter(), select(), mutate(), summarise().\nTodas reciben una tabla como primer argumento y devuelven una tabla.\n\n\n\ninstall.packages(\"tidyverse\")\nlibrary(tidyverse)"
   },
   {
     "objectID": "diapositivas/modulo-2.html#tibbles",
@@ -154,53 +259,74 @@
     "text": "Tibbles\n\nUn tibble es un data.frame moderno: se imprime mejor (solo las primeras filas y el tipo de cada columna) y nunca cambia los nombres de las columnas.\nTodo lo que funciona con un data.frame funciona con un tibble.\nPara convertir: as_tibble(tabla) y as.data.frame(tabla)."
   },
   {
-    "objectID": "diapositivas/modulo-2.html#el-operador-de-cascada",
-    "href": "diapositivas/modulo-2.html#el-operador-de-cascada",
+    "objectID": "diapositivas/modulo-2.html#operador-de-cascada",
+    "href": "diapositivas/modulo-2.html#operador-de-cascada",
     "title": "Visualización de datos en R",
-    "section": "El operador de cascada",
-    "text": "El operador de cascada\nSin el operador, leemos de adentro hacia afuera:\n\nround(mean(pinguinos$body_mass_g, na.rm = TRUE), 1)\n\n[1] 4201.8\n\n\n\nCon |&gt;, leemos de izquierda a derecha, como una receta: “toma esto, y luego haz aquello”.\n\npinguinos$body_mass_g |&gt;\n  mean(na.rm = TRUE) |&gt;\n  round(1)\n\n[1] 4201.8\n\n\n\n\n\n\n\n\n\n\nx |&gt; f(y) es lo mismo que f(x, y). En RStudio: Ctrl + Shift + M. También verás %&gt;%, la versión de {magrittr}; para este curso funcionan igual."
+    "section": "Operador de cascada",
+    "text": "Operador de cascada\n\nEl operador de cascada: %&gt;% es una función de la librería {magrittr}.\nEntendamos a %&gt;% como la palabra “entonces”. En términos sencillos, es algo como: “Tengo harina %&gt;% hago pan”\nEn lenguaje R, esto se interpreta como si tuviéramos un objeto A sobre el cual deseamos aplicar una función B. Esto se vería como: B(A)\nAlternativamente, podemos expresarlo como A %&gt;% B.\nEn base R: D(C(B(A)))\nCon el operador de cascada: A %&gt;% B %&gt;% C %&gt;% D"
   },
   {
-    "objectID": "diapositivas/modulo-2.html#datos-ordenados-tidy-data",
-    "href": "diapositivas/modulo-2.html#datos-ordenados-tidy-data",
+    "objectID": "diapositivas/modulo-2.html#operador-de-cascada-1",
+    "href": "diapositivas/modulo-2.html#operador-de-cascada-1",
     "title": "Visualización de datos en R",
-    "section": "Datos ordenados (tidy data)",
-    "text": "Datos ordenados (tidy data)\n\n\n\n\n\n\n\n\n\nCada variable es una columna.\nCada observación es una fila.\nCada valor está en su propia celda.\n\n. . .\n{ggplot2} y {dplyr} esperan datos ordenados."
+    "section": "Operador de cascada",
+    "text": "Operador de cascada\nSin el operador, leemos de adentro hacia afuera:\n\nround(mean(pinguinos$body_mass_g, na.rm = TRUE), 1)\n\n[1] 4201.8\n\n\n\nCon %&gt;%, leemos de izquierda a derecha, como una receta: “toma esto, y luego haz aquello”.\n\npinguinos$body_mass_g %&gt;%\n  mean(na.rm = TRUE) %&gt;%\n  round(1)\n\n[1] 4201.8\n\n\n\n\n\n\n\n\n\n\nx %&gt;% f(y) es lo mismo que f(x, y). En RStudio: Ctrl + Shift + M. Desde la versión 4.1, R también tiene su propio operador, |&gt;, que funciona casi igual; en este curso usaremos %&gt;%."
   },
   {
     "objectID": "diapositivas/modulo-2.html#formato-ancho-y-formato-largo",
     "href": "diapositivas/modulo-2.html#formato-ancho-y-formato-largo",
     "title": "Visualización de datos en R",
     "section": "Formato ancho y formato largo",
-    "text": "Formato ancho y formato largo\n\nancho &lt;- tibble(especie = c(\"Adelie\", \"Gentoo\"),\n                `2007` = c(3700, 5070), `2008` = c(3740, 5020), `2009` = c(3670, 5140))\nancho\n\n# A tibble: 2 × 4\n  especie `2007` `2008` `2009`\n  &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;\n1 Adelie    3700   3740   3670\n2 Gentoo    5070   5020   5140\n\n\n\n\nlargo &lt;- ancho |&gt;\n  pivot_longer(cols = c(`2007`, `2008`, `2009`), names_to = \"año\", values_to = \"masa_g\")\nlargo\n\n# A tibble: 6 × 3\n  especie año   masa_g\n  &lt;chr&gt;   &lt;chr&gt;  &lt;dbl&gt;\n1 Adelie  2007    3700\n2 Adelie  2008    3740\n3 Adelie  2009    3670\n4 Gentoo  2007    5070\n5 Gentoo  2008    5020\n6 Gentoo  2009    5140\n\n\npivot_wider() hace el camino inverso."
+    "text": "Formato ancho y formato largo\nDe formato ancho a largo\n\nUtilizaremos la función pivot_longer() del paquete {tidyr} con la tabla de base airquality\nCon names_to y values_to elegimos los nombres de las nuevas columnas.\n\n\n\ntabla_larga &lt;- airquality %&gt;%\n  pivot_longer(-c(Month, Day), names_to = \"variable\", values_to = \"valores\")"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#formato-ancho-y-formato-largo-1",
+    "href": "diapositivas/modulo-2.html#formato-ancho-y-formato-largo-1",
+    "title": "Visualización de datos en R",
+    "section": "Formato ancho y formato largo",
+    "text": "Formato ancho y formato largo\nDe formato ancho a largo\n\nUtilizaremos la función pivot_longer() del paquete {tidyr} con la tabla de base airquality\nCon names_to y values_to elegimos los nombres de las nuevas columnas.\n\n\ntabla_larga &lt;- airquality %&gt;%\n  pivot_longer(-c(Month, Day), names_to = \"variable\", values_to = \"valores\")\n\ntabla_larga\n\n# A tibble: 612 × 4\n   Month   Day variable valores\n   &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt;\n 1     5     1 Ozone       41  \n 2     5     1 Solar.R    190  \n 3     5     1 Wind         7.4\n 4     5     1 Temp        67  \n 5     5     2 Ozone       36  \n 6     5     2 Solar.R    118  \n 7     5     2 Wind         8  \n 8     5     2 Temp        72  \n 9     5     3 Ozone       12  \n10     5     3 Solar.R    149  \n# ℹ 602 more rows"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#formato-ancho-y-formato-largo-2",
+    "href": "diapositivas/modulo-2.html#formato-ancho-y-formato-largo-2",
+    "title": "Visualización de datos en R",
+    "section": "Formato ancho y formato largo",
+    "text": "Formato ancho y formato largo\nDe formato largo a ancho\n\nUtilizaremos la función pivot_wider(): names_from indica de qué columna salen los nombres de las nuevas columnas y values_from, de cuál salen sus valores.\n\n\ntabla_ancha &lt;- tabla_larga %&gt;%\n  pivot_wider(names_from = \"variable\", values_from = \"valores\")"
+  },
+  {
+    "objectID": "diapositivas/modulo-2.html#formato-ancho-y-formato-largo-3",
+    "href": "diapositivas/modulo-2.html#formato-ancho-y-formato-largo-3",
+    "title": "Visualización de datos en R",
+    "section": "Formato ancho y formato largo",
+    "text": "Formato ancho y formato largo\nDe formato largo a ancho\n\nUtilizaremos la función pivot_wider(): names_from indica de qué columna salen los nombres de las nuevas columnas y values_from, de cuál salen sus valores.\n\n\ntabla_ancha &lt;- tabla_larga %&gt;%\n  pivot_wider(names_from = \"variable\", values_from = \"valores\")\n\ntabla_ancha\n\n# A tibble: 153 × 6\n   Month   Day Ozone Solar.R  Wind  Temp\n   &lt;int&gt; &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n 1     5     1    41     190   7.4    67\n 2     5     2    36     118   8      72\n 3     5     3    12     149  12.6    74\n 4     5     4    18     313  11.5    62\n 5     5     5    NA      NA  14.3    56\n 6     5     6    28      NA  14.9    66\n 7     5     7    23     299   8.6    65\n 8     5     8    19      99  13.8    59\n 9     5     9     8      19  20.1    61\n10     5    10    NA     194   8.6    69\n# ℹ 143 more rows"
   },
   {
     "objectID": "diapositivas/modulo-2.html#filtrar-filas-filter",
     "href": "diapositivas/modulo-2.html#filtrar-filas-filter",
     "title": "Visualización de datos en R",
     "section": "Filtrar filas: filter()",
-    "text": "Filtrar filas: filter()\n\npinguinos |&gt;\n  filter(species == \"Gentoo\", body_mass_g &gt; 5500)\n\n# A tibble: 28 × 8\n   species island bill_length_mm bill_depth_mm flipper_length_mm body_mass_g\n   &lt;chr&gt;   &lt;chr&gt;           &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;\n 1 Gentoo  Biscoe           50            16.3               230        5700\n 2 Gentoo  Biscoe           50            15.2               218        5700\n 3 Gentoo  Biscoe           49            16.1               216        5550\n 4 Gentoo  Biscoe           48.4          14.6               213        5850\n 5 Gentoo  Biscoe           49.3          15.7               217        5850\n 6 Gentoo  Biscoe           49.2          15.2               221        6300\n 7 Gentoo  Biscoe           50.2          14.3               218        5700\n 8 Gentoo  Biscoe           47.8          15                 215        5650\n 9 Gentoo  Biscoe           50            15.3               220        5550\n10 Gentoo  Biscoe           59.6          17                 230        6050\n# ℹ 18 more rows\n# ℹ 2 more variables: sex &lt;chr&gt;, year &lt;dbl&gt;\n\n\n\nCondiciones: ==, !=, &gt;, &lt;, %in%, y !is.na(x) para descartar faltantes. Varias condiciones separadas por coma se cumplen a la vez."
+    "text": "Filtrar filas: filter()\n\npinguinos %&gt;%\n  filter(species == \"Gentoo\", body_mass_g &gt; 5500)\n\n# A tibble: 28 × 8\n   species island bill_length_mm bill_depth_mm flipper_length_mm body_mass_g\n   &lt;chr&gt;   &lt;chr&gt;           &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;\n 1 Gentoo  Biscoe           50            16.3               230        5700\n 2 Gentoo  Biscoe           50            15.2               218        5700\n 3 Gentoo  Biscoe           49            16.1               216        5550\n 4 Gentoo  Biscoe           48.4          14.6               213        5850\n 5 Gentoo  Biscoe           49.3          15.7               217        5850\n 6 Gentoo  Biscoe           49.2          15.2               221        6300\n 7 Gentoo  Biscoe           50.2          14.3               218        5700\n 8 Gentoo  Biscoe           47.8          15                 215        5650\n 9 Gentoo  Biscoe           50            15.3               220        5550\n10 Gentoo  Biscoe           59.6          17                 230        6050\n# ℹ 18 more rows\n# ℹ 2 more variables: sex &lt;chr&gt;, year &lt;dbl&gt;\n\n\n\nCondiciones: ==, !=, &gt;, &lt;, %in%, y !is.na(x) para descartar faltantes. Varias condiciones separadas por coma se cumplen a la vez."
   },
   {
     "objectID": "diapositivas/modulo-2.html#seleccionar-y-ordenar-select-y-arrange",
     "href": "diapositivas/modulo-2.html#seleccionar-y-ordenar-select-y-arrange",
     "title": "Visualización de datos en R",
     "section": "Seleccionar y ordenar: select() y arrange()",
-    "text": "Seleccionar y ordenar: select() y arrange()\n\npinguinos |&gt;\n  select(species, island, body_mass_g) |&gt;\n  arrange(desc(body_mass_g))\n\n# A tibble: 344 × 3\n   species island body_mass_g\n   &lt;chr&gt;   &lt;chr&gt;        &lt;dbl&gt;\n 1 Gentoo  Biscoe        6300\n 2 Gentoo  Biscoe        6050\n 3 Gentoo  Biscoe        6000\n 4 Gentoo  Biscoe        6000\n 5 Gentoo  Biscoe        5950\n 6 Gentoo  Biscoe        5950\n 7 Gentoo  Biscoe        5850\n 8 Gentoo  Biscoe        5850\n 9 Gentoo  Biscoe        5850\n10 Gentoo  Biscoe        5800\n# ℹ 334 more rows"
+    "text": "Seleccionar y ordenar: select() y arrange()\n\npinguinos %&gt;%\n  select(species, island, body_mass_g) %&gt;%\n  arrange(desc(body_mass_g))\n\n# A tibble: 344 × 3\n   species island body_mass_g\n   &lt;chr&gt;   &lt;chr&gt;        &lt;dbl&gt;\n 1 Gentoo  Biscoe        6300\n 2 Gentoo  Biscoe        6050\n 3 Gentoo  Biscoe        6000\n 4 Gentoo  Biscoe        6000\n 5 Gentoo  Biscoe        5950\n 6 Gentoo  Biscoe        5950\n 7 Gentoo  Biscoe        5850\n 8 Gentoo  Biscoe        5850\n 9 Gentoo  Biscoe        5850\n10 Gentoo  Biscoe        5800\n# ℹ 334 more rows"
   },
   {
     "objectID": "diapositivas/modulo-2.html#crear-columnas-mutate",
     "href": "diapositivas/modulo-2.html#crear-columnas-mutate",
     "title": "Visualización de datos en R",
     "section": "Crear columnas: mutate()",
-    "text": "Crear columnas: mutate()\n\npinguinos |&gt;\n  mutate(masa_kg = body_mass_g / 1000,\n         pico_relativo = bill_length_mm / bill_depth_mm) |&gt;\n  select(species, masa_kg, pico_relativo)\n\n# A tibble: 344 × 3\n   species masa_kg pico_relativo\n   &lt;chr&gt;     &lt;dbl&gt;         &lt;dbl&gt;\n 1 Adelie     3.75          2.09\n 2 Adelie     3.8           2.27\n 3 Adelie     3.25          2.24\n 4 Adelie    NA            NA   \n 5 Adelie     3.45          1.90\n 6 Adelie     3.65          1.91\n 7 Adelie     3.62          2.19\n 8 Adelie     4.68          2   \n 9 Adelie     3.48          1.88\n10 Adelie     4.25          2.08\n# ℹ 334 more rows"
+    "text": "Crear columnas: mutate()\n\npinguinos %&gt;%\n  mutate(masa_kg = body_mass_g / 1000,\n         pico_relativo = bill_length_mm / bill_depth_mm) %&gt;%\n  select(species, masa_kg, pico_relativo)\n\n# A tibble: 344 × 3\n   species masa_kg pico_relativo\n   &lt;chr&gt;     &lt;dbl&gt;         &lt;dbl&gt;\n 1 Adelie     3.75          2.09\n 2 Adelie     3.8           2.27\n 3 Adelie     3.25          2.24\n 4 Adelie    NA            NA   \n 5 Adelie     3.45          1.90\n 6 Adelie     3.65          1.91\n 7 Adelie     3.62          2.19\n 8 Adelie     4.68          2   \n 9 Adelie     3.48          1.88\n10 Adelie     4.25          2.08\n# ℹ 334 more rows"
   },
   {
     "objectID": "diapositivas/modulo-2.html#resumir-por-grupos-group_by-y-summarise",
     "href": "diapositivas/modulo-2.html#resumir-por-grupos-group_by-y-summarise",
     "title": "Visualización de datos en R",
     "section": "Resumir por grupos: group_by() y summarise()",
-    "text": "Resumir por grupos: group_by() y summarise()\n\npinguinos |&gt;\n  filter(!is.na(body_mass_g)) |&gt;\n  group_by(species) |&gt;\n  summarise(n = n(),\n            masa_media = mean(body_mass_g),\n            masa_de = sd(body_mass_g))\n\n# A tibble: 3 × 4\n  species       n masa_media masa_de\n  &lt;chr&gt;     &lt;int&gt;      &lt;dbl&gt;   &lt;dbl&gt;\n1 Adelie      151      3701.    459.\n2 Chinstrap    68      3733.    384.\n3 Gentoo      123      5076.    504.\n\n\n\ncount(species, island) es un atajo para contar combinaciones."
+    "text": "Resumir por grupos: group_by() y summarise()\n\npinguinos %&gt;%\n  filter(!is.na(body_mass_g)) %&gt;%\n  group_by(species) %&gt;%\n  summarise(n = n(),\n            masa_media = mean(body_mass_g),\n            masa_de = sd(body_mass_g))\n\n# A tibble: 3 × 4\n  species       n masa_media masa_de\n  &lt;chr&gt;     &lt;int&gt;      &lt;dbl&gt;   &lt;dbl&gt;\n1 Adelie      151      3701.    459.\n2 Chinstrap    68      3733.    384.\n3 Gentoo      123      5076.    504.\n\n\n\ncount(species, island) es un atajo para contar combinaciones."
   },
   {
     "objectID": "diapositivas/modulo-2.html#section-1",
